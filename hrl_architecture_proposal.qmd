@@ -509,42 +509,15 @@ volumes and ingestion cadence are better characterized.
 
 | Risk | Severity | Likelihood | Mitigation |
 |---|---|---|---|
-| **Staffing delays.** Civil service hiring timelines may delay the data engineer or scientific data scientist hires beyond Phase 0. | High | High | Begin hiring immediately. Consider contractors for early pipeline and data stewardship work. Scope Phase 1 conservatively. |
-| **Schema design stalls.** Cross-agency agreement on data standards is politically complex. | High | Medium | Start in Phase 0 before pipelines are built. Use lightweight RFC process. Begin with least-contested data types. |
-| **Data producer compliance.** Some producers may not meet EDI requirements on time or at required quality. | Medium | Medium | Make the publication contract a Science Committee-endorsed governance requirement. Provide templates and onboarding support. |
-| **LiDAR / EO processing burden.** Large raster data may exceed Phase 1 team capacity. | Medium | Medium | Explicitly defer raw raster processing to Phase 2. Assess existing platforms (NASA, USGS, Microsoft Planetary Computer) before acquiring raw data. |
-| **Interagency cloud access.** Partners may face friction accessing cloud-hosted resources depending on which platform is chosen. | Medium | Low | Store all public data in open formats accessible via HTTPS without authentication. The storage platform should be invisible to end users. |
-| **Key person dependency.** Small team means loss of one person significantly disrupts delivery. | High | Low | Enforce documentation and code review standards from day one. No pipeline should be understandable only to its author. |
 
 ---
 
 ## Decisions Required {#decisions-required}
 
 This proposal asks the Science Committee to make or endorse the following
-decisions to enable Phase 0 to proceed:
+decisions to enable early work to proceed:
 
-1. **Endorse the publication contract as a program governance requirement.**
-   EDI publication with compliant EML metadata should be a documented,
-   Science Committee-endorsed requirement for all HRL data producers.
-
-2. **Approve initiation of the Year 1 technical hires.** The Year 1 deliverable
-   is not achievable without one data engineer and one scientific data
-   scientist. Position descriptions should be developed and posted during Phase
-   0.
-
-3. **Authorize cloud storage provisioning and select a platform.** A cloud
-   object storage platform must be selected and provisioned before Phase 1
-   pipeline development can begin. Azure Blob Storage is the leading candidate
-   given DWR's existing enterprise agreement; this should be confirmed and
-   documented as an Architecture Decision Record.
-
-4. **Designate a schema working group.** Cross-agency schema design requires
-   convening the right people. The Science Committee should designate a small
-   working group (3–5 people) to lead schema design in Phase 0.
-
-5. **Confirm CARE data handling scope.** The specific data types, sensitivity
-   classifications, and partner agreements that define what requires access
-   control need to be confirmed in consultation with Tribal partners.
+TBD.
 
 ::: {.callout-tip}
 ## This document is a living proposal

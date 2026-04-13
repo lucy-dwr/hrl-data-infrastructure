@@ -577,13 +577,7 @@ flowchart TB
 </section>
 <section id="risks-open-questions" class="level2">
 <h2 class="anchored" data-anchor-id="risks-open-questions">Risks &amp; Open Questions</h2>
-<table class="caption-top table">
-<colgroup>
-<col style="width: 25%">
-<col style="width: 25%">
-<col style="width: 25%">
-<col style="width: 25%">
-</colgroup>
+<table class="caption-top">
 <thead>
 <tr class="header">
 <th>Risk</th>
@@ -593,59 +587,14 @@ flowchart TB
 </tr>
 </thead>
 <tbody>
-<tr class="odd">
-<td><strong>Staffing delays.</strong> Civil service hiring timelines may delay the data engineer or scientific data scientist hires beyond Phase 0.</td>
-<td>High</td>
-<td>High</td>
-<td>Begin hiring immediately. Consider contractors for early pipeline and data stewardship work. Scope Phase 1 conservatively.</td>
-</tr>
-<tr class="even">
-<td><strong>Schema design stalls.</strong> Cross-agency agreement on data standards is politically complex.</td>
-<td>High</td>
-<td>Medium</td>
-<td>Start in Phase 0 before pipelines are built. Use lightweight RFC process. Begin with least-contested data types.</td>
-</tr>
-<tr class="odd">
-<td><strong>Data producer compliance.</strong> Some producers may not meet EDI requirements on time or at required quality.</td>
-<td>Medium</td>
-<td>Medium</td>
-<td>Make the publication contract a Science Committee-endorsed governance requirement. Provide templates and onboarding support.</td>
-</tr>
-<tr class="even">
-<td><strong>LiDAR / EO processing burden.</strong> Large raster data may exceed Phase 1 team capacity.</td>
-<td>Medium</td>
-<td>Medium</td>
-<td>Explicitly defer raw raster processing to Phase 2. Assess existing platforms (NASA, USGS, Microsoft Planetary Computer) before acquiring raw data.</td>
-</tr>
-<tr class="odd">
-<td><strong>Interagency cloud access.</strong> Partners may face friction accessing cloud-hosted resources depending on which platform is chosen.</td>
-<td>Medium</td>
-<td>Low</td>
-<td>Store all public data in open formats accessible via HTTPS without authentication. The storage platform should be invisible to end users.</td>
-</tr>
-<tr class="even">
-<td><strong>Key person dependency.</strong> Small team means loss of one person significantly disrupts delivery.</td>
-<td>High</td>
-<td>Low</td>
-<td>Enforce documentation and code review standards from day one. No pipeline should be understandable only to its author.</td>
-</tr>
 </tbody>
 </table>
 <hr>
 </section>
 <section id="decisions-required" class="level2">
 <h2 class="anchored" data-anchor-id="decisions-required">Decisions Required</h2>
-<p>This proposal asks the Science Committee to make or endorse the following decisions to enable Phase 0 to proceed:</p>
-<ol type="1">
-<li><p><strong>Endorse the publication contract as a program governance requirement.</strong> EDI publication with compliant EML metadata should be a documented, Science Committee-endorsed requirement for all HRL data producers.</p></li>
-<li><p><strong>Approve initiation of the Year 1 technical hires.</strong> The Year 1 deliverable is not achievable without one data engineer and one scientific data scientist. Position descriptions should be developed and posted during Phase</p>
-<ol start="0" type="1">
-<li></li>
-</ol></li>
-<li><p><strong>Authorize cloud storage provisioning and select a platform.</strong> A cloud object storage platform must be selected and provisioned before Phase 1 pipeline development can begin. Azure Blob Storage is the leading candidate given DWR’s existing enterprise agreement; this should be confirmed and documented as an Architecture Decision Record.</p></li>
-<li><p><strong>Designate a schema working group.</strong> Cross-agency schema design requires convening the right people. The Science Committee should designate a small working group (3–5 people) to lead schema design in Phase 0.</p></li>
-<li><p><strong>Confirm CARE data handling scope.</strong> The specific data types, sensitivity classifications, and partner agreements that define what requires access control need to be confirmed in consultation with Tribal partners.</p></li>
-</ol>
+<p>This proposal asks the Science Committee to make or endorse the following decisions to enable early work to proceed:</p>
+<p>TBD.</p>
 <div class="callout callout-style-default callout-tip callout-titled">
 <div class="callout-header d-flex align-content-center">
 <div class="callout-icon-container">
