@@ -434,7 +434,7 @@ flowchart TB
 <div class="callout-body-container callout-body">
 <ul>
 <li><strong>Will a Python SDK be developed alongside the R package?</strong> The HRL science community is R-first, but some partners and the broader open data audience may expect a Python interface. Is a Python SDK in scope for any phase of the program, or is the REST API sufficient for non-R users?</li>
-<li><strong>What platform will host the data catalog portal?</strong> Options include GitHub Pages (free, simple, version-controlled), Posit Connect (if the program obtains a license), and Azure Static Web Apps. The right choice depends on whether the catalog needs to be dynamic (server-side search, filtering) or can be fully static-rendered.</li>
+<li><strong>What platform will host the data catalog portal?</strong> Options include GitHub Pages (free, simple, version-controlled), Posit Team (if the program obtains a license), and Azure Static Web Apps. The right choice depends on whether the catalog needs to be dynamic (server-side search, filtering) or can be fully static-rendered.</li>
 <li><strong>Should the catalog be built on an existing open-source catalog solution or developed as a custom Quarto site?</strong> Existing tools such as CKAN or Datasette provide richer functionality out of the box but add operational complexity. A custom Quarto-rendered catalog is simpler to build and maintain but has limited interactivity until Phase 2 STAC integration.</li>
 <li><strong>How will the <code>hrldata</code> package handle authentication for access-controlled datasets (e.g., Tribal data), or should access-controlled datasets be handled differently (not by the SDK at all)?</strong> The package needs a credential management strategy that is secure and does not require users to handle raw Azure credentials directly.</li>
 </ul>
@@ -566,18 +566,18 @@ flowchart TB
 </div>
 </div>
 <div class="callout-body-container callout-body">
-<p>The recommended Year 1 team is <strong>one data engineer, one data scientist, and one program data lead</strong>. The data engineer is responsible for pipeline implementation, storage integration, automation, and catalog infrastructure. The data scientist is responsible for schema coordination, scientific QA/QC of ingested products, data producer support, documentation, and early synthesis support. Attempting Phase 1 without both roles is not recommended: the pipeline development work is full-time, and the scientific validation and producer coordination work requires domain fluency that should not be treated as a side responsibility of the data engineer.</p>
+<p>The recommended Year 1 team is <strong>one data engineer, one data scientist, and one program data lead</strong>. The data engineer is responsible for pipeline implementation, storage integration, automation, and catalog infrastructure. The data scientist is responsible for schema coordination, scientific QA/QC of ingested products, data producer support, documentation, and early synthesis support. Attempting to implement this architecture without both roles is not recommended: the pipeline development work is full-time, and the scientific validation and producer coordination work requires domain fluency that should not be treated as a side responsibility of the data engineer.</p>
 </div>
 </div>
 <section id="infrastructure-costs" class="level3">
 <h3 class="anchored" data-anchor-id="infrastructure-costs">Infrastructure costs</h3>
-<p>Cloud infrastructure costs for Phase 0 and Phase 1 are modest. Estimated costs for the storage and compute components are in the range of <strong>$500–$2,000 per month</strong> at Phase 1 scale, depending on data volume and query patterns. A more detailed cost estimate will be developed as part of Phase 0, once initial data volumes and ingestion cadence are better characterized.</p>
+<p>Cloud infrastructure costs early phases are modest. Estimated costs for the storage and compute components are in the range of <strong>$500–$2,000 per month</strong> at early phases, depending on data volume and query patterns. A more detailed cost estimate will be developed as part of early implementation, once initial data volumes and ingestion cadence are better characterized.</p>
 <hr>
 </section>
 </section>
 <section id="risks-open-questions" class="level2">
 <h2 class="anchored" data-anchor-id="risks-open-questions">Risks &amp; Open Questions</h2>
-<table class="caption-top">
+<table class="caption-top table">
 <thead>
 <tr class="header">
 <th>Risk</th>
@@ -587,6 +587,12 @@ flowchart TB
 </tr>
 </thead>
 <tbody>
+<tr class="odd">
+<td>TBD</td>
+<td>TBD</td>
+<td>TBD</td>
+<td>TBD</td>
+</tr>
 </tbody>
 </table>
 <hr>

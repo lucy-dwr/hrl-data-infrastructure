@@ -412,7 +412,7 @@ public. Multiple access modes serve different users:
   expect a Python interface. Is a Python SDK in scope for any phase of the
   program, or is the REST API sufficient for non-R users?
 - **What platform will host the data catalog portal?** Options include GitHub
-  Pages (free, simple, version-controlled), Posit Connect (if the program obtains
+  Pages (free, simple, version-controlled), Posit Team (if the program obtains
   a license), and Azure Static Web Apps. The right choice depends on whether the
   catalog needs to be dynamic (server-side search, filtering) or can be fully
   static-rendered.
@@ -489,18 +489,18 @@ program data lead**. The data engineer is responsible for pipeline implementatio
 storage integration, automation, and catalog infrastructure. The data scientist
 is responsible for schema coordination, scientific QA/QC of ingested products,
 data producer support, documentation, and early synthesis support. Attempting
-Phase 1 without both roles is not recommended: the pipeline development work is
-full-time, and the scientific validation and producer coordination work requires
-domain fluency that should not be treated as a side responsibility of the data
-engineer.
+to implement this architecture without both roles is not recommended: the
+pipeline development work is full-time, and the scientific validation and
+producer coordination work requires domain fluency that should not be treated as
+a side responsibility of the data engineer.
 :::
 
 ### Infrastructure costs
 
-Cloud infrastructure costs for Phase 0 and Phase 1 are modest. Estimated costs
-for the storage and compute components are in the range of **$500–$2,000 per
-month** at Phase 1 scale, depending on data volume and query patterns. A more
-detailed cost estimate will be developed as part of Phase 0, once initial data
+Cloud infrastructure costs early phases are modest. Estimated costs for the
+storage and compute components are in the range of **$500–$2,000 per month** at
+early phases, depending on data volume and query patterns. A more detailed cost
+estimate will be developed as part of early implementation, once initial data
 volumes and ingestion cadence are better characterized.
 
 ---
@@ -509,6 +509,7 @@ volumes and ingestion cadence are better characterized.
 
 | Risk | Severity | Likelihood | Mitigation |
 |---|---|---|---|
+| TBD | TBD | TBD | TBD |
 
 ---
 
