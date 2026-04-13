@@ -1,0 +1,148 @@
+/*-- scss:defaults --*/
+
+/* ============================================
+   DWR Custom Palette Overrides for Sandstone
+   ============================================ */
+
+/* ------- Palette Variables ------- */
+
+$dwr-navy:        #0C425C;
+$dwr-blue-dark:   #052C3A;
+$dwr-blue:        #2E7DA1;
+$dwr-blue-light:  #D2EAF4;
+
+$dwr-gold:        #F2C94C;
+$dwr-amber:       #D89A28;
+$dwr-gold-light:  #FAE9A4;
+
+$dwr-green-dark:  #2E6E3D;
+$dwr-green:       #76A57C;
+$dwr-green-light: #C4D8C6;
+
+$dwr-charcoal:    #333333;
+$dwr-grey:        #777777;
+$dwr-grey-light:  #DADADA;
+$dwr-bg:          #F7F7F7;
+$dwr-white:       #FFFFFF;
+
+/* ------- Bootstrap Variable Overrides ------- */
+
+/* Primary brand color */
+$primary:            $dwr-navy;
+$primary-dark:       $dwr-blue-dark;
+$primary-light:      $dwr-blue;
+
+/* Secondary brand color */
+$secondary:          $dwr-gold;
+
+/* Success tone (environmental cues) */
+$success:            $dwr-green-dark;
+
+/* Info / link color */
+$info:               $dwr-blue;
+
+/* Neutrals */
+$body-color:         $dwr-charcoal;
+$headings-color:     $dwr-green-dark; 
+$body-bg:            $dwr-white;
+$border-color:       $dwr-grey-light;
+
+/* Links */
+$link-color:         $dwr-navy;
+$link-hover-color:   $dwr-blue;
+
+/* Cards, callouts, subtle components */
+$card-border-color:  $dwr-grey-light;
+$card-cap-bg:        $dwr-bg;
+
+/* Buttons */
+$btn-primary-bg:        $primary;
+$btn-primary-border:    $primary-dark;
+$btn-primary-hover-bg:  $primary-dark;
+
+/* Navbar */
+$navbar-bg:               $dwr-blue-dark;
+$navbar-dark-color:       #fff;
+$navbar-dark-hover-color: $dwr-gold;
+
+
+/*-- scss:rules --*/
+
+/* Heading color hierarchy (branding) */
+main h1,
+main .h1 {
+  color: $dwr-green-dark;
+}
+
+main h2,
+main .h2 {
+  color: $dwr-green-dark;
+}
+
+main h3,
+main .h3 {
+  color: $dwr-green;
+}
+
+/* GitHub icon */
+.quarto-footer-tools i.bi-github,
+a.quarto-link i.bi-github,
+footer i.bi-github,
+.navbar i.bi-github {
+  color: $dwr-navy;
+  font-size: 2rem;
+}
+
+.quarto-footer-tools i.bi-github:hover,
+a.quarto-link i.bi-github:hover,
+footer i.bi-github:hover,
+.navbar i.bi-github:hover {
+  color: $dwr-gold;
+}
+
+/* Footer background and text color */
+footer.footer,
+footer .nav-footer,
+.nav-footer {
+  background-color: $dwr-grey-light !important;
+  color: $dwr-charcoal;
+}
+
+/* Footer links */
+footer.footer .nav-footer a,
+.nav-footer a {
+  color: $dwr-navy;
+}
+
+footer.footer .nav-footer a:hover,
+.nav-footer a:hover {
+  color: $dwr-green-dark;
+}
+
+
+/* ============================================
+   Button Overrides for Outline Primary Buttons
+   ============================================ */
+
+/* Default state: light grey fill, navy text */
+.btn-outline-primary {
+  background-color: $dwr-grey-light !important;
+  color: $dwr-navy !important;
+  border-color: $dwr-grey-light !important;
+}
+
+/* Hover: dark blue background, white text */
+.btn-outline-primary:hover,
+.btn-outline-primary:focus,
+.btn-outline-primary:active,
+.btn-outline-primary.active {
+  background-color: $primary-dark !important;
+  border-color: $primary-dark !important;
+  color: $dwr-white !important;
+}
+
+/* Ensure button group/stack spacing displays correctly */
+.btn-container .btn {
+  margin-right: 0.5rem;
+  margin-bottom: 0.5rem;
+}

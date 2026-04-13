@@ -1,0 +1,38 @@
+project:
+  type: website
+  output-dir: docs
+  render:
+    - hrl_architecture_proposal.qmd
+
+execute:
+  freeze: auto
+
+website:
+  title: "HRL Data Infrastructure"
+  bread-crumbs: false
+  page-navigation: true
+
+  navbar:
+    left:
+      - text: "Architecture Proposal"
+        href: hrl_architecture_proposal.qmd
+
+  page-footer:
+    left:
+      - text: '<span class="footer-draft-note">Disclaimer: this site is currently published in draft form, aligned with HRL''s commitment to open source work, and should not be cited as authoritative HRL policy.</span>'
+    right:
+      - icon: github
+        aria-label: "HRL Data Infrastructure on GitHub"
+        href: https://github.com/lucy-dwr/hrl-data-infrastructure
+
+format:
+  html:
+    grid:
+      sidebar-width: 300px
+    theme:
+      - sandstone
+      - theme/dwr-overrides.scss
+    css: styles.css
+    toc: true
+    mermaid:
+      theme: neutral

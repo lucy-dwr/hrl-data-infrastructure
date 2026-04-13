@@ -39,11 +39,14 @@ vignettes/*.pdf
 # R Environment Variables
 .Renviron
 
-# pkgdown site
-docs/
-
 # translation temp files
 po/*~
 
 # RStudio Connect folder
 rsconnect/
+
+/.quarto/
+**/*.quarto_ipynb
+
+# Stale root-level Quarto render artifacts (output goes to docs/)
+/site_libs/

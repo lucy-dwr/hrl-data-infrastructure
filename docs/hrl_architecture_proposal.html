@@ -1,0 +1,1098 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en"><head>
+
+<meta charset="utf-8">
+<meta name="generator" content="quarto-1.8.27">
+
+<meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
+
+<meta name="author" content="Lucy Andrews">
+
+<title>HRL Data Infrastructure Proposal – HRL Data Infrastructure</title>
+<style>
+code{white-space: pre-wrap;}
+span.smallcaps{font-variant: small-caps;}
+div.columns{display: flex; gap: min(4vw, 1.5em);}
+div.column{flex: auto; overflow-x: auto;}
+div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
+ul.task-list{list-style: none;}
+ul.task-list li input[type="checkbox"] {
+  width: 0.8em;
+  margin: 0 0.8em 0.2em -1em; /* quarto-specific, see https://github.com/quarto-dev/quarto-cli/issues/4556 */ 
+  vertical-align: middle;
+}
+</style>
+
+
+<script src="site_libs/quarto-nav/quarto-nav.js"></script>
+<script src="site_libs/quarto-nav/headroom.min.js"></script>
+<script src="site_libs/clipboard/clipboard.min.js"></script>
+<script src="site_libs/quarto-search/autocomplete.umd.js"></script>
+<script src="site_libs/quarto-search/fuse.min.js"></script>
+<script src="site_libs/quarto-search/quarto-search.js"></script>
+<meta name="quarto:offset" content="./">
+<script src="site_libs/quarto-html/quarto.js" type="module"></script>
+<script src="site_libs/quarto-html/tabsets/tabsets.js" type="module"></script>
+<script src="site_libs/quarto-html/axe/axe-check.js" type="module"></script>
+<script src="site_libs/quarto-html/popper.min.js"></script>
+<script src="site_libs/quarto-html/tippy.umd.min.js"></script>
+<script src="site_libs/quarto-html/anchor.min.js"></script>
+<link href="site_libs/quarto-html/tippy.css" rel="stylesheet">
+<link href="site_libs/quarto-html/quarto-syntax-highlighting-ed96de9b727972fe78a7b5d16c58bf87.css" rel="stylesheet" id="quarto-text-highlighting-styles">
+<script src="site_libs/bootstrap/bootstrap.min.js"></script>
+<link href="site_libs/bootstrap/bootstrap-icons.css" rel="stylesheet">
+<link href="site_libs/bootstrap/bootstrap-c4fd38cde07524c451fc58cf4a89e20d.min.css" rel="stylesheet" append-hash="true" id="quarto-bootstrap" data-mode="light">
+<script id="quarto-search-options" type="application/json">{
+  "location": "navbar",
+  "copy-button": false,
+  "collapse-after": 3,
+  "panel-placement": "end",
+  "type": "overlay",
+  "limit": 50,
+  "keyboard-shortcut": [
+    "f",
+    "/",
+    "s"
+  ],
+  "show-item-context": false,
+  "language": {
+    "search-no-results-text": "No results",
+    "search-matching-documents-text": "matching documents",
+    "search-copy-link-title": "Copy link to search",
+    "search-hide-matches-text": "Hide additional matches",
+    "search-more-match-text": "more match in this document",
+    "search-more-matches-text": "more matches in this document",
+    "search-clear-button-title": "Clear",
+    "search-text-placeholder": "",
+    "search-detached-cancel-button-title": "Cancel",
+    "search-submit-button-title": "Submit",
+    "search-label": "Search"
+  }
+}</script>
+<style>html{ scroll-behavior: smooth; }</style>
+<meta name="mermaid-theme" content="neutral">
+<script src="site_libs/quarto-diagram/mermaid.min.js"></script>
+<script src="site_libs/quarto-diagram/mermaid-init.js"></script>
+<link href="site_libs/quarto-diagram/mermaid.css" rel="stylesheet">
+
+
+<link rel="stylesheet" href="styles.css">
+</head>
+
+<body class="nav-fixed quarto-light">
+
+<div id="quarto-search-results"></div>
+  <header id="quarto-header" class="headroom fixed-top">
+    <nav class="navbar navbar-expand-lg " data-bs-theme="dark">
+      <div class="navbar-container container-fluid">
+      <div class="navbar-brand-container mx-auto">
+    <a class="navbar-brand" href="./index.html">
+    <span class="navbar-title">HRL Data Infrastructure</span>
+    </a>
+  </div>
+            <div id="quarto-search" class="" title="Search"></div>
+          <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarCollapse" aria-controls="navbarCollapse" role="menu" aria-expanded="false" aria-label="Toggle navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">
+  <span class="navbar-toggler-icon"></span>
+</button>
+          <div class="collapse navbar-collapse" id="navbarCollapse">
+            <ul class="navbar-nav navbar-nav-scroll me-auto">
+  <li class="nav-item">
+    <a class="nav-link active" href="./hrl_architecture_proposal.html" aria-current="page"> 
+<span class="menu-text">Architecture Proposal</span></a>
+  </li>  
+</ul>
+          </div> <!-- /navcollapse -->
+            <div class="quarto-navbar-tools">
+</div>
+      </div> <!-- /container-fluid -->
+    </nav>
+</header>
+<!-- content -->
+<div id="quarto-content" class="quarto-container page-columns page-rows-contents page-layout-article page-navbar">
+<!-- sidebar -->
+<!-- margin-sidebar -->
+    <div id="quarto-margin-sidebar" class="sidebar margin-sidebar">
+        <nav id="TOC" role="doc-toc" class="toc-active">
+    <h2 id="toc-title">On this page</h2>
+   
+  <ul>
+  <li><a href="#executive-summary" id="toc-executive-summary" class="nav-link active" data-scroll-target="#executive-summary">Executive Summary</a></li>
+  <li><a href="#program-context-requirements" id="toc-program-context-requirements" class="nav-link" data-scroll-target="#program-context-requirements">Program Context &amp; Requirements</a>
+  <ul class="collapse">
+  <li><a href="#the-core-challenge" id="toc-the-core-challenge" class="nav-link" data-scroll-target="#the-core-challenge">The core challenge</a></li>
+  <li><a href="#the-hrl-data-landscape" id="toc-the-hrl-data-landscape" class="nav-link" data-scroll-target="#the-hrl-data-landscape">The HRL data landscape</a></li>
+  <li><a href="#design-principles" id="toc-design-principles" class="nav-link" data-scroll-target="#design-principles">Design principles</a></li>
+  </ul></li>
+  <li><a href="#architecture-overview" id="toc-architecture-overview" class="nav-link" data-scroll-target="#architecture-overview">Architecture Overview</a>
+  <ul class="collapse">
+  <li><a href="#layer-1-source-and-static-publication" id="toc-layer-1-source-and-static-publication" class="nav-link" data-scroll-target="#layer-1-source-and-static-publication">Layer 1 — Source and Static Publication</a></li>
+  <li><a href="#layer-2-ingestion-and-standardization" id="toc-layer-2-ingestion-and-standardization" class="nav-link" data-scroll-target="#layer-2-ingestion-and-standardization">Layer 2 — Ingestion and Standardization</a></li>
+  <li><a href="#layer-3-storage-and-serving" id="toc-layer-3-storage-and-serving" class="nav-link" data-scroll-target="#layer-3-storage-and-serving">Layer 3 — Storage and Serving</a></li>
+  <li><a href="#layer-4-access-and-applications" id="toc-layer-4-access-and-applications" class="nav-link" data-scroll-target="#layer-4-access-and-applications">Layer 4 — Access and Applications</a></li>
+  </ul></li>
+  <li><a href="#technology-stack" id="toc-technology-stack" class="nav-link" data-scroll-target="#technology-stack">Technology Stack</a></li>
+  <li><a href="#phased-roadmap" id="toc-phased-roadmap" class="nav-link" data-scroll-target="#phased-roadmap">Phased Roadmap</a>
+  <ul class="collapse">
+  <li><a href="#phase-0-foundations-now-month-3" id="toc-phase-0-foundations-now-month-3" class="nav-link" data-scroll-target="#phase-0-foundations-now-month-3">Phase 0 — Foundations (Now — Month 3)</a></li>
+  </ul></li>
+  <li><a href="#staffing-resource-requirements" id="toc-staffing-resource-requirements" class="nav-link" data-scroll-target="#staffing-resource-requirements">Staffing &amp; Resource Requirements</a>
+  <ul class="collapse">
+  <li><a href="#infrastructure-costs" id="toc-infrastructure-costs" class="nav-link" data-scroll-target="#infrastructure-costs">Infrastructure costs</a></li>
+  </ul></li>
+  <li><a href="#risks-open-questions" id="toc-risks-open-questions" class="nav-link" data-scroll-target="#risks-open-questions">Risks &amp; Open Questions</a></li>
+  <li><a href="#decisions-required" id="toc-decisions-required" class="nav-link" data-scroll-target="#decisions-required">Decisions Required</a></li>
+  </ul>
+</nav>
+    </div>
+<!-- main -->
+<main class="content" id="quarto-document-content">
+
+<header id="title-block-header" class="quarto-title-block default">
+<div class="quarto-title">
+<h1 class="title">HRL Data Infrastructure Proposal</h1>
+<p class="subtitle lead">Healthy Rivers and Landscapes Science Program</p>
+</div>
+
+
+
+<div class="quarto-title-meta">
+
+    <div>
+    <div class="quarto-title-meta-heading">Author</div>
+    <div class="quarto-title-meta-contents">
+             <p>Lucy Andrews </p>
+          </div>
+  </div>
+    
+    <div>
+    <div class="quarto-title-meta-heading">Published</div>
+    <div class="quarto-title-meta-contents">
+      <p class="date">April 2026</p>
+    </div>
+  </div>
+  
+    
+  </div>
+  
+
+
+</header>
+
+
+<div class="callout callout-style-default callout-warning callout-titled">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+<span class="screen-reader-only">Warning</span>Draft document
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p>This document is currently published in draft form and should not be cited as authoritative HRL policy.</p>
+</div>
+</div>
+<section id="executive-summary" class="level2">
+<h2 class="anchored" data-anchor-id="executive-summary">Executive Summary</h2>
+<p>The HRL Science Program is committed to open, reproducible science in an eight-year, multi-agency program that will generate hundreds of datasets, analyses, and decision-support products. That commitment requires technical infrastructure to support open data and synthesis science: a system that can receive data from a federated network of producers, standardize and integrate it reliably, store it in a durable and accessible way, and make it discoverable and available to synthesis teams, external stakeholders, and the general public.</p>
+<p>This document proposes a phased data architecture to deliver on those commitments. The architecture is designed around three core realities of the HRL context:</p>
+<ul>
+<li><strong>The team is small now and must grow.</strong> The HRL Science Program’s data science and engineering capacity is currently extremely limited. The architecture must be buildable by a small team—perhaps even a single person with a broad skillset—while providing a credible path for development and maturation as capacity grows.</li>
+<li><strong>The program is inherently interagency.</strong> Partners will both contribute and consume data. The infrastructure must be cloud-neutral, built on open standards, and governed by clear data agreements rather than technical lock-in and ad hoc decisions about data publication, access, and reuse.</li>
+<li><strong>The data landscape is heterogeneous and may include large spatial datasets.</strong> The architecture must handle tabular monitoring data, geospatial products, and potentially large raster datasets (LiDAR, remote sensing) without requiring separate, siloed systems for each.</li>
+</ul>
+<p>The proposed approach is a four-layer model—source and publication, ingestion and standardization, storage and serving, and access and applications—implemented in three phases over the program lifetime. <strong>The Year 1 deliverable is a set of functional, reproducible ingestion pipelines for the first wave of HRL datasets, paired with a simple metadata catalog that makes those datasets discoverable and queryable by partners.</strong></p>
+<p>Achieving this requires investment in two things the program currently lacks: dedicated technical capacity and basic cloud infrastructure. The recommended Year 1 staffing ask is one data engineer and one scientific data scientist. The staffing and infrastructure costs are low relative to program scale.</p>
+<hr>
+</section>
+<section id="program-context-requirements" class="level2">
+<h2 class="anchored" data-anchor-id="program-context-requirements">Program Context &amp; Requirements</h2>
+<section id="the-core-challenge" class="level3">
+<h3 class="anchored" data-anchor-id="the-core-challenge">The core challenge</h3>
+<p>HRL faces a structural tension that is common to large interagency monitoring programs but rarely addressed explicitly: <strong>data production is federated, but data use and synthesis science requires centralization.</strong> Field teams, tributaries/system governance entities, and partner agencies will collect and publish data independently, using their own methods, systems, and timelines, with methodological comparability tracked by the HRL Science Committee. Synthesis teams and adaptive managers, however, need data that are consistent and integrated across sites, time periods, and data types.</p>
+<p>Bridging that gap—turning federated outputs into integrated, analysis-ready products discoverable across the program—is the core job of the data infrastructure described here. Without deliberate investment in this bridge, the program risks ending up with a pile of well-documented individual datasets that nobody can practically use for cross-site synthesis and that fail to meet the true spirit of open science that HRL has adopted.</p>
+</section>
+<section id="the-hrl-data-landscape" class="level3">
+<h3 class="anchored" data-anchor-id="the-hrl-data-landscape">The HRL data landscape</h3>
+<p>The program will generate and use a wide variety of data types, each with distinct storage, processing, and access requirements:</p>
+<ul>
+<li><strong>Tabular monitoring data:</strong> time series of flow, water quality, fish counts, invertebrate surveys, and similar field measurements. High volume, regular cadence, generally well-understood formats.</li>
+<li><strong>Geospatial vector data:</strong> habitat mapping, restoration site boundaries, species occurrence, network features. Require consistent coordinate reference systems and topology standards.</li>
+<li><strong>Large raster and point cloud data:</strong> LiDAR-derived terrain models, remote sensing imagery. Potentially very large; require cloud-native formats and specialized processing pipelines. This is the most technically demanding data type and warrants specific architectural attention.</li>
+<li><strong>Model outputs and derived products:</strong> habitat suitability models, hydrologic model outputs, synthesis data products. Variable structure; must be versioned and linked to the code and inputs that produced them.</li>
+<li><strong>Metadata and documentation:</strong> EML packages, data dictionaries, schemas, provenance records. Must travel with data through every stage of the lifecycle.</li>
+</ul>
+</section>
+<section id="design-principles" class="level3">
+<h3 class="anchored" data-anchor-id="design-principles">Design principles</h3>
+<p>The architecture is shaped by HRL’s commitments to FAIR and CARE principles, reproducible science, and open data. Translated into infrastructure design, those commitments produce four guiding principles:</p>
+<ul>
+<li><strong>Open by default.</strong> Open-source tools, open standards, and open formats at every layer where feasible. Vendor-specific dependencies are introduced only where they provide clear, justified value.</li>
+<li><strong>Interoperable, not integrated.</strong> The architecture should not require partners to adopt HRL-specific systems. Data enters through standard interfaces (EDI publication, documented schemas) and exits through standard interfaces (APIs, R package, open formats).</li>
+<li><strong>Phased and maintainable.</strong> Each phase should be independently useful and maintainable by the team that exists at that time, not dependent on the team that is hoped for.</li>
+<li><strong>Reproducibility is non-negotiable.</strong> Every pipeline, transformation, and derived product must be scripted, open-source, versioned, and executable without manual intervention.</li>
+</ul>
+<hr>
+</section>
+</section>
+<section id="architecture-overview" class="level2">
+<h2 class="anchored" data-anchor-id="architecture-overview">Architecture Overview</h2>
+<p>The proposed architecture is organized into four layers, each corresponding to a stage in the HRL data lifecycle. Data flows from producers through each layer, culminating in analysis-ready products accessible to synthesis teams and external stakeholders.</p>
+<div class="cell" data-layout-align="center">
+<div class="cell-output-display">
+<div>
+<p></p><figure class="figure"><p></p>
+<div>
+<pre class="mermaid mermaid-js">---
+config:
+  theme: neutral
+  themeVariables:
+    fontFamily: "Arial, sans-serif"
+    lineColor: "#555555"
+    edgeLabelBackground: "#FFFFFF"
+    primaryTextColor: "#333333"
+  flowchart:
+    useMaxWidth: true
+    wrappingWidth: 420
+    nodeSpacing: 40
+    rankSpacing: 50
+---
+flowchart TB
+    A(["Data Producers"])
+
+    B1["&lt;b&gt;Layer 1 · EDI Archive&lt;/b&gt;&lt;br/&gt;Field and monitoring data published as versioned, DOI-bearing packages with EML metadata"]
+
+    B2["&lt;b&gt;Layer 1 · Alternative Archive (TBD)&lt;/b&gt;&lt;br/&gt;Complex data objects (e.g., EO imagery) requiring a DOI-minting repository appropriate to data type"]
+
+    C["&lt;b&gt;Layer 2 · Ingestion &amp;amp; Standardization&lt;/b&gt;&lt;br/&gt;Automated pipelines harvest, validate, and standardize to the HRL data model"]
+
+    D["&lt;b&gt;Layer 3 · Storage &amp;amp; Serving&lt;/b&gt;&lt;br/&gt;Analysis-ready products in open formats in a central, queryable cloud store"]
+
+    E["&lt;b&gt;Layer 4 · Access &amp;amp; Applications&lt;/b&gt;&lt;br/&gt;Data reaches synthesis teams and the public via R packages, Python libraries, discovery-friendly data catalogs with download options, and dashboards"]
+
+    A --&gt; B1
+    A --&gt; B2
+    B1 --&gt;|"harvest &amp;amp; validate"| C
+    B2 --&gt;|"harvest &amp;amp; validate"| C
+    C --&gt;|"standardize &amp;amp; store"| D
+    D --&gt;|"query &amp;amp; download"| E
+
+    classDef producer fill:#E3EFF5,stroke:#2E7DA1,stroke-width:2px,color:#0C425C
+    classDef l1 fill:#EDF5F0,stroke:#2E6E3D,stroke-width:2px,color:#1A4A2A
+    classDef l2 fill:#FEF9ED,stroke:#B07820,stroke-width:2px,color:#4A3000
+    classDef l3 fill:#F1EDF8,stroke:#6A4A9A,stroke-width:2px,color:#3A1E6A
+    classDef l4 fill:#FDEEEC,stroke:#A03428,stroke-width:2px,color:#5C1A10
+
+    class A producer
+    class B1,B2 l1
+    class C l2
+    class D l3
+    class E l4
+</pre>
+</div>
+<p></p></figure><p></p>
+</div>
+</div>
+</div>
+<section id="layer-1-source-and-static-publication" class="level3">
+<h3 class="anchored" data-anchor-id="layer-1-source-and-static-publication">Layer 1 — Source and Static Publication</h3>
+<p>Data enters the HRL system from a distributed network of producers. The program cannot and should not control what systems producers use internally. What it can and must establish is a clear <strong>publication contract</strong>: before any dataset is eligible for ingestion into the HRL platform, it must exist as a versioned, DOI-bearing package in a stable public archive with compliant metadata. For field and monitoring data, that archive is EDI with EML metadata. For data types that do not fit EDI’s model, the appropriate archive is an open question (see below).</p>
+<p>This is a governance decision as much as a technical one, and it’s the single most important thing the Science Committee can do to simplify the architecture. It shifts the burden of data formatting upstream (to the people who best understand their own data) while providing the Central Data Team with a consistent interface to harvest from.</p>
+<div class="callout callout-style-default callout-tip callout-titled">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+<span class="screen-reader-only">Tip</span>Why EDI as the primary archive
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p>EDI (Environmental Data Initiative) is well-established in the freshwater ecology community; supports EML metadata (the most detailed and standardized ecological metadata standard); provides free, stable DOIs; and has R tooling (<code>EDIutils</code>, <code>EMLassemblyline</code>) that makes publication and harvesting scriptable. These considerations make it the right choice for HRL field and monitoring data types and community context.</p>
+</div>
+</div>
+<div class="callout callout-style-default callout-important callout-titled">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+<span class="screen-reader-only">Important</span>Decisions to Be Made — Layer 1
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<ul>
+<li><strong>Where should large or complex data objects be archived?</strong> EDI may not be appropriate for Earth observation products, LiDAR point clouds, or large model outputs. The CNRA Open Data Portal does not mint DOIs and therefore cannot be the primary archive location. Candidates include Zenodo, Dryad, and domain-specific repositories. Is a single alternative archive sufficient, or should the choice be data-type-specific? What location(s) should be used?</li>
+<li><strong>How will real-time or near-real-time sensor data be handled?</strong> Continuous monitoring feeds (e.g., CDEC, in-situ sensor networks) do not fit EDI’s data-package publication model. Does the publication contract require a batched EDI snapshot at a defined frequency, or is a different path needed for streaming or high-frequency data?</li>
+<li><strong>What is the DOI and archiving requirement for derived products and synthesis outputs?</strong> Should program-produced synthesis data products also go through EDI, or is a different archive appropriate? This determines whether the publication contract applies only to raw monitoring data or to all program outputs.</li>
+</ul>
+</div>
+</div>
+</section>
+<section id="layer-2-ingestion-and-standardization" class="level3">
+<h3 class="anchored" data-anchor-id="layer-2-ingestion-and-standardization">Layer 2 — Ingestion and Standardization</h3>
+<p>This is the most technically demanding layer to build and the Year 1 focus. Ingestion pipelines are responsible for:</p>
+<ul>
+<li>Harvesting newly published or updated datasets from EDI and other archive repositories</li>
+<li>Parsing metadata and extracting provenance information</li>
+<li>Validating incoming data against HRL program schemas (e.g., column names, units, coordinate reference systems, and allowed values)</li>
+<li>Reshaping and standardizing data to conform to HRL’s program-wide data model</li>
+<li>Writing outputs to cloud storage in open, analysis-ready formats (e.g., Parquet for tabular data, GeoPackage or Cloud-Optimized GeoTIFF for spatial data)</li>
+<li>Producing provenance records linking every output to its source EDI package, input version, and pipeline commit hash</li>
+</ul>
+<p>Pipelines orchestration frameworks have yet to be determined. Routine jobs run automatically on GitHub Actions, triggered by new EDI publications or on a schedule. Containerization ensures reproducibility across environments and makes pipelines portable across whatever compute substrate the program ultimately uses. The orchestration framework and container tooling have not yet been selected; leading candidates are described in the decisions section below.</p>
+<div class="callout callout-style-default callout-warning callout-titled">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+<span class="screen-reader-only">Warning</span>The hardest problem in Layer 2
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p>Schema design, i.e., defining the program-wide data model that ingestion pipelines conform data to, is the most intellectually demanding work in this layer. It requires deep domain knowledge, cross-agency buy-in or delegated strong authority, and careful handling of the tension between standardization and the legitimate variability across HRL study designs.</p>
+</div>
+</div>
+<div class="callout callout-style-default callout-important callout-titled">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+<span class="screen-reader-only">Important</span>Decisions to Be Made — Layer 2
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<ul>
+<li><strong>What pipeline orchestration framework should be used?</strong> This is a foundational decision that shapes the entire Layer 2 architecture. How likely is the pipeline language mix to expand beyond R? Will any pipelines need to run on HPC or cloud compute beyond GitHub Actions? Is there interagency tooling precedent that should inform the choice? Leading candidates:
+<ul>
+<li><strong><code>targets</code></strong> (R) — R-native, excellent dependency graph and caching, reproducibility-focused, well-matched to an R-first team. Lower learning curve for R practitioners; less suited to polyglot or HPC workloads.</li>
+<li><strong>Nextflow</strong> — polyglot DSL (runs R, Python, shell), widely adopted in computational biology and genomics, strong cloud and HPC support, built-in provenance tracking. Steeper learning curve; potentially overkill if pipelines remain entirely R-based.</li>
+<li><strong>Snakemake</strong> — Python-based but language-agnostic; popular in bioinformatics; similar dependency-graph model to <code>targets</code>. Less natural for an R-first team than <code>targets</code>, but more portable than either if the language mix broadens. Not as user-friendly as Nextflow.</li>
+</ul></li>
+<li><strong>What analysis-ready open format should be used for vector spatial data?</strong> GeoPackage is commonly use, but GeoParquet (Apache Parquet with the spatial extension) is emerging as a more cloud-native alternative with first-class interoperability with the Arrow/DuckDB ecosystem. The choice has implications for how synthesis teams query spatial data and which tooling is required. This should be decided before the first spatial pipeline is built.</li>
+<li><strong>What format should be used for raster analysis-ready products?</strong> Cloud-Optimized GeoTIFF (COG) is commonly used. Zarr is gaining traction for multidimensional raster data (e.g., time-series remote sensing stacks). What is the expected raster data volume and dominant use pattern? Will synthesis teams primarily download full scenes, or do sub-region/time-slice queries need to be fast?</li>
+<li><strong>What coordinate reference system(s) will HRL spatial products be standardized to?</strong> All output spatial data should share a consistent CRS. What is the right choice for the Sacramento Valley and Bay-Delta context? (Candidates include EPSG:4326 for maximum interoperability and EPSG:3310 California Albers for locally appropriate metric units.)</li>
+<li><strong>What schema validation framework will be used?</strong> Options include R packages (e.g., <code>pointblank</code>, <code>validate</code>), frictionless data specifications, and JSON Schema. The choice determines what the validation error reports look like and how easily producers can debug failing submissions.</li>
+<li><strong>Will pipelines be dataset-specific or generalized by data type?</strong> A single highly parameterized pipeline template per data type is more maintainable than one bespoke pipeline per EDI package, but requires more upfront design. This architectural decision significantly affects long-term maintenance burden.</li>
+<li><strong>What container tooling will be used?</strong> Docker is the most widely adopted option and has strong GitHub Actions integration, but others may be worth considering if DWR system policies restrict Docker daemon access on shared compute. The choice is largely an implementation detail, but should be confirmed against DWR IT constraints early.</li>
+<li><strong>How will the pipeline handle missing or inconsistent temporal metadata?</strong> Datasets will vary in temporal precision (year, date, datetime, sub-daily). Is there a program-wide standard for temporal resolution and time zone handling, and how do pipelines respond when incoming data does not meet it?</li>
+</ul>
+</div>
+</div>
+</section>
+<section id="layer-3-storage-and-serving" class="level3">
+<h3 class="anchored" data-anchor-id="layer-3-storage-and-serving">Layer 3 — Storage and Serving</h3>
+<p>The central data store holds standardized, analysis-ready products and makes them accessible through multiple interfaces. The proposed approach is a tiered storage model:</p>
+<ul>
+<li><strong>Cloud object storage</strong> as the primary substrate. Files are stored in open formats (see the notes in Layer 2 for pending format decisions), organized in a logical partition structure (e.g., by data type, watershed, year). Azure Blob Storage is the leading candidate given DWR’s existing enterprise agreement, but the choice has not been made (see decisions below).</li>
+<li><strong>PostgreSQL + PostGIS</strong> for relational and spatial query capability. A lightweight managed instance supports catalog metadata, cross-dataset joins, and spatial queries.</li>
+<li><strong>STAC catalog (Phase 2)</strong> for spatial and raster data discovery. The SpatioTemporal Asset Catalog standard is the modern, widely-adopted approach to organizing geospatial datasets. It is used by entities such as NASA, USGS, and Microsoft Planetary Computer. Building HRL’s spatial catalog on STAC means interoperability with the broader geospatial ecosystem and native support for LiDAR and remote sensing products.</li>
+</ul>
+<p>Essentially all HRL data will be publicly accessible, with the primary exception being Tribal data as dictated by data sharing agreements. File-level access control and relational row-level security are both well-supported by the leading storage candidates; the specific mechanisms will follow from the storage platform decision.</p>
+<div class="callout callout-style-default callout-important callout-titled">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+<span class="screen-reader-only">Important</span>Decisions to Be Made — Layer 3
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<ul>
+<li><strong>What cloud object storage platform should be used?</strong> Azure Blob Storage is the leading candidate given DWR’s existing enterprise agreement and the low procurement overhead that implies. AWS S3 and Google Cloud Storage are functionally equivalent alternatives. Because all data will be stored in open formats (Parquet, GeoPackage, COG), the storage layer is swappable — but the decision has implications for access control tooling, cost structure, hosting agency, and interagency friction.</li>
+<li><strong>What partition structure should be used in cloud object storage?</strong> The folder hierarchy determines how efficiently clients can list and filter available data without downloading catalog metadata. Options include partitioning by data type, watershed, year, or hierarchical combinations (e.g., <code>/{data_type}/{watershed}/{year}/</code>). The right choice depends on expected query patterns from synthesis teams.</li>
+<li><strong>Is PostgreSQL + PostGIS necessary in Phase 1, or can it be deferred?</strong> A relational database adds operational overhead. If the catalog is initially a static file (e.g., a Parquet or CSV manifest), PostGIS could be deferred to Phase 2 when spatial query needs are clearer.</li>
+<li><strong>What storage access tier strategy is appropriate for different data classes?</strong> Most providers offer tiered pricing by access frequency (hot, cool, cold, archive). Analysis-ready products warrant a hot or cool tier; raw ingested snapshots retained for provenance may qualify for cold or archive storage. This decision affects both cost and the latency seen by data users.</li>
+<li><strong>What is the data retention and versioning policy for raw ingested snapshots?</strong> When a producer publishes a new EDI version, should the pipeline retain the previously ingested raw snapshot indefinitely, or is only the current version kept? How long are superseded analysis-ready products retained?</li>
+<li><strong>How will sensitivity classification and access control for Tribal data be implemented at the storage layer?</strong> This requires clear policy decisions in consultation with Tribal partners before storage is provisioned.</li>
+</ul>
+</div>
+</div>
+</section>
+<section id="layer-4-access-and-applications" class="level3">
+<h3 class="anchored" data-anchor-id="layer-4-access-and-applications">Layer 4 — Access and Applications</h3>
+<p>The access layer is how data reaches synthesis teams, partner agencies, and the public. Multiple access modes serve different users:</p>
+<ul>
+<li><strong>An R package SDK (e.g., <code>hrldata</code>)</strong> as the primary interface for R-based synthesis science. Wraps catalog discovery, data download, and format handling so synthesis teams don’t need to know anything about the underlying storage architecture.</li>
+<li><strong>A data catalog portal</strong> — a lightweight, browsable interface to catalog metadata. Initially a rendered Quarto document or static site; evolves into a STAC browser in Phase 2.</li>
+<li><strong>Direct download links</strong> for data products, generated automatically as part of ingestion pipeline outputs.</li>
+<li><strong>Application dashboards and Quarto reports</strong> for science communication and decision support; applications may be built with frameworks such as Shiny, Streamlit, or Node.js + React.</li>
+<li><strong>A REST API</strong> for programmatic access by non-R users. Phase 2+.</li>
+</ul>
+<div class="callout callout-style-default callout-important callout-titled">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+<span class="screen-reader-only">Important</span>Decisions to Be Made — Layer 4
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<ul>
+<li><strong>Will a Python SDK be developed alongside the R package?</strong> The HRL science community is R-first, but some partners and the broader open data audience may expect a Python interface. Is a Python SDK in scope for any phase of the program, or is the REST API sufficient for non-R users?</li>
+<li><strong>What platform will host the data catalog portal?</strong> Options include GitHub Pages (free, simple, version-controlled), Posit Connect (if the program obtains a license), and Azure Static Web Apps. The right choice depends on whether the catalog needs to be dynamic (server-side search, filtering) or can be fully static-rendered.</li>
+<li><strong>Should the catalog be built on an existing open-source catalog solution or developed as a custom Quarto site?</strong> Existing tools such as CKAN or Datasette provide richer functionality out of the box but add operational complexity. A custom Quarto-rendered catalog is simpler to build and maintain but has limited interactivity until Phase 2 STAC integration.</li>
+<li><strong>How will the <code>hrldata</code> package handle authentication for access-controlled datasets (e.g., Tribal data), or should access-controlled datasets be handled differently (not by the SDK at all)?</strong> The package needs a credential management strategy that is secure and does not require users to handle raw Azure credentials directly.</li>
+</ul>
+</div>
+</div>
+<hr>
+</section>
+</section>
+<section id="technology-stack" class="level2">
+<h2 class="anchored" data-anchor-id="technology-stack">Technology Stack</h2>
+<table class="caption-top table">
+<colgroup>
+<col style="width: 50%">
+<col style="width: 50%">
+</colgroup>
+<thead>
+<tr class="header">
+<th>Layer</th>
+<th>Tools and technologies</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td>Data archiving &amp; metadata</td>
+<td>EDI / EML, other storage locations (TBD), <code>EMLassemblyline</code>, <code>EDIutils</code>, <code>hrlpub</code></td>
+</tr>
+<tr class="even">
+<td>Pipeline &amp; orchestration</td>
+<td>R / Python, <code>targets</code> / Nextflow / Snakemake (TBD), Docker / other containization option (TBD), GitHub Actions</td>
+</tr>
+<tr class="odd">
+<td>Data processing</td>
+<td><code>arrow</code>, <code>dplyr</code>, <code>sf</code>, <code>terra</code>, <code>stars</code>, <code>vroom</code>, etc.</td>
+</tr>
+<tr class="even">
+<td>Storage &amp; database</td>
+<td>Azure Blob Storage / AWS S3 / GCS (TBD), PostgreSQL + PostGIS, Apache Parquet, GeoPackage / GeoParquet (TBD), COG</td>
+</tr>
+<tr class="odd">
+<td>Catalog</td>
+<td>STAC, <code>rstac</code>, <code>stac-fastapi</code>, etc.</td>
+</tr>
+<tr class="even">
+<td>Access &amp; applications</td>
+<td><code>hrldata</code> R package, Shiny / Posit Connect, Quarto, Plumber / other REST API constructor</td>
+</tr>
+<tr class="odd">
+<td>Version control &amp; CI/CD</td>
+<td>GitHub, GitHub Actions, <code>lintr</code>, <code>styler</code>, <code>testthat</code>, etc.</td>
+</tr>
+</tbody>
+</table>
+<div class="callout callout-style-default callout-note callout-titled">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+<span class="screen-reader-only">Note</span>On vendor neutrality and cloud storage
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p>The cloud object storage platform has not been finalized. Azure Blob Storage is the leading candidate given DWR’s existing enterprise agreement, but the architecture is deliberately designed so that the storage layer is an implementation detail, not a dependency. All data is stored in open formats (Parquet, GeoPackage, COG) that are readable from any cloud or local environment. Switching between Azure Blob Storage, AWS S3, or Google Cloud Storage would be a configuration change, not a re-architecture.</p>
+</div>
+</div>
+<hr>
+</section>
+<section id="phased-roadmap" class="level2">
+<h2 class="anchored" data-anchor-id="phased-roadmap">Phased Roadmap</h2>
+<p>The architecture is designed to be implemented in phases, each of which is independently useful and maintainable. Phases are defined by what the team can realistically deliver given available staffing.</p>
+<section id="phase-0-foundations-now-month-3" class="level3">
+<h3 class="anchored" data-anchor-id="phase-0-foundations-now-month-3">Phase 0 — Foundations (Now — Month 3)</h3>
+<p>TBD.</p>
+<hr>
+</section>
+</section>
+<section id="staffing-resource-requirements" class="level2">
+<h2 class="anchored" data-anchor-id="staffing-resource-requirements">Staffing &amp; Resource Requirements</h2>
+<p>The architecture described here is realistic only if the program makes genuine investment in dedicated technical capacity. Scientific software and data engineering are skilled professions; they cannot be accomplished reliably as a side responsibility of scientists whose primary obligation is research or program administration and who do not have specific training in these domains.</p>
+<table class="caption-top table">
+<colgroup>
+<col style="width: 25%">
+<col style="width: 25%">
+<col style="width: 25%">
+<col style="width: 25%">
+</colgroup>
+<thead>
+<tr class="header">
+<th>Role</th>
+<th>FTE</th>
+<th>Phase</th>
+<th>Primary responsibilities</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td>Data Engineer</td>
+<td>1.0</td>
+<td>TBD</td>
+<td>Ingestion pipeline development, schema implementation, cloud storage, CI/CD, R package development, catalog build-out</td>
+</tr>
+<tr class="even">
+<td>Data Scientist</td>
+<td>2.0</td>
+<td>TBD</td>
+<td>Domain schema coordination, scientific QA of ingested products, synthesis support, documentation and producer training, decision-support tools, dashboards, reporting</td>
+</tr>
+<tr class="odd">
+<td>Cloud / DevOps Engineer</td>
+<td>1.0</td>
+<td>TBD</td>
+<td>Cloud infrastructure, STAC server deployment, API deployment, monitoring, security</td>
+</tr>
+<tr class="even">
+<td>Program Data Lead</td>
+<td>1.0</td>
+<td>All phases</td>
+<td>Architecture governance, external partnerships, publication contract, Science Committee liaison</td>
+</tr>
+</tbody>
+</table>
+<div class="callout callout-style-default callout-note callout-titled">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+<span class="screen-reader-only">Note</span>Note on Year 1 staffing
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p>The recommended Year 1 team is <strong>one data engineer, one data scientist, and one program data lead</strong>. The data engineer is responsible for pipeline implementation, storage integration, automation, and catalog infrastructure. The data scientist is responsible for schema coordination, scientific QA/QC of ingested products, data producer support, documentation, and early synthesis support. Attempting Phase 1 without both roles is not recommended: the pipeline development work is full-time, and the scientific validation and producer coordination work requires domain fluency that should not be treated as a side responsibility of the data engineer.</p>
+</div>
+</div>
+<section id="infrastructure-costs" class="level3">
+<h3 class="anchored" data-anchor-id="infrastructure-costs">Infrastructure costs</h3>
+<p>Cloud infrastructure costs for Phase 0 and Phase 1 are modest. Estimated costs for the storage and compute components are in the range of <strong>$500–$2,000 per month</strong> at Phase 1 scale, depending on data volume and query patterns. A more detailed cost estimate will be developed as part of Phase 0, once initial data volumes and ingestion cadence are better characterized.</p>
+<hr>
+</section>
+</section>
+<section id="risks-open-questions" class="level2">
+<h2 class="anchored" data-anchor-id="risks-open-questions">Risks &amp; Open Questions</h2>
+<table class="caption-top table">
+<colgroup>
+<col style="width: 25%">
+<col style="width: 25%">
+<col style="width: 25%">
+<col style="width: 25%">
+</colgroup>
+<thead>
+<tr class="header">
+<th>Risk</th>
+<th>Severity</th>
+<th>Likelihood</th>
+<th>Mitigation</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td><strong>Staffing delays.</strong> Civil service hiring timelines may delay the data engineer or scientific data scientist hires beyond Phase 0.</td>
+<td>High</td>
+<td>High</td>
+<td>Begin hiring immediately. Consider contractors for early pipeline and data stewardship work. Scope Phase 1 conservatively.</td>
+</tr>
+<tr class="even">
+<td><strong>Schema design stalls.</strong> Cross-agency agreement on data standards is politically complex.</td>
+<td>High</td>
+<td>Medium</td>
+<td>Start in Phase 0 before pipelines are built. Use lightweight RFC process. Begin with least-contested data types.</td>
+</tr>
+<tr class="odd">
+<td><strong>Data producer compliance.</strong> Some producers may not meet EDI requirements on time or at required quality.</td>
+<td>Medium</td>
+<td>Medium</td>
+<td>Make the publication contract a Science Committee-endorsed governance requirement. Provide templates and onboarding support.</td>
+</tr>
+<tr class="even">
+<td><strong>LiDAR / EO processing burden.</strong> Large raster data may exceed Phase 1 team capacity.</td>
+<td>Medium</td>
+<td>Medium</td>
+<td>Explicitly defer raw raster processing to Phase 2. Assess existing platforms (NASA, USGS, Microsoft Planetary Computer) before acquiring raw data.</td>
+</tr>
+<tr class="odd">
+<td><strong>Interagency cloud access.</strong> Partners may face friction accessing cloud-hosted resources depending on which platform is chosen.</td>
+<td>Medium</td>
+<td>Low</td>
+<td>Store all public data in open formats accessible via HTTPS without authentication. The storage platform should be invisible to end users.</td>
+</tr>
+<tr class="even">
+<td><strong>Key person dependency.</strong> Small team means loss of one person significantly disrupts delivery.</td>
+<td>High</td>
+<td>Low</td>
+<td>Enforce documentation and code review standards from day one. No pipeline should be understandable only to its author.</td>
+</tr>
+</tbody>
+</table>
+<hr>
+</section>
+<section id="decisions-required" class="level2">
+<h2 class="anchored" data-anchor-id="decisions-required">Decisions Required</h2>
+<p>This proposal asks the Science Committee to make or endorse the following decisions to enable Phase 0 to proceed:</p>
+<ol type="1">
+<li><p><strong>Endorse the publication contract as a program governance requirement.</strong> EDI publication with compliant EML metadata should be a documented, Science Committee-endorsed requirement for all HRL data producers.</p></li>
+<li><p><strong>Approve initiation of the Year 1 technical hires.</strong> The Year 1 deliverable is not achievable without one data engineer and one scientific data scientist. Position descriptions should be developed and posted during Phase</p>
+<ol start="0" type="1">
+<li></li>
+</ol></li>
+<li><p><strong>Authorize cloud storage provisioning and select a platform.</strong> A cloud object storage platform must be selected and provisioned before Phase 1 pipeline development can begin. Azure Blob Storage is the leading candidate given DWR’s existing enterprise agreement; this should be confirmed and documented as an Architecture Decision Record.</p></li>
+<li><p><strong>Designate a schema working group.</strong> Cross-agency schema design requires convening the right people. The Science Committee should designate a small working group (3–5 people) to lead schema design in Phase 0.</p></li>
+<li><p><strong>Confirm CARE data handling scope.</strong> The specific data types, sensitivity classifications, and partner agreements that define what requires access control need to be confirmed in consultation with Tribal partners.</p></li>
+</ol>
+<div class="callout callout-style-default callout-tip callout-titled">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+<span class="screen-reader-only">Tip</span>This document is a living proposal
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p>Architecture proposals age quickly. This document is intended to be version-controlled, revisited at each phase transition, and updated as the program learns. Suggestions and revisions are welcome via GitHub issues on the <a href="https://github.com/lucy-dwr/hrl-data-architecture">hrl-data-architecture repository</a>.</p>
+</div>
+</div>
+<hr>
+
+
+</section>
+
+</main> <!-- /main -->
+<script id="quarto-html-after-body" type="application/javascript">
+  window.document.addEventListener("DOMContentLoaded", function (event) {
+    const icon = "";
+    const anchorJS = new window.AnchorJS();
+    anchorJS.options = {
+      placement: 'right',
+      icon: icon
+    };
+    anchorJS.add('.anchored');
+    const isCodeAnnotation = (el) => {
+      for (const clz of el.classList) {
+        if (clz.startsWith('code-annotation-')) {                     
+          return true;
+        }
+      }
+      return false;
+    }
+    const onCopySuccess = function(e) {
+      // button target
+      const button = e.trigger;
+      // don't keep focus
+      button.blur();
+      // flash "checked"
+      button.classList.add('code-copy-button-checked');
+      var currentTitle = button.getAttribute("title");
+      button.setAttribute("title", "Copied!");
+      let tooltip;
+      if (window.bootstrap) {
+        button.setAttribute("data-bs-toggle", "tooltip");
+        button.setAttribute("data-bs-placement", "left");
+        button.setAttribute("data-bs-title", "Copied!");
+        tooltip = new bootstrap.Tooltip(button, 
+          { trigger: "manual", 
+            customClass: "code-copy-button-tooltip",
+            offset: [0, -8]});
+        tooltip.show();    
+      }
+      setTimeout(function() {
+        if (tooltip) {
+          tooltip.hide();
+          button.removeAttribute("data-bs-title");
+          button.removeAttribute("data-bs-toggle");
+          button.removeAttribute("data-bs-placement");
+        }
+        button.setAttribute("title", currentTitle);
+        button.classList.remove('code-copy-button-checked');
+      }, 1000);
+      // clear code selection
+      e.clearSelection();
+    }
+    const getTextToCopy = function(trigger) {
+      const outerScaffold = trigger.parentElement.cloneNode(true);
+      const codeEl = outerScaffold.querySelector('code');
+      for (const childEl of codeEl.children) {
+        if (isCodeAnnotation(childEl)) {
+          childEl.remove();
+        }
+      }
+      return codeEl.innerText;
+    }
+    const clipboard = new window.ClipboardJS('.code-copy-button:not([data-in-quarto-modal])', {
+      text: getTextToCopy
+    });
+    clipboard.on('success', onCopySuccess);
+    if (window.document.getElementById('quarto-embedded-source-code-modal')) {
+      const clipboardModal = new window.ClipboardJS('.code-copy-button[data-in-quarto-modal]', {
+        text: getTextToCopy,
+        container: window.document.getElementById('quarto-embedded-source-code-modal')
+      });
+      clipboardModal.on('success', onCopySuccess);
+    }
+      var localhostRegex = new RegExp(/^(?:http|https):\/\/localhost\:?[0-9]*\//);
+      var mailtoRegex = new RegExp(/^mailto:/);
+        var filterRegex = new RegExp('/' + window.location.host + '/');
+      var isInternal = (href) => {
+          return filterRegex.test(href) || localhostRegex.test(href) || mailtoRegex.test(href);
+      }
+      // Inspect non-navigation links and adorn them if external
+     var links = window.document.querySelectorAll('a[href]:not(.nav-link):not(.navbar-brand):not(.toc-action):not(.sidebar-link):not(.sidebar-item-toggle):not(.pagination-link):not(.no-external):not([aria-hidden]):not(.dropdown-item):not(.quarto-navigation-tool):not(.about-link)');
+      for (var i=0; i<links.length; i++) {
+        const link = links[i];
+        if (!isInternal(link.href)) {
+          // undo the damage that might have been done by quarto-nav.js in the case of
+          // links that we want to consider external
+          if (link.dataset.originalHref !== undefined) {
+            link.href = link.dataset.originalHref;
+          }
+        }
+      }
+    function tippyHover(el, contentFn, onTriggerFn, onUntriggerFn) {
+      const config = {
+        allowHTML: true,
+        maxWidth: 500,
+        delay: 100,
+        arrow: false,
+        appendTo: function(el) {
+            return el.parentElement;
+        },
+        interactive: true,
+        interactiveBorder: 10,
+        theme: 'quarto',
+        placement: 'bottom-start',
+      };
+      if (contentFn) {
+        config.content = contentFn;
+      }
+      if (onTriggerFn) {
+        config.onTrigger = onTriggerFn;
+      }
+      if (onUntriggerFn) {
+        config.onUntrigger = onUntriggerFn;
+      }
+      window.tippy(el, config); 
+    }
+    const noterefs = window.document.querySelectorAll('a[role="doc-noteref"]');
+    for (var i=0; i<noterefs.length; i++) {
+      const ref = noterefs[i];
+      tippyHover(ref, function() {
+        // use id or data attribute instead here
+        let href = ref.getAttribute('data-footnote-href') || ref.getAttribute('href');
+        try { href = new URL(href).hash; } catch {}
+        const id = href.replace(/^#\/?/, "");
+        const note = window.document.getElementById(id);
+        if (note) {
+          return note.innerHTML;
+        } else {
+          return "";
+        }
+      });
+    }
+    const xrefs = window.document.querySelectorAll('a.quarto-xref');
+    const processXRef = (id, note) => {
+      // Strip column container classes
+      const stripColumnClz = (el) => {
+        el.classList.remove("page-full", "page-columns");
+        if (el.children) {
+          for (const child of el.children) {
+            stripColumnClz(child);
+          }
+        }
+      }
+      stripColumnClz(note)
+      if (id === null || id.startsWith('sec-')) {
+        // Special case sections, only their first couple elements
+        const container = document.createElement("div");
+        if (note.children && note.children.length > 2) {
+          container.appendChild(note.children[0].cloneNode(true));
+          for (let i = 1; i < note.children.length; i++) {
+            const child = note.children[i];
+            if (child.tagName === "P" && child.innerText === "") {
+              continue;
+            } else {
+              container.appendChild(child.cloneNode(true));
+              break;
+            }
+          }
+          if (window.Quarto?.typesetMath) {
+            window.Quarto.typesetMath(container);
+          }
+          return container.innerHTML
+        } else {
+          if (window.Quarto?.typesetMath) {
+            window.Quarto.typesetMath(note);
+          }
+          return note.innerHTML;
+        }
+      } else {
+        // Remove any anchor links if they are present
+        const anchorLink = note.querySelector('a.anchorjs-link');
+        if (anchorLink) {
+          anchorLink.remove();
+        }
+        if (window.Quarto?.typesetMath) {
+          window.Quarto.typesetMath(note);
+        }
+        if (note.classList.contains("callout")) {
+          return note.outerHTML;
+        } else {
+          return note.innerHTML;
+        }
+      }
+    }
+    for (var i=0; i<xrefs.length; i++) {
+      const xref = xrefs[i];
+      tippyHover(xref, undefined, function(instance) {
+        instance.disable();
+        let url = xref.getAttribute('href');
+        let hash = undefined; 
+        if (url.startsWith('#')) {
+          hash = url;
+        } else {
+          try { hash = new URL(url).hash; } catch {}
+        }
+        if (hash) {
+          const id = hash.replace(/^#\/?/, "");
+          const note = window.document.getElementById(id);
+          if (note !== null) {
+            try {
+              const html = processXRef(id, note.cloneNode(true));
+              instance.setContent(html);
+            } finally {
+              instance.enable();
+              instance.show();
+            }
+          } else {
+            // See if we can fetch this
+            fetch(url.split('#')[0])
+            .then(res => res.text())
+            .then(html => {
+              const parser = new DOMParser();
+              const htmlDoc = parser.parseFromString(html, "text/html");
+              const note = htmlDoc.getElementById(id);
+              if (note !== null) {
+                const html = processXRef(id, note);
+                instance.setContent(html);
+              } 
+            }).finally(() => {
+              instance.enable();
+              instance.show();
+            });
+          }
+        } else {
+          // See if we can fetch a full url (with no hash to target)
+          // This is a special case and we should probably do some content thinning / targeting
+          fetch(url)
+          .then(res => res.text())
+          .then(html => {
+            const parser = new DOMParser();
+            const htmlDoc = parser.parseFromString(html, "text/html");
+            const note = htmlDoc.querySelector('main.content');
+            if (note !== null) {
+              // This should only happen for chapter cross references
+              // (since there is no id in the URL)
+              // remove the first header
+              if (note.children.length > 0 && note.children[0].tagName === "HEADER") {
+                note.children[0].remove();
+              }
+              const html = processXRef(null, note);
+              instance.setContent(html);
+            } 
+          }).finally(() => {
+            instance.enable();
+            instance.show();
+          });
+        }
+      }, function(instance) {
+      });
+    }
+        let selectedAnnoteEl;
+        const selectorForAnnotation = ( cell, annotation) => {
+          let cellAttr = 'data-code-cell="' + cell + '"';
+          let lineAttr = 'data-code-annotation="' +  annotation + '"';
+          const selector = 'span[' + cellAttr + '][' + lineAttr + ']';
+          return selector;
+        }
+        const selectCodeLines = (annoteEl) => {
+          const doc = window.document;
+          const targetCell = annoteEl.getAttribute("data-target-cell");
+          const targetAnnotation = annoteEl.getAttribute("data-target-annotation");
+          const annoteSpan = window.document.querySelector(selectorForAnnotation(targetCell, targetAnnotation));
+          const lines = annoteSpan.getAttribute("data-code-lines").split(",");
+          const lineIds = lines.map((line) => {
+            return targetCell + "-" + line;
+          })
+          let top = null;
+          let height = null;
+          let parent = null;
+          if (lineIds.length > 0) {
+              //compute the position of the single el (top and bottom and make a div)
+              const el = window.document.getElementById(lineIds[0]);
+              top = el.offsetTop;
+              height = el.offsetHeight;
+              parent = el.parentElement.parentElement;
+            if (lineIds.length > 1) {
+              const lastEl = window.document.getElementById(lineIds[lineIds.length - 1]);
+              const bottom = lastEl.offsetTop + lastEl.offsetHeight;
+              height = bottom - top;
+            }
+            if (top !== null && height !== null && parent !== null) {
+              // cook up a div (if necessary) and position it 
+              let div = window.document.getElementById("code-annotation-line-highlight");
+              if (div === null) {
+                div = window.document.createElement("div");
+                div.setAttribute("id", "code-annotation-line-highlight");
+                div.style.position = 'absolute';
+                parent.appendChild(div);
+              }
+              div.style.top = top - 2 + "px";
+              div.style.height = height + 4 + "px";
+              div.style.left = 0;
+              let gutterDiv = window.document.getElementById("code-annotation-line-highlight-gutter");
+              if (gutterDiv === null) {
+                gutterDiv = window.document.createElement("div");
+                gutterDiv.setAttribute("id", "code-annotation-line-highlight-gutter");
+                gutterDiv.style.position = 'absolute';
+                const codeCell = window.document.getElementById(targetCell);
+                const gutter = codeCell.querySelector('.code-annotation-gutter');
+                gutter.appendChild(gutterDiv);
+              }
+              gutterDiv.style.top = top - 2 + "px";
+              gutterDiv.style.height = height + 4 + "px";
+            }
+            selectedAnnoteEl = annoteEl;
+          }
+        };
+        const unselectCodeLines = () => {
+          const elementsIds = ["code-annotation-line-highlight", "code-annotation-line-highlight-gutter"];
+          elementsIds.forEach((elId) => {
+            const div = window.document.getElementById(elId);
+            if (div) {
+              div.remove();
+            }
+          });
+          selectedAnnoteEl = undefined;
+        };
+          // Handle positioning of the toggle
+      window.addEventListener(
+        "resize",
+        throttle(() => {
+          elRect = undefined;
+          if (selectedAnnoteEl) {
+            selectCodeLines(selectedAnnoteEl);
+          }
+        }, 10)
+      );
+      function throttle(fn, ms) {
+      let throttle = false;
+      let timer;
+        return (...args) => {
+          if(!throttle) { // first call gets through
+              fn.apply(this, args);
+              throttle = true;
+          } else { // all the others get throttled
+              if(timer) clearTimeout(timer); // cancel #2
+              timer = setTimeout(() => {
+                fn.apply(this, args);
+                timer = throttle = false;
+              }, ms);
+          }
+        };
+      }
+        // Attach click handler to the DT
+        const annoteDls = window.document.querySelectorAll('dt[data-target-cell]');
+        for (const annoteDlNode of annoteDls) {
+          annoteDlNode.addEventListener('click', (event) => {
+            const clickedEl = event.target;
+            if (clickedEl !== selectedAnnoteEl) {
+              unselectCodeLines();
+              const activeEl = window.document.querySelector('dt[data-target-cell].code-annotation-active');
+              if (activeEl) {
+                activeEl.classList.remove('code-annotation-active');
+              }
+              selectCodeLines(clickedEl);
+              clickedEl.classList.add('code-annotation-active');
+            } else {
+              // Unselect the line
+              unselectCodeLines();
+              clickedEl.classList.remove('code-annotation-active');
+            }
+          });
+        }
+    const findCites = (el) => {
+      const parentEl = el.parentElement;
+      if (parentEl) {
+        const cites = parentEl.dataset.cites;
+        if (cites) {
+          return {
+            el,
+            cites: cites.split(' ')
+          };
+        } else {
+          return findCites(el.parentElement)
+        }
+      } else {
+        return undefined;
+      }
+    };
+    var bibliorefs = window.document.querySelectorAll('a[role="doc-biblioref"]');
+    for (var i=0; i<bibliorefs.length; i++) {
+      const ref = bibliorefs[i];
+      const citeInfo = findCites(ref);
+      if (citeInfo) {
+        tippyHover(citeInfo.el, function() {
+          var popup = window.document.createElement('div');
+          citeInfo.cites.forEach(function(cite) {
+            var citeDiv = window.document.createElement('div');
+            citeDiv.classList.add('hanging-indent');
+            citeDiv.classList.add('csl-entry');
+            var biblioDiv = window.document.getElementById('ref-' + cite);
+            if (biblioDiv) {
+              citeDiv.innerHTML = biblioDiv.innerHTML;
+            }
+            popup.appendChild(citeDiv);
+          });
+          return popup.innerHTML;
+        });
+      }
+    }
+  });
+  </script>
+</div> <!-- /content -->
+<footer class="footer">
+  <div class="nav-footer">
+    <div class="nav-footer-left">
+      <ul class="footer-items list-unstyled">
+    <li class="nav-item">
+ <span class="footer-draft-note">Disclaimer: this site is currently published in draft form, aligned with HRL's commitment to open source work, and should not be cited as authoritative HRL policy.</span>
+  </li>  
+</ul>
+    </div>   
+    <div class="nav-footer-center">
+      &nbsp;
+    </div>
+    <div class="nav-footer-right">
+      <ul class="footer-items list-unstyled">
+    <li class="nav-item compact">
+    <a class="nav-link" href="https://github.com/lucy-dwr/hrl-data-infrastructure">
+      <i class="bi bi-github" role="img" aria-label="HRL Data Infrastructure on GitHub">
+</i> 
+    </a>
+  </li>  
+</ul>
+    </div>
+  </div>
+</footer>
+
+
+
+
+<script src="site_libs/quarto-html/zenscroll-min.js"></script>
+</body></html>
