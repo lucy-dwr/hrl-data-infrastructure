@@ -203,6 +203,14 @@ ul.task-list li input[type="checkbox"] {
 </ul>
 <p>The proposed approach is a four-layer model—source and publication, ingestion and standardization, storage and serving, and access and applications—implemented in three phases over the program lifetime. <strong>The Year 1 deliverable is a set of functional, reproducible ingestion pipelines for the first wave of HRL datasets, paired with a simple metadata catalog that makes those datasets discoverable and queryable by partners.</strong></p>
 <p>Achieving this requires investment in two things the program currently lacks: dedicated technical capacity and basic cloud infrastructure. The recommended Year 1 staffing ask is one data engineer and one scientific data scientist. The staffing and infrastructure costs are low relative to program scale.</p>
+<p>This document also surfaces several consequential decisions that require HRL program leadership engagement or endorsement. The most important of these are not technical choices—they are governance and resource decisions:</p>
+<ul>
+<li><strong>Governance and technical leadership.</strong> There is currently no established structure for funding, building, hosting, or maintaining the program’s shared data infrastructure and no defined process for making technical decisions— from strategic choices (what technology stack to adopt) to operational ones (how a specific pipeline or API is implemented). Both gaps need to be resolved before substantive technical work can begin. This includes clarity on which agency or body holds decision-making authority, where the infrastructure lives institutionally, and how technical leadership is accountable to program leadership.</li>
+<li><strong>The publication contract.</strong> Before any dataset enters the shared system, it must be published to a public archive with standardized metadata and tracked provenance. Common data standards may also need to be established to facilitate later dataset integration. Establishing and enforcing this requirement across all contributing agencies is the single most important thing the Science Committee can do to make the architecture function.</li>
+<li><strong>Dedicated staffing.</strong> The architecture cannot be built as a side responsibility of existing staff. Hiring data engineers and data scientists is a prerequisite, not an option.</li>
+<li><strong>Cloud storage and large-data archiving.</strong> The program needs a shared, public data store and a clear answer for where large or complex data objects (LiDAR, remote sensing imagery, model outputs) will be archived. These decisions are not blocking for early work, but must be made before the first spatial or large-data pipelines are built.</li>
+<li><strong>Public access.</strong> The program has committed to open science. This proposal operationalizes that commitment through a public data catalog with download links and an R package that synthesis teams can use to discover and download data without knowing anything about the underlying infrastructure. What access looks like for non-R users and the general public beyond this is an open question for later phases.</li>
+</ul>
 <hr>
 </section>
 <section id="program-context-requirements" class="level2">
@@ -340,7 +348,7 @@ flowchart TB
 <li>Writing outputs to cloud storage in open, analysis-ready formats (e.g., Parquet for tabular data, GeoPackage or Cloud-Optimized GeoTIFF for spatial data)</li>
 <li>Producing provenance records linking every output to its source EDI package, input version, and pipeline commit hash</li>
 </ul>
-<p>Pipelines orchestration frameworks have yet to be determined. Routine jobs run automatically on GitHub Actions, triggered by new EDI publications or on a schedule. Containerization ensures reproducibility across environments and makes pipelines portable across whatever compute substrate the program ultimately uses. The orchestration framework and container tooling have not yet been selected; leading candidates are described in the decisions section below.</p>
+<p>Pipeline orchestration frameworks have yet to be determined. Routine ingestion jobs run automatically on GitHub Actions, triggered by new EDI publications or on a schedule — GitHub Actions free tier is sufficient for most tabular and vector workloads. Compute-intensive jobs (LiDAR processing, large remote sensing stacks, or multi-year raster time series) will likely exceed what GitHub Actions can handle cost-effectively and will require dedicated cloud compute resources (e.g., Azure Batch, AWS Batch, or on-demand VMs). Containerization ensures reproducibility across environments and makes pipelines portable across compute substrates: the same container that runs a pipeline in CI can run it on a cloud VM or HPC node without modification. The orchestration framework, container tooling, and cloud compute platform have not yet been selected; leading candidates are described in the decisions section below.</p>
 <div class="callout callout-style-default callout-warning callout-titled">
 <div class="callout-header d-flex align-content-center">
 <div class="callout-icon-container">
@@ -367,7 +375,7 @@ flowchart TB
 <ul>
 <li><strong>What pipeline orchestration framework should be used?</strong> This is a foundational decision that shapes the entire Layer 2 architecture. How likely is the pipeline language mix to expand beyond R? Will any pipelines need to run on HPC or cloud compute beyond GitHub Actions? Is there interagency tooling precedent that should inform the choice? Leading candidates:
 <ul>
-<li><strong><code>targets</code></strong> (R) — R-native, excellent dependency graph and caching, reproducibility-focused, well-matched to an R-first team. Lower learning curve for R practitioners; less suited to polyglot or HPC workloads.</li>
+<li><strong><code>targets</code></strong> — R-native, excellent dependency graph and caching, reproducibility-focused, well-matched to an R-first team. Lower learning curve for R practitioners; less suited to polyglot or HPC workloads.</li>
 <li><strong>Nextflow</strong> — polyglot DSL (runs R, Python, shell), widely adopted in computational biology and genomics, strong cloud and HPC support, built-in provenance tracking. Steeper learning curve; potentially overkill if pipelines remain entirely R-based.</li>
 <li><strong>Snakemake</strong> — Python-based but language-agnostic; popular in bioinformatics; similar dependency-graph model to <code>targets</code>. Less natural for an R-first team than <code>targets</code>, but more portable than either if the language mix broadens. Not as user-friendly as Nextflow.</li>
 </ul></li>
@@ -376,6 +384,7 @@ flowchart TB
 <li><strong>What coordinate reference system(s) will HRL spatial products be standardized to?</strong> All output spatial data should share a consistent CRS. What is the right choice for the Sacramento Valley and Bay-Delta context? (Candidates include EPSG:4326 for maximum interoperability and EPSG:3310 California Albers for locally appropriate metric units.)</li>
 <li><strong>What schema validation framework will be used?</strong> Options include R packages (e.g., <code>pointblank</code>, <code>validate</code>), frictionless data specifications, and JSON Schema. The choice determines what the validation error reports look like and how easily producers can debug failing submissions.</li>
 <li><strong>Will pipelines be dataset-specific or generalized by data type?</strong> A single highly parameterized pipeline template per data type is more maintainable than one bespoke pipeline per EDI package, but requires more upfront design. This architectural decision significantly affects long-term maintenance burden.</li>
+<li><strong>What cloud compute platform will be used for compute-intensive jobs?</strong> GitHub Actions is sufficient for routine ingestion of tabular and vector data, but LiDAR processing and large raster pipelines will need dedicated compute. Azure Batch is the natural candidate alongside Azure Blob Storage; AWS Batch and cloud VMs are alternatives. The choice should be confirmed with IT early, as enterprise agreements, egress costs between storage and compute, and policy constraints on account types all affect the decision.</li>
 <li><strong>What container tooling will be used?</strong> Docker is the most widely adopted option and has strong GitHub Actions integration, but others may be worth considering if DWR system policies restrict Docker daemon access on shared compute. The choice is largely an implementation detail, but should be confirmed against DWR IT constraints early.</li>
 <li><strong>How will the pipeline handle missing or inconsistent temporal metadata?</strong> Datasets will vary in temporal precision (year, date, datetime, sub-daily). Is there a program-wide standard for temporal resolution and time zone handling, and how do pipelines respond when incoming data does not meet it?</li>
 </ul>
@@ -388,7 +397,7 @@ flowchart TB
 <ul>
 <li><strong>Cloud object storage</strong> as the primary substrate. Files are stored in open formats (see the notes in Layer 2 for pending format decisions), organized in a logical partition structure (e.g., by data type, watershed, year). Azure Blob Storage is the leading candidate given DWR’s existing enterprise agreement, but the choice has not been made (see decisions below).</li>
 <li><strong>PostgreSQL + PostGIS</strong> for relational and spatial query capability. A lightweight managed instance supports catalog metadata, cross-dataset joins, and spatial queries.</li>
-<li><strong>STAC catalog (Phase 2)</strong> for spatial and raster data discovery. The SpatioTemporal Asset Catalog standard is the modern, widely-adopted approach to organizing geospatial datasets. It is used by entities such as NASA, USGS, and Microsoft Planetary Computer. Building HRL’s spatial catalog on STAC means interoperability with the broader geospatial ecosystem and native support for LiDAR and remote sensing products.</li>
+<li><strong>STAC catalog</strong> for spatial and raster data discovery. The SpatioTemporal Asset Catalog standard is the modern, widely-adopted approach to organizing geospatial datasets. It is used by entities such as NASA, USGS, and Microsoft Planetary Computer. Building HRL’s spatial catalog on STAC means interoperability with the broader geospatial ecosystem and native support for LiDAR and remote sensing products.</li>
 </ul>
 <p>Essentially all HRL data will be publicly accessible, with the primary exception being Tribal data as dictated by data sharing agreements. File-level access control and relational row-level security are both well-supported by the leading storage candidates; the specific mechanisms will follow from the storage platform decision.</p>
 <div class="callout callout-style-default callout-important callout-titled">
@@ -404,7 +413,7 @@ flowchart TB
 <ul>
 <li><strong>What cloud object storage platform should be used?</strong> Azure Blob Storage is the leading candidate given DWR’s existing enterprise agreement and the low procurement overhead that implies. AWS S3 and Google Cloud Storage are functionally equivalent alternatives. Because all data will be stored in open formats (Parquet, GeoPackage, COG), the storage layer is swappable — but the decision has implications for access control tooling, cost structure, hosting agency, and interagency friction.</li>
 <li><strong>What partition structure should be used in cloud object storage?</strong> The folder hierarchy determines how efficiently clients can list and filter available data without downloading catalog metadata. Options include partitioning by data type, watershed, year, or hierarchical combinations (e.g., <code>/{data_type}/{watershed}/{year}/</code>). The right choice depends on expected query patterns from synthesis teams.</li>
-<li><strong>Is PostgreSQL + PostGIS necessary in Phase 1, or can it be deferred?</strong> A relational database adds operational overhead. If the catalog is initially a static file (e.g., a Parquet or CSV manifest), PostGIS could be deferred to Phase 2 when spatial query needs are clearer.</li>
+<li><strong>Is PostgreSQL + PostGIS necessary in initial implementation, or can it be deferred?</strong> A relational database adds operational overhead. If the catalog is initially a static file (e.g., a Parquet or CSV manifest), PostGIS could be deferred to a later phase when spatial query needs are clearer.</li>
 <li><strong>What storage access tier strategy is appropriate for different data classes?</strong> Most providers offer tiered pricing by access frequency (hot, cool, cold, archive). Analysis-ready products warrant a hot or cool tier; raw ingested snapshots retained for provenance may qualify for cold or archive storage. This decision affects both cost and the latency seen by data users.</li>
 <li><strong>What is the data retention and versioning policy for raw ingested snapshots?</strong> When a producer publishes a new EDI version, should the pipeline retain the previously ingested raw snapshot indefinitely, or is only the current version kept? How long are superseded analysis-ready products retained?</li>
 <li><strong>How will sensitivity classification and access control for Tribal data be implemented at the storage layer?</strong> This requires clear policy decisions in consultation with Tribal partners before storage is provisioned.</li>
@@ -417,11 +426,13 @@ flowchart TB
 <p>The access layer is how data reaches synthesis teams, partner agencies, and the public. Multiple access modes serve different users:</p>
 <ul>
 <li><strong>An R package SDK (e.g., <code>hrldata</code>)</strong> as the primary interface for R-based synthesis science. Wraps catalog discovery, data download, and format handling so synthesis teams don’t need to know anything about the underlying storage architecture.</li>
-<li><strong>A data catalog portal</strong> — a lightweight, browsable interface to catalog metadata. Initially a rendered Quarto document or static site; evolves into a STAC browser in Phase 2.</li>
+<li><strong>A data catalog portal</strong> — a lightweight, browsable interface to catalog metadata. Initially a rendered Quarto document or static site; evolves into a STAC browser in a later phase.</li>
 <li><strong>Direct download links</strong> for data products, generated automatically as part of ingestion pipeline outputs.</li>
 <li><strong>Application dashboards and Quarto reports</strong> for science communication and decision support; applications may be built with frameworks such as Shiny, Streamlit, or Node.js + React.</li>
-<li><strong>A REST API</strong> for programmatic access by non-R users. Phase 2+.</li>
+<li><strong>A REST API</strong> for programmatic access by non-R users. Later phase.</li>
+<li><strong>Application hosting infrastructure</strong> — interactive applications and APIs require persistent server compute, distinct from the pipeline compute described in Layer 2. Options include Posit Connect (tight Shiny/Quarto integration, requires a license), Azure App Service or Azure Container Apps (cloud-native, integrates naturally with the Azure storage stack), and shinyapps.io (simple managed hosting, less control). The right choice depends on application complexity, authentication requirements, and whether DWR can provide or procure the needed platform.</li>
 </ul>
+<p>Synthesis teams access HRL data through the <code>hrldata</code> package and direct download from their own compute environments. The core infrastructure does not need to provision compute for synthesis science; however, if the program later wants to provide shared interactive environments (e.g., a hosted RStudio or JupyterHub instance), that would be a separate platform decision beyond the scope of this proposal.</p>
 <div class="callout callout-style-default callout-important callout-titled">
 <div class="callout-header d-flex align-content-center">
 <div class="callout-icon-container">
@@ -435,8 +446,10 @@ flowchart TB
 <ul>
 <li><strong>Will a Python SDK be developed alongside the R package?</strong> The HRL science community is R-first, but some partners and the broader open data audience may expect a Python interface. Is a Python SDK in scope for any phase of the program, or is the REST API sufficient for non-R users?</li>
 <li><strong>What platform will host the data catalog portal?</strong> Options include GitHub Pages (free, simple, version-controlled), Posit Team (if the program obtains a license), and Azure Static Web Apps. The right choice depends on whether the catalog needs to be dynamic (server-side search, filtering) or can be fully static-rendered.</li>
-<li><strong>Should the catalog be built on an existing open-source catalog solution or developed as a custom Quarto site?</strong> Existing tools such as CKAN or Datasette provide richer functionality out of the box but add operational complexity. A custom Quarto-rendered catalog is simpler to build and maintain but has limited interactivity until Phase 2 STAC integration.</li>
+<li><strong>Should the catalog be built on an existing open-source catalog solution or developed as a custom Quarto site?</strong> Existing tools such as CKAN or Datasette provide richer functionality out of the box but add operational complexity. A custom Quarto-rendered catalog is simpler to build and maintain but has limited interactivity until later-phase STAC integration.</li>
 <li><strong>How will the <code>hrldata</code> package handle authentication for access-controlled datasets (e.g., Tribal data), or should access-controlled datasets be handled differently (not by the SDK at all)?</strong> The package needs a credential management strategy that is secure and does not require users to handle raw Azure credentials directly.</li>
+<li><strong>Where will interactive applications and APIs be hosted?</strong> Shiny apps, dashboards, and any REST API require persistent server infrastructure that must be provisioned, maintained, and paid for. Leading options: Posit Connect (best Shiny/Quarto integration; requires a license that must be procured); Azure App Service / Azure Container Apps (aligns with Azure Blob Storage; supports any containerized app, not just R).</li>
+<li><strong>Should the program offer shared compute for synthesis science?</strong> The proposed architecture assumes synthesis teams supply their own compute and use the <code>hrldata</code> package from their own environments. If partner agencies lack adequate compute, the program could consider hosting a shared interactive environment (e.g., Posit Workbench, a JupyterHub instance).</li>
 </ul>
 </div>
 </div>
@@ -463,7 +476,15 @@ flowchart TB
 </tr>
 <tr class="even">
 <td>Pipeline &amp; orchestration</td>
-<td>R / Python, <code>targets</code> / Nextflow / Snakemake (TBD), Docker / other containization option (TBD), GitHub Actions</td>
+<td>R / Python, <code>targets</code> / Nextflow / Snakemake (TBD), Docker / other containerization option (TBD), GitHub Actions</td>
+</tr>
+<tr class="odd">
+<td>Pipeline compute</td>
+<td>GitHub Actions (routine jobs), Azure Batch / AWS Batch / cloud VMs (TBD, for compute-intensive workloads)</td>
+</tr>
+<tr class="even">
+<td>App &amp; API hosting</td>
+<td>Posit Connect / shinyapps.io / Azure App Service / Azure Container Apps (TBD)</td>
 </tr>
 <tr class="odd">
 <td>Data processing</td>
@@ -571,7 +592,7 @@ flowchart TB
 </div>
 <section id="infrastructure-costs" class="level3">
 <h3 class="anchored" data-anchor-id="infrastructure-costs">Infrastructure costs</h3>
-<p>Cloud infrastructure costs early phases are modest. Estimated costs for the storage and compute components are in the range of <strong>$500–$2,000 per month</strong> at early phases, depending on data volume and query patterns. A more detailed cost estimate will be developed as part of early implementation, once initial data volumes and ingestion cadence are better characterized.</p>
+<p>Cloud infrastructure costs in early phases are modest. Estimated costs for storage and pipeline compute are in the range of $500–$2,000 per month, depending on data volume and ingestion cadence. Application hosting adds to this: a Posit Connect license runs roughly $15,000–$20,000/year (coarse estimate); Azure App Service or Container Apps hosting for a small number of applications typically $100–$500/month. A more detailed cost estimate will be developed during early implementation, once data volumes, ingestion cadence, and application hosting requirements are better characterized.</p>
 <hr>
 </section>
 </section>
