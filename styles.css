@@ -104,6 +104,18 @@ main section[class^="level"]
    Specific Overrides
    ========================================================= */
 
+/* Tables
+   ------------------------------- */
+main table thead th,
+main .table thead th {
+  background-color: #f2f2f2 !important;
+}
+
+main table tbody tr:hover > *,
+main .table tbody tr:hover > * {
+  background-color: #f7f7f7 !important;
+}
+
 /* Increase vertical spacing between bullets (works even with Bootstrap/Quarto overrides) */
 main ul li,
 main ol li {

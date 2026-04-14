@@ -2,7 +2,7 @@
 <html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en"><head>
 
 <meta charset="utf-8">
-<meta name="generator" content="quarto-1.8.27">
+<meta name="generator" content="quarto-1.9.37">
 
 <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
 
@@ -10,6 +10,9 @@
 
 <title>HRL Data Infrastructure Proposal – HRL Data Infrastructure</title>
 <style>
+/* Default styles provided by pandoc.
+** See https://pandoc.org/MANUAL.html#variables-for-html for config info.
+*/
 code{white-space: pre-wrap;}
 span.smallcaps{font-variant: small-caps;}
 div.columns{display: flex; gap: min(4vw, 1.5em);}
@@ -24,24 +27,23 @@ ul.task-list li input[type="checkbox"] {
 </style>
 
 
-<script src="site_libs/quarto-nav/quarto-nav.js"></script>
-<script src="site_libs/quarto-nav/headroom.min.js"></script>
-<script src="site_libs/clipboard/clipboard.min.js"></script>
-<script src="site_libs/quarto-search/autocomplete.umd.js"></script>
-<script src="site_libs/quarto-search/fuse.min.js"></script>
-<script src="site_libs/quarto-search/quarto-search.js"></script>
-<meta name="quarto:offset" content="./">
-<script src="site_libs/quarto-html/quarto.js" type="module"></script>
-<script src="site_libs/quarto-html/tabsets/tabsets.js" type="module"></script>
-<script src="site_libs/quarto-html/axe/axe-check.js" type="module"></script>
-<script src="site_libs/quarto-html/popper.min.js"></script>
-<script src="site_libs/quarto-html/tippy.umd.min.js"></script>
-<script src="site_libs/quarto-html/anchor.min.js"></script>
-<link href="site_libs/quarto-html/tippy.css" rel="stylesheet">
-<link href="site_libs/quarto-html/quarto-syntax-highlighting-ed96de9b727972fe78a7b5d16c58bf87.css" rel="stylesheet" id="quarto-text-highlighting-styles">
-<script src="site_libs/bootstrap/bootstrap.min.js"></script>
-<link href="site_libs/bootstrap/bootstrap-icons.css" rel="stylesheet">
-<link href="site_libs/bootstrap/bootstrap-c4fd38cde07524c451fc58cf4a89e20d.min.css" rel="stylesheet" append-hash="true" id="quarto-bootstrap" data-mode="light">
+<script src="../site_libs/quarto-nav/quarto-nav.js"></script>
+<script src="../site_libs/quarto-nav/headroom.min.js"></script>
+<script src="../site_libs/clipboard/clipboard.min.js"></script>
+<script src="../site_libs/quarto-search/autocomplete.umd.js"></script>
+<script src="../site_libs/quarto-search/fuse.min.js"></script>
+<script src="../site_libs/quarto-search/quarto-search.js"></script>
+<meta name="quarto:offset" content="../">
+<script src="../site_libs/quarto-html/quarto.js" type="module"></script>
+<script src="../site_libs/quarto-html/tabsets/tabsets.js" type="module"></script>
+<script src="../site_libs/quarto-html/popper.min.js"></script>
+<script src="../site_libs/quarto-html/tippy.umd.min.js"></script>
+<script src="../site_libs/quarto-html/anchor.min.js"></script>
+<link href="../site_libs/quarto-html/tippy.css" rel="stylesheet">
+<link href="../site_libs/quarto-html/quarto-syntax-highlighting-7f8f88aac4f3542376d5c11b86a4c14d.css" rel="stylesheet" id="quarto-text-highlighting-styles">
+<script src="../site_libs/bootstrap/bootstrap.min.js"></script>
+<link href="../site_libs/bootstrap/bootstrap-icons.css" rel="stylesheet">
+<link href="../site_libs/bootstrap/bootstrap-2b97345991622508a16f759eadd5bdf7.min.css" rel="stylesheet" append-hash="true" id="quarto-bootstrap" data-mode="light">
 <script id="quarto-search-options" type="application/json">{
   "location": "navbar",
   "copy-button": false,
@@ -71,12 +73,12 @@ ul.task-list li input[type="checkbox"] {
 }</script>
 <style>html{ scroll-behavior: smooth; }</style>
 <meta name="mermaid-theme" content="neutral">
-<script src="site_libs/quarto-diagram/mermaid.min.js"></script>
-<script src="site_libs/quarto-diagram/mermaid-init.js"></script>
-<link href="site_libs/quarto-diagram/mermaid.css" rel="stylesheet">
+<script src="../site_libs/quarto-diagram/mermaid.min.js"></script>
+<script src="../site_libs/quarto-diagram/mermaid-init.js"></script>
+<link href="../site_libs/quarto-diagram/mermaid.css" rel="stylesheet">
 
 
-<link rel="stylesheet" href="styles.css">
+<link rel="stylesheet" href="../styles.css">
 </head>
 
 <body class="nav-fixed quarto-light">
@@ -86,7 +88,7 @@ ul.task-list li input[type="checkbox"] {
     <nav class="navbar navbar-expand-lg " data-bs-theme="dark">
       <div class="navbar-container container-fluid">
       <div class="navbar-brand-container mx-auto">
-    <a class="navbar-brand" href="./index.html">
+    <a class="navbar-brand" href="../index.html">
     <span class="navbar-title">HRL Data Infrastructure</span>
     </a>
   </div>
@@ -97,8 +99,12 @@ ul.task-list li input[type="checkbox"] {
           <div class="collapse navbar-collapse" id="navbarCollapse">
             <ul class="navbar-nav navbar-nav-scroll me-auto">
   <li class="nav-item">
-    <a class="nav-link active" href="./hrl_architecture_proposal.html" aria-current="page"> 
-<span class="menu-text">Architecture Proposal</span></a>
+    <a class="nav-link active" href="../pages/hrl_infrastructure_proposal.html" aria-current="page"> 
+<span class="menu-text">Infrastructure Proposal</span></a>
+  </li>  
+  <li class="nav-item">
+    <a class="nav-link" href="../pages/map_memo.html"> 
+<span class="menu-text">Restoration Project Map</span></a>
   </li>  
 </ul>
           </div> <!-- /navcollapse -->
@@ -123,7 +129,7 @@ ul.task-list li input[type="checkbox"] {
   <li><a href="#the-hrl-data-landscape" id="toc-the-hrl-data-landscape" class="nav-link" data-scroll-target="#the-hrl-data-landscape">The HRL data landscape</a></li>
   <li><a href="#design-principles" id="toc-design-principles" class="nav-link" data-scroll-target="#design-principles">Design principles</a></li>
   </ul></li>
-  <li><a href="#architecture-overview" id="toc-architecture-overview" class="nav-link" data-scroll-target="#architecture-overview">Architecture Overview</a>
+  <li><a href="#infrastructure-overview" id="toc-infrastructure-overview" class="nav-link" data-scroll-target="#infrastructure-overview">Infrastructure Overview</a>
   <ul class="collapse">
   <li><a href="#layer-1-source-and-static-publication" id="toc-layer-1-source-and-static-publication" class="nav-link" data-scroll-target="#layer-1-source-and-static-publication">Layer 1 — Source and Static Publication</a></li>
   <li><a href="#layer-2-ingestion-and-standardization" id="toc-layer-2-ingestion-and-standardization" class="nav-link" data-scroll-target="#layer-2-ingestion-and-standardization">Layer 2 — Ingestion and Standardization</a></li>
@@ -201,7 +207,7 @@ ul.task-list li input[type="checkbox"] {
 <li><strong>The program is inherently interagency.</strong> Partners will both contribute and consume data. The infrastructure must be cloud-neutral, built on open standards, and governed by clear data agreements rather than technical lock-in and ad hoc decisions about data publication, access, and reuse.</li>
 <li><strong>The data landscape is heterogeneous and may include large spatial datasets.</strong> The architecture must handle tabular monitoring data, geospatial products, and potentially large raster datasets (LiDAR, remote sensing) without requiring separate, siloed systems for each.</li>
 </ul>
-<p>The proposed approach is a four-layer model—source and publication, ingestion and standardization, storage and serving, and access and applications—implemented in three phases over the program lifetime. <strong>The Year 1 deliverable is a set of functional, reproducible ingestion pipelines for the first wave of HRL datasets, paired with a simple metadata catalog that makes those datasets discoverable and queryable by partners.</strong></p>
+<p>The proposed approach is a four-layer model—source and publication, ingestion and standardization, storage and serving, and access and applications—implemented in three phases over the program lifetime. <strong>The proposed Year 1 deliverable is a set of functional, reproducible ingestion pipelines for the first wave of HRL datasets and initial storage solutions, paired with a metadata catalog that makes those datasets discoverable and queryable by partners.</strong></p>
 <p>Achieving this requires investment in two things the program currently lacks: dedicated technical capacity and basic cloud infrastructure. The recommended Year 1 staffing ask is one data engineer and one scientific data scientist. The staffing and infrastructure costs are low relative to program scale.</p>
 <p>This document also surfaces several consequential decisions that require HRL program leadership engagement or endorsement. The most important of these are not technical choices—they are governance and resource decisions:</p>
 <ul>
@@ -233,7 +239,7 @@ ul.task-list li input[type="checkbox"] {
 </section>
 <section id="design-principles" class="level3">
 <h3 class="anchored" data-anchor-id="design-principles">Design principles</h3>
-<p>The architecture is shaped by HRL’s commitments to FAIR and CARE principles, reproducible science, and open data. Translated into infrastructure design, those commitments produce four guiding principles:</p>
+<p>The infrastructure design is shaped by HRL’s commitments to FAIR and CARE principles, reproducible science, and open data. Translated into infrastructure design, those commitments produce four guiding principles:</p>
 <ul>
 <li><strong>Open by default.</strong> Open-source tools, open standards, and open formats at every layer where feasible. Vendor-specific dependencies are introduced only where they provide clear, justified value.</li>
 <li><strong>Interoperable, not integrated.</strong> The architecture should not require partners to adopt HRL-specific systems. Data enters through standard interfaces (EDI publication, documented schemas) and exits through standard interfaces (APIs, R package, open formats).</li>
@@ -243,9 +249,9 @@ ul.task-list li input[type="checkbox"] {
 <hr>
 </section>
 </section>
-<section id="architecture-overview" class="level2">
-<h2 class="anchored" data-anchor-id="architecture-overview">Architecture Overview</h2>
-<p>The proposed architecture is organized into four layers, each corresponding to a stage in the HRL data lifecycle. Data flows from producers through each layer, culminating in analysis-ready products accessible to synthesis teams and external stakeholders.</p>
+<section id="infrastructure-overview" class="level2">
+<h2 class="anchored" data-anchor-id="infrastructure-overview">Infrastructure Overview</h2>
+<p>The proposed infrastructure is organized into four layers, each corresponding to a stage in the HRL data lifecycle. Data flows from producers through each layer, culminating in analysis-ready products accessible to synthesis teams and external stakeholders.</p>
 <div class="cell" data-layout-align="center">
 <div class="cell-output-display">
 <div>
@@ -632,7 +638,7 @@ flowchart TB
 </div>
 </div>
 <div class="callout-body-container callout-body">
-<p>Architecture proposals age quickly. This document is intended to be version-controlled, revisited at each phase transition, and updated as the program learns. Suggestions and revisions are welcome via GitHub issues on the <a href="https://github.com/lucy-dwr/hrl-data-architecture">hrl-data-architecture repository</a>.</p>
+<p>Infrastructure proposals age quickly. This document is intended to be version-controlled, revisited at each phase transition, and updated as the program learns. Suggestions and revisions are welcome via GitHub issues on the <a href="https://github.com/lucy-dwr/hrl-data-infrastructure">hrl-data-infrastructure repository</a>.</p>
 </div>
 </div>
 <hr>
@@ -1070,5 +1076,5 @@ flowchart TB
 
 
 
-<script src="site_libs/quarto-html/zenscroll-min.js"></script>
+<script src="../site_libs/quarto-html/zenscroll-min.js"></script>
 </body></html>
