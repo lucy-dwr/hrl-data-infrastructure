@@ -1,0 +1,208 @@
+---
+title: "HRL Restoration Project Map: Implicated Infrastructure Decisions"
+author: "Lucy Andrews"
+date: "April 2026"
+date-format: "MMMM YYYY"
+---
+
+::: {.callout-warning}
+## Working memo
+This is an internal planning document, not a policy or design specification.
+:::
+
+## The task
+
+We want to compile a spatial dataset of all HRL restoration projects in the
+Sacramento River and Bay-Delta watershed (with relevant attributes), store it in
+the HRL data infrastructure, and publish it as an interactive map that staff,
+the State Water Resources Control Board, and the public can use.
+
+This is a well-scoped, achievable task and a good one to tackle early because it
+is relatively narrow, has a specific end-product, and will prompt engagement
+with technical questions that the HRL program needs to start addressing in
+preparation for implementation. But completing this task requires resolving
+several infrastructure decisions that are currently open. This memo walks through
+what those decisions are and why they matter.
+
+For a thorough discussion of HRL data infrastructure, including decisions that 
+need to be made in order for work to progress, please see the
+[HRL Data Infrastructure Proposal](hrl_infrastructure_proposal.qmd) page.
+
+---
+
+## Why this task touches so much of the infrastructure
+
+The HRL data infrastructure is designed in four layers, each with a distinct job:
+
+| Layer | Job |
+|---|---|
+| 1 — Source & Publication | Data is created and archived in a stable, open location |
+| 2 — Ingestion & Standardization | Automated pipelines pull the data in, validate it, and put it in a standard format |
+| 3 — Storage & Serving | The processed data lives in a central store that other tools can read from |
+| 4 — Access & Applications | Program staff and the public interact with the data through maps, packages, and dashboards |
+
+Making a restoration project map means doing something at every one of these
+layers. That is what makes this task a useful test case: it forces us to make foundational
+decisions in a low-stakes context, before we have a large catalog of datasets
+depending on those choices.
+
+---
+
+## Layer by layer: what needs to happen and what decisions are open
+
+### Layer 1 — Creating and publishing the dataset
+
+**What this means here:** The restoration project spatial dataset does not exist
+yet as a program-administered dataset. It needs to be created from existing GIS
+layers, partner data, and/or first-principles digitizing; assigned a stable home;
+and given an explicit process for review, update, and versioning.
+
+**Open decision: Does this dataset go through EDI?**
+
+Our standard process requires that all HRL data be published to EDI before it
+enters the infrastructure. EDI is designed for ecological field data with rich,
+standardized metadata.
+
+A spatial reference layer such as restoration project boundaries is likely to be
+an exception, especially because this particular dataset may need to evolve in
+ways that don't lend themselves to rigid versioning. It could instead live
+directly in HRL program infrastructure as a program reference layer. We need to
+decide which path to take, and document it, because this decision could set a
+precedent for other spatial datasets.
+
+**Open decision: How are shared program datasets administered and updated?**
+
+We should not assume DWR owns this dataset simply because DWR staff may help
+compile it. The restoration project map should be treated as a shared HRL program
+dataset, which means we need to decide how program datasets are administered:
+who is the steward, who can propose edits, who approves changes, how often the
+dataset is reviewed, how partner updates flow in, and how revisions are
+versioned and documented. This affects both the data model and the governance.
+
+---
+
+### Layer 2 — Ingesting and standardizing the data
+
+**What this means here:** Once the data are archived, an automated pipeline needs
+to pull them in, validate them (do all features have the required attributes? are
+coordinates in the expected projection? etc.), and convert it to the standard
+format for storage.
+
+**Open decision: Which spatial file format do we use?**
+
+The infrastructure proposal identifies two candidates for storing spatial (vector)
+data in a nonproprietary structure:
+
+- **GeoPackage** — a single-file format, widely used in GIS software like QGIS,
+  should be familiar to many geospatial analysts.
+- **GeoParquet** — a newer format designed for cloud storage, faster for
+  large-scale queries, but likely less familiar.
+
+This decision needs to be made before we build the first spatial pipeline. Both
+options are open standards, so we are not locked in either way, but once we
+pick one, spatial pipelines should follow that standard unless there is a 
+compelling reason to deviate. The restoration project map is a natural place to
+make this call and see if any challenges arise during implementation that would
+suggest a different approach.
+
+**Open decision: What attributes does each restoration project record need?**
+
+Before the pipeline can validate the data, we need a schema: what fields does
+each record have? (name, location, watershed, project phase, restoration action,
+implementation status, lead entity, science considerations, etc.). We will also 
+need to determine how the schema is built (e.g., JSON).
+
+---
+
+### Layer 3 — Storing and serving the data
+
+**What this means here:** The processed spatial dataset needs to live somewhere
+permanent that other tools---mapping clients, a data access R package or Python
+library, and future analyses---can reliably read from. Storage alone is not
+enough; we also need to decide how clients discover, query, and retrieve the
+data.
+
+**Open decision: How will we provision and manage cloud storage?**
+
+The infrastructure proposal calls for cloud object storage (Azure Blob Storage
+is the leading candidate, given DWR's existing enterprise agreement, though
+other options may be compelling). That storage has not been set up yet. The
+restoration project spatial dataset could be the first dataset we store there,
+which means we need to provision the storage, configure access permissions, and
+establish naming conventions for this work to proceed.
+
+This is a dependency, not a blocker we can work around: there is no place to
+put the processed data until storage exists.
+
+**Open decision: What data-serving interface do clients (tools or applications) use, and how is that interface made public?**
+
+The interactive map (and any future applications or end users) needs a stable
+way to access the data. A small first version could read a static GeoJSON,
+GeoPackage, or GeoParquet file directly from public object storage. That is
+simple, but it becomes limiting if clients need to query by geography, filter by
+attributes, request only a subset of records, or support multiple applications
+without duplicating data access logic.
+
+If those needs are in scope, we likely need a queryable serving layer, such as a
+REST API, OGC API Features endpoint, STAC/catalog-backed service, ArcGIS Feature
+Layer, or lightweight database-backed API. This is the interface that clients
+(tools or applications) would use to access the restoration project dataset,
+while the underlying storage remains the durable system of record.
+
+Public access should be treated as the default for this dataset and for the map
+that uses it. The decision is therefore not only which interface to use, but how
+that interface is made reliably public: stable URLs, clear documentation, a
+versioning/update policy, appropriate cross-origin access for web maps, and no
+requirement that public users or partner agencies sign in with DWR-specific
+accounts. If any subset of the data needs restricted access later, that should
+be handled explicitly as an exception rather than as the default design.
+
+---
+
+### Layer 4 — The interactive map
+
+**What this means here:** The map is the deliverable the stakeholder can see,
+but "interactive map" can mean several very different things, with different
+implications for hosting, maintenance, user experience, and cost.
+
+**Open decision: What does "interactive map" mean for this task?**
+
+The options, roughly in order of complexity:
+
+| Option | What it is | Hosting | Maintenance |
+|---|---|---|---|
+| Standalone web map | A simple web page with a Leaflet or Mapbox map, hosted publicly | GitHub Pages or cloud hosting | Low; maintenance can be shared among agencies |
+| Custom JavaScript web map | A custom Node.js + React, kepler.gl, MapLibre, or similar map with richer client-side interaction | Static hosting for a bundled app, or cloud app hosting if server-side features are needed | Medium; simpler to host than Shiny/Streamlit if static, but requires JavaScript build tooling and frontend maintenance |
+| ArcGIS Online map | A hosted Esri web map built from a feature layer or static spatial data product | ArcGIS Online under a DWR or HRL program account | Medium; no server to maintain, but requires account and licensing; maintenance may be challenging to share among agencies |
+| Shiny/Streamlit dashboard | A full interactive app with filters, data tables, and map | Posit Connect cloud or other app hosting | Higher; easier for R/Python developers to build, but requires a running server and app-hosting maintenance; maintenance can be shared among agencies |
+
+For a restoration project reference layer, a static or simple embedded map is
+probably sufficient and keeps infrastructure costs and complexity low. A full
+dashboard becomes worthwhile when users need to filter, query, or download
+subsets of the data. We should align on which option is in scope before building
+anything.
+
+**Open decision: Who is the audience, and how do we build for their needs?**
+
+The map will be built predominantly for the SWRCB, but there will be other 
+audiences that could be served as well. What are all of these audiences' needs, 
+what UX/UI design and beta testing practices do we want to engage, and how can
+we maximize accessibility?
+
+---
+
+## Summary of decisions required
+
+The following decisions need to be made for this work to proceed. Some can be
+made by staff; others may need leadership input or cross-agency coordination.
+
+| Decision | Who needs to decide | Blocking? |
+|---|---|---|
+| Does this dataset go through EDI or is it hosted on program infrastructure? | ? | Yes — affects data creation workflow |
+| How are shared program datasets administered and updated? | ? | Yes — affects ownership, stewardship, and update workflow |
+| Which spatial file format: GeoPackage or GeoParquet? | Technical expert(s) (Lucy?) | Yes — needed before pipeline build |
+| What attributes does each restoration project record need? | Spatial restoration data working group | Yes — needed before schema design |
+| How do we provision cloud storage? | ? | Yes — data has nowhere to live |
+| What data-serving interface do clients use? | ? | Yes — determines how maps, apps, packages, and other end users access the data |
+| What does "interactive map" mean? | ? | Yes — scope determines build plan |
+| Map audience? | ? | Yes — determines hosting path |
