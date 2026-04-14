@@ -8,8 +8,8 @@ format:
   html:
     theme:
       - sandstone
-      - theme/dwr-overrides.scss
-    css: styles.css
+      - ../theme/dwr-overrides.scss
+    css: ../styles.css
     toc: true
     toc-depth: 3
     toc-title: "On this page"
@@ -57,10 +57,10 @@ context:
 
 The proposed approach is a four-layer model---source and publication, ingestion
 and standardization, storage and serving, and access and applications---implemented
-in three phases over the program lifetime. **The Year 1 deliverable is a set of
-functional, reproducible ingestion pipelines for the first wave of HRL datasets,
-paired with a simple metadata catalog that makes those datasets discoverable
-and queryable by partners.** 
+in three phases over the program lifetime. **The proposed Year 1 deliverable is
+a set of functional, reproducible ingestion pipelines for the first wave of HRL
+datasets and initial storage solutions, paired with a metadata catalog that
+makes those datasets discoverable and queryable by partners.** 
 
 Achieving this requires investment in two things the program currently lacks:
 dedicated technical capacity and basic cloud infrastructure. The recommended
@@ -147,7 +147,7 @@ distinct storage, processing, and access requirements:
 
 ### Design principles
 
-The architecture is shaped by HRL's commitments to FAIR and CARE principles,
+The infrastructure design is shaped by HRL's commitments to FAIR and CARE principles,
 reproducible science, and open data. Translated into infrastructure design,
 those commitments produce four guiding principles:
 
@@ -167,9 +167,9 @@ those commitments produce four guiding principles:
 
 ---
 
-## Architecture Overview
+## Infrastructure Overview
 
-The proposed architecture is organized into four layers, each corresponding to a
+The proposed infrastructure is organized into four layers, each corresponding to a
 stage in the HRL data lifecycle. Data flows from producers through each layer,
 culminating in analysis-ready products accessible to synthesis teams and external
 stakeholders.
@@ -600,10 +600,10 @@ TBD.
 
 ::: {.callout-tip}
 ## This document is a living proposal
-Architecture proposals age quickly. This document is intended to be
+Infrastructure proposals age quickly. This document is intended to be
 version-controlled, revisited at each phase transition, and updated as the
 program learns. Suggestions and revisions are welcome via GitHub issues on the
-[hrl-data-architecture repository](https://github.com/lucy-dwr/hrl-data-architecture).
+[hrl-data-infrastructure repository](https://github.com/lucy-dwr/hrl-data-infrastructure).
 :::
 
 ---

@@ -2,7 +2,8 @@ project:
   type: website
   output-dir: docs
   render:
-    - hrl_architecture_proposal.qmd
+    - pages/hrl_infrastructure_proposal.qmd
+    - pages/map_memo.qmd
 
 execute:
   freeze: auto
@@ -14,8 +15,10 @@ website:
 
   navbar:
     left:
-      - text: "Architecture Proposal"
-        href: hrl_architecture_proposal.qmd
+      - text: "Infrastructure Proposal"
+        href: pages/hrl_infrastructure_proposal.qmd
+      - text: "Restoration Project Map"
+        href: pages/map_memo.qmd
 
   page-footer:
     left:
