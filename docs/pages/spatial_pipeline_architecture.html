@@ -8,7 +8,7 @@
 
 <meta name="author" content="Lucy Andrews">
 
-<title>HRL Restoration Project Map: Implicated Infrastructure Decisions – HRL Data Infrastructure</title>
+<title>Spatial Data Pipeline Architecture – HRL Data Infrastructure</title>
 <style>
 /* Default styles provided by pandoc.
 ** See https://pandoc.org/MANUAL.html#variables-for-html for config info.
@@ -71,6 +71,10 @@ ul.task-list li input[type="checkbox"] {
     "search-label": "Search"
   }
 }</script>
+<meta name="mermaid-theme" content="neutral">
+<script src="../site_libs/quarto-diagram/mermaid.min.js"></script>
+<script src="../site_libs/quarto-diagram/mermaid-init.js"></script>
+<link href="../site_libs/quarto-diagram/mermaid.css" rel="stylesheet">
 
 
 <link rel="stylesheet" href="../styles.css">
@@ -94,28 +98,21 @@ ul.task-list li input[type="checkbox"] {
           <div class="collapse navbar-collapse" id="navbarCollapse">
             <ul class="navbar-nav navbar-nav-scroll me-auto">
   <li class="nav-item">
-    <a class="nav-link" href="../pages/data_pipeline_architecture.html"> 
-<span class="menu-text">Data Pipeline Architecture</span></a>
+    <a class="nav-link" href="../pages/hrl_infrastructure_proposal.html"> 
+<span class="menu-text">Infrastructure Proposal</span></a>
+  </li>  
+  <li class="nav-item">
+    <a class="nav-link" href="../pages/map_memo.html"> 
+<span class="menu-text">Restoration Project Map</span></a>
+  </li>  
+  <li class="nav-item">
+    <a class="nav-link active" href="../pages/spatial_pipeline_architecture.html" aria-current="page"> 
+<span class="menu-text">Spatial Pipeline Architecture</span></a>
   </li>  
   <li class="nav-item">
     <a class="nav-link" href="../pages/posit_platform.html"> 
 <span class="menu-text">Posit Data Science Platform</span></a>
   </li>  
-  <li class="nav-item dropdown ">
-    <a class="nav-link dropdown-toggle" href="#" id="nav-menu-archive" role="link" data-bs-toggle="dropdown" aria-expanded="false">
- <span class="menu-text">Archive</span>
-    </a>
-    <ul class="dropdown-menu" aria-labelledby="nav-menu-archive">    
-        <li>
-    <a class="dropdown-item" href="../pages/hrl_infrastructure_proposal.html">
- <span class="dropdown-text">Infrastructure Proposal</span></a>
-  </li>  
-        <li>
-    <a class="dropdown-item" href="../pages/map_memo.html">
- <span class="dropdown-text">Restoration Project Map</span></a>
-  </li>  
-    </ul>
-  </li>
 </ul>
           </div> <!-- /navcollapse -->
             <div class="quarto-navbar-tools">
@@ -132,16 +129,9 @@ ul.task-list li input[type="checkbox"] {
     <h2 id="toc-title">On this page</h2>
    
   <ul>
-  <li><a href="#the-task" id="toc-the-task" class="nav-link active" data-scroll-target="#the-task">The task</a></li>
-  <li><a href="#why-this-task-touches-so-much-of-the-infrastructure" id="toc-why-this-task-touches-so-much-of-the-infrastructure" class="nav-link" data-scroll-target="#why-this-task-touches-so-much-of-the-infrastructure">Why this task touches so much of the infrastructure</a></li>
-  <li><a href="#layer-by-layer-what-needs-to-happen-and-what-decisions-are-open" id="toc-layer-by-layer-what-needs-to-happen-and-what-decisions-are-open" class="nav-link" data-scroll-target="#layer-by-layer-what-needs-to-happen-and-what-decisions-are-open">Layer by layer: what needs to happen and what decisions are open</a>
-  <ul class="collapse">
-  <li><a href="#layer-1-creating-and-publishing-the-dataset" id="toc-layer-1-creating-and-publishing-the-dataset" class="nav-link" data-scroll-target="#layer-1-creating-and-publishing-the-dataset">Layer 1 — Creating and publishing the dataset</a></li>
-  <li><a href="#layer-2-ingesting-and-standardizing-the-data" id="toc-layer-2-ingesting-and-standardizing-the-data" class="nav-link" data-scroll-target="#layer-2-ingesting-and-standardizing-the-data">Layer 2 — Ingesting and standardizing the data</a></li>
-  <li><a href="#layer-3-storing-and-serving-the-data" id="toc-layer-3-storing-and-serving-the-data" class="nav-link" data-scroll-target="#layer-3-storing-and-serving-the-data">Layer 3 — Storing and serving the data</a></li>
-  <li><a href="#layer-4-the-interactive-map" id="toc-layer-4-the-interactive-map" class="nav-link" data-scroll-target="#layer-4-the-interactive-map">Layer 4 — The interactive map</a></li>
-  </ul></li>
-  <li><a href="#summary-of-decisions-required" id="toc-summary-of-decisions-required" class="nav-link" data-scroll-target="#summary-of-decisions-required">Summary of decisions required</a></li>
+  <li><a href="#component-reference" id="toc-component-reference" class="nav-link active" data-scroll-target="#component-reference">Component reference</a></li>
+  <li><a href="#recommended-implementation-pattern" id="toc-recommended-implementation-pattern" class="nav-link" data-scroll-target="#recommended-implementation-pattern">Recommended implementation pattern</a></li>
+  <li><a href="#proposed-storage-structure" id="toc-proposed-storage-structure" class="nav-link" data-scroll-target="#proposed-storage-structure">Proposed storage structure</a></li>
   </ul>
 </nav>
     </div>
@@ -150,7 +140,7 @@ ul.task-list li input[type="checkbox"] {
 
 <header id="title-block-header" class="quarto-title-block default">
 <div class="quarto-title">
-<h1 class="title">HRL Restoration Project Map: Implicated Infrastructure Decisions</h1>
+<h1 class="title">Spatial Data Pipeline Architecture</h1>
 </div>
 
 
@@ -167,7 +157,7 @@ ul.task-list li input[type="checkbox"] {
     <div>
     <div class="quarto-title-meta-heading">Published</div>
     <div class="quarto-title-meta-contents">
-      <p class="date">April 2026</p>
+      <p class="date">May 2026</p>
     </div>
   </div>
   
@@ -185,150 +175,77 @@ ul.task-list li input[type="checkbox"] {
 <i class="callout-icon"></i>
 </div>
 <div class="callout-title-container flex-fill">
-<span class="screen-reader-only">Warning</span>Working memo
+<span class="screen-reader-only">Warning</span>Working draft
 </div>
 </div>
 <div class="callout-body-container callout-body">
 <p>This is an internal planning document, not a policy or design specification.</p>
 </div>
 </div>
-<section id="the-task" class="level2">
-<h2 class="anchored" data-anchor-id="the-task">The task</h2>
-<p>We want to compile a spatial dataset of all HRL restoration projects in the Sacramento River and Bay-Delta watershed (with relevant attributes), store it in the HRL data infrastructure, and publish it as an interactive map that staff, the State Water Resources Control Board, and the public can use.</p>
-<p>This is a well-scoped, achievable task and a good one to tackle early because it is relatively narrow, has a specific end-product, and will prompt engagement with technical questions that the HRL program needs to start addressing in preparation for implementation. But completing this task requires resolving several infrastructure decisions that are currently open. This memo walks through what those decisions are and why they matter.</p>
-<p>For a thorough discussion of HRL data infrastructure, including decisions that need to be made in order for work to progress, please see the <a href="../pages/hrl_infrastructure_proposal.html">HRL Data Infrastructure Proposal</a> page.</p>
-<hr>
-</section>
-<section id="why-this-task-touches-so-much-of-the-infrastructure" class="level2">
-<h2 class="anchored" data-anchor-id="why-this-task-touches-so-much-of-the-infrastructure">Why this task touches so much of the infrastructure</h2>
-<p>The HRL data infrastructure is designed in four layers, each with a distinct job:</p>
-<table class="caption-top table">
-<colgroup>
-<col style="width: 50%">
-<col style="width: 50%">
-</colgroup>
-<thead>
-<tr class="header">
-<th>Layer</th>
-<th>Job</th>
-</tr>
-</thead>
-<tbody>
-<tr class="odd">
-<td>1 — Source &amp; Publication</td>
-<td>Data is created and archived in a stable, open location</td>
-</tr>
-<tr class="even">
-<td>2 — Ingestion &amp; Standardization</td>
-<td>Automated pipelines pull the data in, validate it, and put it in a standard format</td>
-</tr>
-<tr class="odd">
-<td>3 — Storage &amp; Serving</td>
-<td>The processed data lives in a central store that other tools can read from</td>
-</tr>
-<tr class="even">
-<td>4 — Access &amp; Applications</td>
-<td>Program staff and the public interact with the data through maps, packages, and dashboards</td>
-</tr>
-</tbody>
-</table>
-<p>Making a restoration project map means doing something at every one of these layers. That is what makes this task a useful test case: it forces us to make foundational decisions in a low-stakes context, before we have a large catalog of datasets depending on those choices.</p>
-<hr>
-</section>
-<section id="layer-by-layer-what-needs-to-happen-and-what-decisions-are-open" class="level2">
-<h2 class="anchored" data-anchor-id="layer-by-layer-what-needs-to-happen-and-what-decisions-are-open">Layer by layer: what needs to happen and what decisions are open</h2>
-<section id="layer-1-creating-and-publishing-the-dataset" class="level3">
-<h3 class="anchored" data-anchor-id="layer-1-creating-and-publishing-the-dataset">Layer 1 — Creating and publishing the dataset</h3>
-<p><strong>What this means here:</strong> The restoration project spatial dataset does not exist yet as a program-administered dataset. It needs to be created from existing GIS layers, partner data, and/or first-principles digitizing; assigned a stable home; and given an explicit process for review, update, and versioning.</p>
-<p><strong>Open decision: Does this dataset go through EDI?</strong></p>
-<p>Our standard process requires that all HRL data be published to EDI before it enters the infrastructure. EDI is designed for ecological field data with rich, standardized metadata.</p>
-<p>A spatial reference layer such as restoration project boundaries is likely to be an exception, especially because this particular dataset may need to evolve in ways that don’t lend themselves to rigid versioning. It could instead live directly in HRL program infrastructure as a program reference layer. We need to decide which path to take, and document it, because this decision could set a precedent for other spatial datasets.</p>
-<p><strong>Open decision: How are shared program datasets administered and updated?</strong></p>
-<p>We should not assume DWR owns this dataset simply because DWR staff may help compile it. The restoration project map should be treated as a shared HRL program dataset, which means we need to decide how program datasets are administered: who is the steward, who can propose edits, who approves changes, how often the dataset is reviewed, how partner updates flow in, and how revisions are versioned and documented. This affects both the data model and the governance.</p>
-<hr>
-</section>
-<section id="layer-2-ingesting-and-standardizing-the-data" class="level3">
-<h3 class="anchored" data-anchor-id="layer-2-ingesting-and-standardizing-the-data">Layer 2 — Ingesting and standardizing the data</h3>
-<p><strong>What this means here:</strong> Once the data are archived, an automated pipeline needs to pull them in, validate them (do all features have the required attributes? are coordinates in the expected projection? etc.), and convert it to the standard format for storage.</p>
-<p><strong>Open decision: Which spatial file format do we use?</strong></p>
-<p>The infrastructure proposal identifies two candidates for storing spatial (vector) data in a nonproprietary structure:</p>
-<ul>
-<li><strong>GeoPackage</strong> — a single-file format, widely used in GIS software like QGIS, should be familiar to many geospatial analysts.</li>
-<li><strong>GeoParquet</strong> — a newer format designed for cloud storage, faster for large-scale queries, but likely less familiar.</li>
-</ul>
-<p>This decision needs to be made before we build the first spatial pipeline. Both options are open standards, so we are not locked in either way, but once we pick one, spatial pipelines should follow that standard unless there is a compelling reason to deviate. The restoration project map is a natural place to make this call and see if any challenges arise during implementation that would suggest a different approach.</p>
-<p><strong>Open decision: What attributes does each restoration project record need?</strong></p>
-<p>Before the pipeline can validate the data, we need a schema: what fields does each record have? (name, location, watershed, project phase, restoration action, implementation status, lead entity, science considerations, etc.). We will also need to determine how the schema is built (e.g., JSON).</p>
-<hr>
-</section>
-<section id="layer-3-storing-and-serving-the-data" class="level3">
-<h3 class="anchored" data-anchor-id="layer-3-storing-and-serving-the-data">Layer 3 — Storing and serving the data</h3>
-<p><strong>What this means here:</strong> The processed spatial dataset needs to live somewhere permanent that other tools—mapping clients, a data access R package or Python library, and future analyses—can reliably read from. Storage alone is not enough; we also need to decide how clients discover, query, and retrieve the data.</p>
-<p><strong>Open decision: How will we provision and manage cloud storage?</strong></p>
-<p>The infrastructure proposal calls for cloud object storage (Azure Blob Storage is the leading candidate, given DWR’s existing enterprise agreement, though other options may be compelling). That storage has not been set up yet. The restoration project spatial dataset could be the first dataset we store there, which means we need to provision the storage, configure access permissions, and establish naming conventions for this work to proceed.</p>
-<p>This is a dependency, not a blocker we can work around: there is no place to put the processed data until storage exists.</p>
-<p><strong>Open decision: What data-serving interface do clients (tools or applications) use, and how is that interface made public?</strong></p>
-<p>The interactive map (and any future applications or end users) needs a stable way to access the data. A small first version could read a static GeoJSON, GeoPackage, or GeoParquet file directly from public object storage. That is simple, but it becomes limiting if clients need to query by geography, filter by attributes, request only a subset of records, or support multiple applications without duplicating data access logic.</p>
-<p>If those needs are in scope, we likely need a queryable serving layer, such as a REST API, OGC API Features endpoint, STAC/catalog-backed service, ArcGIS Feature Layer, or lightweight database-backed API. This is the interface that clients (tools or applications) would use to access the restoration project dataset, while the underlying storage remains the durable system of record.</p>
-<p>Public access should be treated as the default for this dataset and for the map that uses it. The decision is therefore not only which interface to use, but how that interface is made reliably public: stable URLs, clear documentation, a versioning/update policy, appropriate cross-origin access for web maps, and no requirement that public users or partner agencies sign in with DWR-specific accounts. If any subset of the data needs restricted access later, that should be handled explicitly as an exception rather than as the default design.</p>
-<hr>
-</section>
-<section id="layer-4-the-interactive-map" class="level3">
-<h3 class="anchored" data-anchor-id="layer-4-the-interactive-map">Layer 4 — The interactive map</h3>
-<p><strong>What this means here:</strong> The map is the deliverable the stakeholder can see, but “interactive map” can mean several very different things, with different implications for hosting, maintenance, user experience, and cost.</p>
-<p><strong>Open decision: What does “interactive map” mean for this task?</strong></p>
-<p>The options, roughly in order of complexity:</p>
-<table class="caption-top table">
-<colgroup>
-<col style="width: 25%">
-<col style="width: 25%">
-<col style="width: 25%">
-<col style="width: 25%">
-</colgroup>
-<thead>
-<tr class="header">
-<th>Option</th>
-<th>What it is</th>
-<th>Hosting</th>
-<th>Maintenance</th>
-</tr>
-</thead>
-<tbody>
-<tr class="odd">
-<td>Standalone web map</td>
-<td>A simple web page with a Leaflet or Mapbox map, hosted publicly</td>
-<td>GitHub Pages or cloud hosting</td>
-<td>Low; maintenance can be shared among agencies</td>
-</tr>
-<tr class="even">
-<td>Custom JavaScript web map</td>
-<td>A custom Node.js + React, kepler.gl, MapLibre, or similar map with richer client-side interaction</td>
-<td>Static hosting for a bundled app, or cloud app hosting if server-side features are needed</td>
-<td>Medium; simpler to host than Shiny/Streamlit if static, but requires JavaScript build tooling and frontend maintenance</td>
-</tr>
-<tr class="odd">
-<td>ArcGIS Online map</td>
-<td>A hosted Esri web map built from a feature layer or static spatial data product</td>
-<td>ArcGIS Online under a DWR or HRL program account</td>
-<td>Medium; no server to maintain, but requires account and licensing; maintenance may be challenging to share among agencies</td>
-</tr>
-<tr class="even">
-<td>Shiny/Streamlit dashboard</td>
-<td>A full interactive app with filters, data tables, and map</td>
-<td>Posit Connect cloud or other app hosting</td>
-<td>Higher; easier for R/Python developers to build, but requires a running server and app-hosting maintenance; maintenance can be shared among agencies</td>
-</tr>
-</tbody>
-</table>
-<p>For a restoration project reference layer, a static or simple embedded map is probably sufficient and keeps infrastructure costs and complexity low. A full dashboard becomes worthwhile when users need to filter, query, or download subsets of the data. We should align on which option is in scope before building anything.</p>
-<p><strong>Open decision: Who is the audience, and how do we build for their needs?</strong></p>
-<p>The map will be built predominantly for the SWRCB, but there will be other audiences that could be served as well. What are all of these audiences’ needs, what UX/UI design and beta testing practices do we want to engage, and how can we maximize accessibility?</p>
-<hr>
-</section>
-</section>
-<section id="summary-of-decisions-required" class="level2">
-<h2 class="anchored" data-anchor-id="summary-of-decisions-required">Summary of decisions required</h2>
-<p>The following decisions need to be made for this work to proceed. Some can be made by staff; others may need leadership input or cross-agency coordination.</p>
+<p>This document lays out a stack for the ingestion, validation, standardization, storage, and publication of HRL spatial data. It focuses on spatial data given immediate mapping needs but represents the first instance of a broader data infrastructure that will expand to serve other HRL data types as the program matures.</p>
+<p>Restoration spatial datasets (i.e., datasets describing where restoration is happening and some basic attributes describing the projects) will be emailed to Lucy for upload into this data system. These datasets are not suited for external repositories due to their content and update/versioning patterns. For other data types, HRL data producers publish datasets to external repositories such as the Environmental Data Initiative (EDI). EDI and analogous external repositories are the right place for static, citable archival data but are not a sufficient end state for a program that needs to integrate data across agencies, serve live applications, and present a coherent picture of restoration and environmental flow activity across the watershed. Data arriving from different producers will vary in structure, field names, field types, controlled vocabularies, coordinate reference systems, geometry types, and metadata completeness. Without a standardization layer, every downstream use — a map, a query, a join — would require repetitive, redundant manual reconciliation.</p>
+<p>The infrastructure described here fills that gap. It receives submitted spatial files (and eventually other data type files harvested from repositories such as EDI), validates them against a shared schema, transforms them to a common standard, loads them into a managed spatial database, and exposes them through an API and mapping application. It also provides the hosting environment that external repositories do not: a place to run the pipeline itself, serve an API, and deploy interactive applications for staff, partner agencies, and the public.</p>
+<p>The primary architectural decision running through this design is <strong>platform-as-a-service (PaaS) over infrastructure-as-a-service (IaaS)</strong>. With IaaS, the team would provision and manage virtual machines directly — handling OS updates, security patching, and uptime. PaaS offloads that to Azure, so the team is responsible only for the application and data layers. For a program of this scale and team size, PaaS is the right default: it substantially reduces operational overhead without meaningfully constraining what the infrastructure can do.</p>
+<div class="callout callout-style-default callout-note callout-titled">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+Note
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p>This page covers the data engineering and hosting layer: ingestion, validation, standardization, and storage. This page also covers infrastructure needed to host applications (e.g., maps) and APIs until Posit Connect is procured and configured. This page does not cover the tooling that supports data scientists in developing and publishing analytical content without needed to interact with Azure complexity described in this document. That is described separately on the <a href="../pages/posit_platform.html">Posit Data Science Platform</a> page.</p>
+</div>
+</div>
+<div class="cell" data-layout-align="default">
+<div class="cell-output-display">
+<div>
+<p></p><figure class="figure"><p></p>
+<div>
+<pre class="mermaid mermaid-js">flowchart TD
+    A[Manual upload of spatial data files&lt;br/&gt;GeoPackage, zipped shapefile] --&gt; B[&lt;b&gt;Azure Storage / ADLS Gen2&lt;/b&gt;&lt;br/&gt;raw-submissions/]
+
+    C[Machine-readable schema&lt;br/&gt;&lt;b&gt;schemas/&lt;/b&gt;] --&gt; D[&lt;b&gt;Azure Container Apps Job&lt;/b&gt;&lt;br/&gt;Validation + transformation script]
+    B --&gt; D
+
+    D --&gt; E{Validation passes?}
+
+    E -- No --&gt; F[Write validation report&lt;br/&gt;&lt;b&gt;validation-reports/&lt;/b&gt;]
+    F --&gt; G[Return issues to data submitter&lt;br/&gt;Schema errors, geometry errors, CRS issues]
+
+    E -- Yes --&gt; H[Transform to common standard fields,&lt;br/&gt;CRS, geometry type, metadata]
+    H --&gt; I[&lt;b&gt;Azure Database for PostgreSQL&lt;/b&gt;&lt;br/&gt;Flexible Server + &lt;b&gt;PostGIS&lt;/b&gt;]
+
+    H --&gt; J[Standardized export files&lt;br/&gt;GeoPackage, GeoJSON, CSV, GeoParquet&lt;br/&gt;&lt;b&gt;standardized-exports/&lt;/b&gt;]
+
+    I --&gt; K[API layer&lt;br/&gt;&lt;b&gt;Azure App Service&lt;/b&gt; or &lt;b&gt;Azure Container Apps&lt;/b&gt;]
+    K --&gt; L[&lt;b&gt;Azure API Management&lt;/b&gt;&lt;br/&gt;External access, auth, throttling, versioning]
+
+    L --&gt; M[External clients&lt;br/&gt;GIS users, analysts, partner agencies, dashboards]
+
+    I --&gt; N[Interactive map application&lt;br/&gt;&lt;b&gt;Azure Static Web Apps&lt;/b&gt;, &lt;b&gt;App Service&lt;/b&gt;,&lt;br/&gt;or &lt;b&gt;Container Apps&lt;/b&gt;]
+    L --&gt; N
+
+    J --&gt; M
+
+    I --&gt; O[Metadata and catalog layer&lt;br/&gt;&lt;b&gt;Microsoft Purview&lt;/b&gt; and/or&lt;br/&gt;metadata landing page]
+    J --&gt; O
+    F --&gt; O
+
+    O --&gt; M
+
+    classDef azure fill:#D2EAF4,stroke:#2E7DA1,stroke-width:2px,color:#0C425C
+    class B,D,I,K,L,N,O azure
+</pre>
+</div>
+<p></p></figure><p></p>
+</div>
+</div>
+</div>
+<section id="component-reference" class="level2">
+<h2 class="anchored" data-anchor-id="component-reference">Component reference</h2>
 <table class="caption-top table">
 <colgroup>
 <col style="width: 33%">
@@ -337,54 +254,108 @@ ul.task-list li input[type="checkbox"] {
 </colgroup>
 <thead>
 <tr class="header">
-<th>Decision</th>
-<th>Who needs to decide</th>
-<th>Blocking?</th>
+<th>Need</th>
+<th>Azure component</th>
+<th>Why</th>
 </tr>
 </thead>
 <tbody>
 <tr class="odd">
-<td>Does this dataset go through EDI or is it hosted on program infrastructure?</td>
-<td>?</td>
-<td>Yes — affects data creation workflow</td>
+<td>Raw uploaded spatial files</td>
+<td><strong>Azure Blob Storage</strong> or <strong>Azure Data Lake Storage Gen2</strong></td>
+<td>Store submitted GeoPackages, zipped shapefiles, validation reports, transformed outputs, and archived versions. Azure Storage can also host static websites if needed.</td>
 </tr>
 <tr class="even">
-<td>How are shared program datasets administered and updated?</td>
-<td>?</td>
-<td>Yes — affects ownership, stewardship, and update workflow</td>
+<td>Schema / controlled vocabularies</td>
+<td><strong>GitHub/Azure DevOps repo + Blob Storage copy</strong></td>
+<td>Keep the machine-readable schema version-controlled; optionally publish a frozen copy with each pipeline run.</td>
 </tr>
 <tr class="odd">
-<td>Which spatial file format: GeoPackage or GeoParquet?</td>
-<td>Technical expert(s) (Lucy?)</td>
-<td>Yes — needed before pipeline build</td>
+<td>Validation and transformation script</td>
+<td><strong>Azure Container Apps Jobs</strong>, <strong>Azure Functions</strong>, or <strong>Azure Data Factory orchestration</strong></td>
+<td>Azure Functions is event-driven and suited for lightweight, short-running scripts — for example, triggering validation when a file lands in storage. Container Apps Jobs run a full container, making them a better fit for pipelines that need geospatial dependencies like GDAL or Python/R packages, or that require longer runtimes. Data Factory can orchestrate either as part of a larger scheduled pipeline.</td>
 </tr>
 <tr class="even">
-<td>What attributes does each restoration project record need?</td>
-<td>Spatial restoration data working group</td>
-<td>Yes — needed before schema design</td>
+<td>Spatial database</td>
+<td><strong>Azure Database for PostgreSQL Flexible Server + PostGIS</strong></td>
+<td>This is the cleanest managed Postgres/PostGIS option. Azure’s own architecture guidance identifies PostgreSQL/PostGIS as a fit for geospatial apps, and Azure Database for PostgreSQL is managed by Azure rather than by the team.</td>
 </tr>
 <tr class="odd">
-<td>How do we provision cloud storage?</td>
-<td>?</td>
-<td>Yes — data has nowhere to live</td>
+<td>Standardized public/download dataset</td>
+<td><strong>PostGIS + GeoPackage/GeoJSON/Parquet outputs in Blob Storage</strong></td>
+<td>PostGIS is the authoritative operational store; files are useful for external clients, archival, and reproducible snapshots.</td>
 </tr>
 <tr class="even">
-<td>What data-serving interface do clients use?</td>
-<td>?</td>
-<td>Yes — determines how maps, apps, packages, and other end users access the data</td>
+<td>Metadata/catalog</td>
+<td><strong>Microsoft Purview</strong> if your organization uses it; otherwise static metadata files + landing page</td>
+<td>Purview is Azure’s governed data catalog/data estate tool and supports metadata, lineage, access policies, data quality concepts, and data discovery.</td>
 </tr>
 <tr class="odd">
-<td>What does “interactive map” mean?</td>
-<td>?</td>
-<td>Yes — scope determines build plan</td>
+<td>API access</td>
+<td><strong>Azure App Service / Container Apps API + Azure API Management</strong></td>
+<td>API Management is designed to publish and govern APIs for external, partner, and internal users.</td>
 </tr>
 <tr class="even">
-<td>Map audience?</td>
-<td>?</td>
-<td>Yes — determines hosting path</td>
+<td>Interactive map app</td>
+<td><strong>Azure App Service</strong>, <strong>Azure Static Web Apps</strong>, or <strong>Azure Container Apps</strong></td>
+<td>App Service is managed PaaS web hosting; Container Apps is better for containerized apps; static hosting works if the app is a static front end consuming APIs.</td>
+</tr>
+<tr class="odd">
+<td>Map rendering</td>
+<td><strong>Azure Maps Web SDK</strong>, <strong>kepler.gl</strong>, <strong>Shiny</strong>, MapLibre, Leaflet, or OpenLayers</td>
+<td>Azure Maps has a Web SDK for interactive maps and Azure-native geospatial services. kepler.gl is a React/WebGL visualization tool (built on deck.gl) well suited to large geospatial datasets; it can load GeoJSON, CSV, or Arrow/Parquet directly from Blob Storage or the API layer and deploys as a static web app. Shiny and Streamlit are also possible frameworks.</td>
 </tr>
 </tbody>
 </table>
+</section>
+<section id="recommended-implementation-pattern" class="level2">
+<h2 class="anchored" data-anchor-id="recommended-implementation-pattern">Recommended implementation pattern</h2>
+<p>The preferred architecture is <strong>PaaS-first</strong>: use Azure-managed services wherever possible and reserve containerized compute for steps that require custom geospatial dependencies. Avoid general-purpose VMs unless DWR IT policy requires them. “PaaS” stands for <a href="https://azure.microsoft.com/en-us/resources/cloud-computing-dictionary/what-is-paas">platform-as-a-service</a>. The other option is <a href="https://azure.microsoft.com/en-us/resources/cloud-computing-dictionary/what-is-iaas">infrastructure-as-a-service</a> (IaaS), but PaaS is better suited for our needs.</p>
+<p><strong>Storage.</strong> Azure Storage / ADLS Gen2 is the backbone of the pipeline. It holds raw submissions as received, the versioned schema and controlled vocabularies used for validation, validation reports (both passes and failures), standardized export files, and archived snapshots. Keeping all of these in a single storage account with a consistent folder hierarchy makes the pipeline auditable and reproducible.</p>
+<p><strong>Validation and transformation.</strong> Azure Container Apps Jobs are the preferred compute layer for this step. Geospatial validation and transformation workflows commonly require GDAL, Python geospatial packages (e.g., <code>geopandas</code>, <code>pyproj</code>, <code>shapely</code>), or R spatial packages, and often take longer than the execution limits of serverless functions. A containerized job can package the full dependency stack, run to completion, and exit — with no persistent infrastructure between runs.</p>
+<p><strong>Spatial database.</strong> Azure Database for PostgreSQL Flexible Server with the PostGIS extension is the authoritative store for standardized spatial data. All validated and transformed submissions are written here. Downstream services — the API layer, the map application, the metadata catalog — read from PostgreSQL/PostGIS as the primary source of truth.</p>
+<p><strong>Export files.</strong> Standardized GeoPackage, GeoJSON, CSV, and GeoParquet exports written to Blob Storage serve a different purpose than the database: they support external clients who cannot query an API, enable reproducible analytical snapshots, and provide archival copies that are independent of database availability.</p>
+<p><strong>API and application layers.</strong> The API and map application should run on managed Azure hosting (App Service, Container Apps, or Static Web Apps) rather than a self-managed VM. This keeps operational overhead low for a small team.</p>
+</section>
+<section id="proposed-storage-structure" class="level2">
+<h2 class="anchored" data-anchor-id="proposed-storage-structure">Proposed storage structure</h2>
+<p>The following container layout organizes all pipeline inputs and outputs in a single Azure Storage account. The structure separates concerns by pipeline stage, makes automated writes and reads straightforward to script, and keeps a clear audit trail.</p>
+<pre class="text"><code>spatial-data-pipeline/
+  raw-submissions/
+    agency-name/
+      project-name/                  # this level may change depending on submission structure
+        submission_date/
+          submitted_file.gpkg
+          submission_metadata.json   # optional; spatial files expected to be self-documenting
+  schemas/
+    current/
+      spatial_submission_schema.json
+      controlled_vocabularies.json
+    archive/
+      v1.0.0/
+      v1.1.0/
+  validation-reports/
+    agency-name/
+      project-name/                  # this level may change depending on submission structure
+        submission-date/
+          validation_report.json
+          validation_report.html
+  standardized-exports/
+    current/
+      restoration_projects.gpkg
+      restoration_projects.geojson
+      restoration_projects.csv
+      restoration_projects.parquet
+    snapshots/
+      YYYY-MM-DD/
+  metadata/
+    data_dictionary.md               # file type tbd; this is a placeholder
+    field_definitions.csv            # file type tbd; this is a placeholder
+    change_log.md
+    lineage.json
+  archive/
+    raw-submissions/
+    standardized-exports/</code></pre>
 
 
 </section>
