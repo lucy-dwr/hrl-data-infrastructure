@@ -1,0 +1,131 @@
+---
+title: "Data Pipeline Architecture"
+author: "Lucy Andrews"
+date: "May 2026"
+date-format: "MMMM YYYY"
+---
+
+::: {.callout-warning}
+## Working draft
+This is an internal planning document, not a policy or design specification.
+:::
+
+This document lays out a stack for the ingestion, validation, standardization, storage, and publication of HRL spatial data. It focuses on spatial data given immediate mapping needs but represents the first instance of a broader data infrastructure that will expand to serve other HRL data types as the program matures.
+
+Restoration spatial datasets (i.e., datasets describing where restoration is happening and some basic attributes describing the projects) will be emailed to Lucy for upload into this data system. These datasets are not suited for external repositories due to their content and update/versioning patterns. For other data types, HRL data producers publish datasets to external repositories such as the Environmental Data Initiative (EDI). EDI and analogous external repositories are the right place for static, citable archival data but are not a sufficient end state for a program that needs to integrate data across agencies, serve live applications, and present a coherent picture of restoration and environmental flow activity across the watershed. Data arriving from different producers will vary in structure, field names, field types, controlled vocabularies, coordinate reference systems, geometry types, and metadata completeness. Without a standardization layer, every downstream use — a map, a query, a join — would require repetitive, redundant manual reconciliation.
+
+The infrastructure described here fills that gap. It receives submitted spatial files (and eventually other data type files harvested from repositories such as EDI), validates them against a shared schema, transforms them to a common standard, loads them into a managed spatial database, and exposes them through an API and mapping application. It also provides the hosting environment that external repositories do not: a place to run the pipeline itself, serve an API, and deploy interactive applications for staff, partner agencies, and the public.
+
+The primary architectural decision running through this design is **platform-as-a-service (PaaS) over infrastructure-as-a-service (IaaS)**. With IaaS, the team would provision and manage virtual machines directly — handling OS updates, security patching, and uptime. PaaS offloads that to Azure, so the team is responsible only for the application and data layers. For a program of this scale and team size, PaaS is the right default: it substantially reduces operational overhead without meaningfully constraining what the infrastructure can do.
+
+::: {.callout-note}
+This page covers the data engineering and hosting layer: ingestion, validation, standardization, and storage. This page also covers infrastructure needed to host applications (e.g., maps) and APIs until Posit Connect is procured and configured. This page does not cover the tooling that supports data scientists in developing and publishing analytical content without needed to interact with Azure complexity described in this document. That is described separately on the [Posit Data Science Platform](posit_platform.qmd) page.
+:::
+
+```{mermaid}
+flowchart TD
+    A[Manual upload of spatial data files<br/>GeoPackage, zipped shapefile] --> B[<b>Azure Storage / ADLS Gen2</b><br/>raw-submissions/]
+
+    C[Machine-readable schema<br/><b>schemas/</b>] --> D[<b>Azure Container Apps Job</b><br/>Validation + transformation script]
+    B --> D
+
+    D --> E{Validation passes?}
+
+    E -- No --> F[Write validation report<br/><b>validation-reports/</b>]
+    F --> G[Return issues to data submitter<br/>Schema errors, geometry errors, CRS issues]
+
+    E -- Yes --> H[Transform to common standard fields,<br/>CRS, geometry type, metadata]
+    H --> I[<b>Azure Database for PostgreSQL</b><br/>Flexible Server + <b>PostGIS</b>]
+
+    H --> J[Standardized export files<br/>GeoPackage, GeoJSON, CSV, GeoParquet<br/><b>standardized-exports/</b>]
+
+    I --> K[API layer<br/><b>Azure App Service</b> or <b>Azure Container Apps</b>]
+    K --> L[<b>Azure API Management</b><br/>External access, auth, throttling, versioning]
+
+    L --> M[External clients<br/>GIS users, analysts, partner agencies, dashboards]
+
+    I --> N[Interactive map application<br/><b>Azure Static Web Apps</b>, <b>App Service</b>,<br/>or <b>Container Apps</b>]
+    L --> N
+
+    J --> M
+
+    I --> O[Metadata and catalog layer<br/><b>Microsoft Purview</b> and/or<br/>metadata landing page]
+    J --> O
+    F --> O
+
+    O --> M
+
+    classDef azure fill:#D2EAF4,stroke:#2E7DA1,stroke-width:2px,color:#0C425C
+    class B,D,I,K,L,N,O azure
+```
+
+## Component reference
+
+| Need | Azure component | Why |
+|---|---|---|
+| Raw uploaded spatial files | **Azure Blob Storage** or **Azure Data Lake Storage Gen2** | Store submitted GeoPackages, zipped shapefiles, validation reports, transformed outputs, and archived versions. Azure Storage can also host static websites if needed. |
+| Schema / controlled vocabularies | **GitHub/Azure DevOps repo + Blob Storage copy** | Keep the machine-readable schema version-controlled; optionally publish a frozen copy with each pipeline run. |
+| Validation and transformation script | **Azure Container Apps Jobs**, **Azure Functions**, or **Azure Data Factory orchestration** | Azure Functions is event-driven and suited for lightweight, short-running scripts — for example, triggering validation when a file lands in storage. Container Apps Jobs run a full container, making them a better fit for pipelines that need geospatial dependencies like GDAL or Python/R packages, or that require longer runtimes. Data Factory can orchestrate either as part of a larger scheduled pipeline. |
+| Spatial database | **Azure Database for PostgreSQL Flexible Server + PostGIS** | This is the cleanest managed Postgres/PostGIS option. Azure's own architecture guidance identifies PostgreSQL/PostGIS as a fit for geospatial apps, and Azure Database for PostgreSQL is managed by Azure rather than by the team. |
+| Standardized public/download dataset | **PostGIS + GeoPackage/GeoJSON/Parquet outputs in Blob Storage** | PostGIS is the authoritative operational store; files are useful for external clients, archival, and reproducible snapshots. |
+| Metadata/catalog | **Microsoft Purview** if your organization uses it; otherwise static metadata files + landing page | Purview is Azure's governed data catalog/data estate tool and supports metadata, lineage, access policies, data quality concepts, and data discovery. |
+| API access | **Azure App Service / Container Apps API + Azure API Management** | API Management is designed to publish and govern APIs for external, partner, and internal users. |
+| Interactive map app | **Azure App Service**, **Azure Static Web Apps**, or **Azure Container Apps** | App Service is managed PaaS web hosting; Container Apps is better for containerized apps; static hosting works if the app is a static front end consuming APIs. |
+| Map rendering | **Azure Maps Web SDK**, **kepler.gl**, **Shiny**, MapLibre, Leaflet, or OpenLayers | Azure Maps has a Web SDK for interactive maps and Azure-native geospatial services. kepler.gl is a React/WebGL visualization tool (built on deck.gl) well suited to large geospatial datasets; it can load GeoJSON, CSV, or Arrow/Parquet directly from Blob Storage or the API layer and deploys as a static web app. Shiny and Streamlit are also possible frameworks. |
+
+## Recommended implementation pattern
+
+The preferred architecture is **PaaS-first**: use Azure-managed services wherever possible and reserve containerized compute for steps that require custom geospatial dependencies. Avoid general-purpose VMs unless DWR IT policy requires them. "PaaS" stands for [platform-as-a-service](https://azure.microsoft.com/en-us/resources/cloud-computing-dictionary/what-is-paas). The other option is [infrastructure-as-a-service](https://azure.microsoft.com/en-us/resources/cloud-computing-dictionary/what-is-iaas) (IaaS), but PaaS is better suited for our needs.
+
+**Storage.** Azure Storage / ADLS Gen2 is the backbone of the pipeline. It holds raw submissions as received, the versioned schema and controlled vocabularies used for validation, validation reports (both passes and failures), standardized export files, and archived snapshots. Keeping all of these in a single storage account with a consistent folder hierarchy makes the pipeline auditable and reproducible.
+
+**Validation and transformation.** Azure Container Apps Jobs are the preferred compute layer for this step. Geospatial validation and transformation workflows commonly require GDAL, Python geospatial packages (e.g., `geopandas`, `pyproj`, `shapely`), or R spatial packages, and often take longer than the execution limits of serverless functions. A containerized job can package the full dependency stack, run to completion, and exit — with no persistent infrastructure between runs.
+
+**Spatial database.** Azure Database for PostgreSQL Flexible Server with the PostGIS extension is the authoritative store for standardized spatial data. All validated and transformed submissions are written here. Downstream services — the API layer, the map application, the metadata catalog — read from PostgreSQL/PostGIS as the primary source of truth.
+
+**Export files.** Standardized GeoPackage, GeoJSON, CSV, and GeoParquet exports written to Blob Storage serve a different purpose than the database: they support external clients who cannot query an API, enable reproducible analytical snapshots, and provide archival copies that are independent of database availability.
+
+**API and application layers.** The API and map application should run on managed Azure hosting (App Service, Container Apps, or Static Web Apps) rather than a self-managed VM. This keeps operational overhead low for a small team.
+
+## Proposed storage structure
+
+The following container layout organizes all pipeline inputs and outputs in a single Azure Storage account. The structure separates concerns by pipeline stage, makes automated writes and reads straightforward to script, and keeps a clear audit trail.
+
+```text
+spatial-data-pipeline/
+  raw-submissions/
+    agency-name/
+      project-name/                  # this level may change depending on submission structure
+        submission_date/
+          submitted_file.gpkg
+          submission_metadata.json   # optional; spatial files expected to be self-documenting
+  schemas/
+    current/
+      spatial_submission_schema.json
+      controlled_vocabularies.json
+    archive/
+      v1.0.0/
+      v1.1.0/
+  validation-reports/
+    agency-name/
+      project-name/                  # this level may change depending on submission structure
+        submission-date/
+          validation_report.json
+          validation_report.html
+  standardized-exports/
+    current/
+      restoration_projects.gpkg
+      restoration_projects.geojson
+      restoration_projects.csv
+      restoration_projects.parquet
+    snapshots/
+      YYYY-MM-DD/
+  metadata/
+    data_dictionary.md               # file type tbd; this is a placeholder
+    field_definitions.csv            # file type tbd; this is a placeholder
+    change_log.md
+    lineage.json
+  archive/
+    raw-submissions/
+    standardized-exports/
+```

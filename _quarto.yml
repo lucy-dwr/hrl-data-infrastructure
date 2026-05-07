@@ -4,6 +4,8 @@ project:
   render:
     - pages/hrl_infrastructure_proposal.qmd
     - pages/map_memo.qmd
+    - pages/data_pipeline_architecture.qmd
+    - pages/posit_platform.qmd
 
 execute:
   freeze: auto
@@ -15,10 +17,16 @@ website:
 
   navbar:
     left:
-      - text: "Infrastructure Proposal"
-        href: pages/hrl_infrastructure_proposal.qmd
-      - text: "Restoration Project Map"
-        href: pages/map_memo.qmd
+      - text: "Data Pipeline Architecture"
+        href: pages/data_pipeline_architecture.qmd
+      - text: "Posit Data Science Platform"
+        href: pages/posit_platform.qmd
+      - text: "Archive"
+        menu:
+          - text: "Infrastructure Proposal"
+            href: pages/hrl_infrastructure_proposal.qmd
+          - text: "Restoration Project Map"
+            href: pages/map_memo.qmd
 
   page-footer:
     left:
