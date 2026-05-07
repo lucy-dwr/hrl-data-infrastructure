@@ -2,6 +2,7 @@ project:
   type: website
   output-dir: docs
   render:
+    - index.qmd
     - pages/hrl_infrastructure_proposal.qmd
     - pages/map_memo.qmd
     - pages/data_pipeline_architecture.qmd

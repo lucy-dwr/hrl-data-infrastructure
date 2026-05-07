@@ -77,6 +77,20 @@
     "text": "Summary of decisions required\nThe following decisions need to be made for this work to proceed. Some can be made by staff; others may need leadership input or cross-agency coordination.\n\n\n\n\n\n\n\n\nDecision\nWho needs to decide\nBlocking?\n\n\n\n\nDoes this dataset go through EDI or is it hosted on program infrastructure?\n?\nYes — affects data creation workflow\n\n\nHow are shared program datasets administered and updated?\n?\nYes — affects ownership, stewardship, and update workflow\n\n\nWhich spatial file format: GeoPackage or GeoParquet?\nTechnical expert(s) (Lucy?)\nYes — needed before pipeline build\n\n\nWhat attributes does each restoration project record need?\nSpatial restoration data working group\nYes — needed before schema design\n\n\nHow do we provision cloud storage?\n?\nYes — data has nowhere to live\n\n\nWhat data-serving interface do clients use?\n?\nYes — determines how maps, apps, packages, and other end users access the data\n\n\nWhat does “interactive map” mean?\n?\nYes — scope determines build plan\n\n\nMap audience?\n?\nYes — determines hosting path"
   },
   {
+    "objectID": "index.html",
+    "href": "index.html",
+    "title": "HRL Data Infrastructure",
+    "section": "",
+    "text": "Technical planning and design documentation for the HRL Science Program data infrastructure — the systems that collect, standardize, store, and serve data across an eight-year, multi-agency ecological restoration and monitoring program — and broader DWR ecological data science."
+  },
+  {
+    "objectID": "index.html#planning-documents",
+    "href": "index.html#planning-documents",
+    "title": "HRL Data Infrastructure",
+    "section": "Planning Documents",
+    "text": "Planning Documents\n\nData Pipeline Architecture\n\nDesign for the ingestion, validation, standardization, storage, and serving layers of the HRL data infrastructure.\n\nPosit Data Science Platform\n\nDesign for the data science tooling layer — Posit Workbench and Connect — that supports analysts working with HRL data products and performing broader DWR science activities."
+  },
+  {
     "objectID": "pages/hrl_infrastructure_proposal.html",
     "href": "pages/hrl_infrastructure_proposal.html",
     "title": "HRL Data Infrastructure Proposal",
