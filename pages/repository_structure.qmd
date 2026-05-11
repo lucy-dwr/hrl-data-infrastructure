@@ -1,0 +1,99 @@
+---
+title: "Repository structure and separation of concerns"
+author: "Lucy Andrews"
+date: "May 2026"
+date-format: "MMMM YYYY"
+---
+
+::: {.callout-warning}
+## Working draft
+This is an internal planning document, not a policy or design specification.
+:::
+
+The HRL spatial data pipeline is composed of multiple related but separable components: a machine-readable data model, validation and standardization code, Azure job orchestration and deployment configuration, a spatial database, an API layer, and one or more map or application interfaces. These components have different purposes, different owners, different release cycles, and different permission needs. The anticipated repository structure mirrors those boundaries so that each component can be developed, reviewed, deployed, and maintained independently.
+
+::: {.callout-note}
+This page covers the expected repository layout for the spatial data pipeline and its supporting Azure stack. It does not describe all repositories that may eventually exist for the broader HRL program.
+:::
+
+## Why not a monorepo?
+
+Keeping every component in a single repository is tempting when a project is small, but it creates friction as the project matures. The spatial data pipeline is intentionally split across multiple repositories for the following reasons:
+
+- **Different purposes.** The data model, validation logic, database migrations, API code, map application, and Azure deployment configuration serve fundamentally different functions. Grouping them together obscures those distinctions and makes it harder to understand what any one repository is responsible for.
+
+- **Different change rates.** Schema changes do not happen at the same time as infrastructure configuration changes, and neither necessarily coincides with a map application release. Separate repositories allow each component to be versioned and released on its own schedule.
+
+- **Different collaborators and permissions.** Infrastructure configuration may be reviewed or managed by DWR IT staff. The data model may need sign-off from science program leads. Application code may be maintained by a developer who does not need write access to the database migration repository. Separate repositories make it practical to grant the right access to the right people.
+
+- **Clearer code review.** A pull request that touches only validation logic is easier to review than one that mixes validation changes with database migrations and deployment scripts. Keeping concerns separate keeps pull requests focused.
+
+- **Avoiding accidental coupling.** When data standards, deployment configuration, storage design, and downstream applications all live in the same repository, it is easy to write code that silently depends on details from another component. Separation makes those dependencies explicit and forces cleaner interfaces between components.
+
+## Core pipeline repositories
+
+The table below describes the repositories anticipated for the spatial data pipeline and its immediate supporting infrastructure. These repositories do not all need to exist from day one; see [Practical starting point](#practical-starting-point) below for sequencing guidance.
+
+| Repository | Primary responsibility | Typical contents | Notes |
+|---|---|---|---|
+| `hrl-data-infrastructure` | Architecture and implementation documentation | Quarto site, diagrams, design notes, decision records, user-facing documentation | Human-readable documentation and planning source of truth. This repository already exists. |
+| `hrl-restoration-schema` | Machine-readable restoration project data model and validation contract | Field definitions, controlled vocabularies, geometry rules, business rules, generated data dictionary, example submissions | Source of truth for what a valid spatial data submission looks like. |
+| `hrl-spatial-validation` | Validation and standardization code | Python or R package or CLI, functions to read GeoPackage and zipped shapefile submissions, attribute validation, geometry checks, CRS checks, validation reports, standardized outputs | Enforces the schema contract and produces submitter-facing validation results. |
+| `hrl-spatial-pipeline` | Azure job orchestration and deployment configuration | Container build files, Azure Container Apps Job configuration, storage path conventions, environment configuration, deployment scripts, pipeline triggers | May initially be combined with the validation repository, but should be separated if deployment concerns become more complex or IT-managed. |
+| `hrl-spatial-database` | PostgreSQL/PostGIS database structure | SQL migrations, table definitions, indexes, lookup tables, views, database comments, seed data for controlled vocabularies | Defines durable storage and query structures for validated and standardized data. |
+| `hrl-restoration-api` | API or service layer over standardized restoration project data | API routes, query logic, authentication and authorization configuration, API documentation, tests | Provides stable access patterns for applications, maps, partner systems, and other approved data consumers. |
+| `hrl-restoration-map` | Interactive map application | Web map application code, map styling, layer configuration, filters, popups, user interface documentation | Uses the API or database views; should not contain ingestion or validation logic. |
+
+## Optional downstream application repositories
+
+Additional applications and reporting products may eventually be created on top of the accepted, standardized data (which is only spatial data to start). These should generally live in separate repositories when they have distinct audiences, maintainers, release cycles, or dependencies. Examples include:
+
+- ingestion, validation, storage, and serving of a different dataset
+- an internal review application for science program staff to inspect incoming submissions before or after acceptance
+- a public-facing project viewer for external audiences
+- a reporting workflow that generates periodic summaries or exports
+- a scenario analysis or spatial prioritization tool
+- a scheduled export or data summary process that feeds partner systems
+
+## How the repositories relate to the pipeline
+
+Each repository corresponds to a distinct stage or concern in the spatial data lifecycle:
+
+- **`hrl-restoration-schema`** defines what valid submitted data look like — the fields, types, controlled vocabularies, and geometry rules that submissions must satisfy.
+- **`hrl-spatial-validation`** contains the code that reads a submitted file and checks it against the schema, producing a validation report and, if the submission passes, a standardized output.
+- **`hrl-spatial-pipeline`** runs that validation and standardization code as an Azure Container Apps Job, managing the deployment configuration, storage paths, and triggers that connect the pieces.
+- **`hrl-spatial-database`** defines how accepted data are stored in PostgreSQL/PostGIS — the table structure, indexes, views, and lookup tables that make the data queryable.
+- **`hrl-restoration-api`** and **`hrl-restoration-map`** expose accepted data to users and partner systems through stable access patterns.
+- **Optional downstream application repositories** support review, reporting, analysis, and communication built on top of accepted, standardized data.
+
+**`hrl-data-infrastructure`** (this site) documents all of the above. It does not contain production code.
+
+## Practical starting point {#practical-starting-point}
+
+The initial implementation does not need to create every repository at once. A reasonable sequencing:
+
+1. **`hrl-data-infrastructure`** — already exists; continue using it as the architecture documentation home.
+2. **`hrl-restoration-schema`** — create early; the schema is the contract that everything else depends on.
+3. **`hrl-spatial-validation`** — create early alongside the schema; these two components are tightly coupled during initial development.
+4. **`hrl-spatial-pipeline`** — Azure deployment configuration can live in the validation repository at first. Create a separate pipeline repository when deployment concerns become more complex, when DWR IT takes on a management role, or when the pipeline needs to be managed independently of the validation code.
+5. **`hrl-spatial-database`** — create when PostGIS table structures and migrations are being formalized and need version control of their own.
+6. **`hrl-restoration-api`** and **`hrl-restoration-map`** — create as those components become real products with their own development cycles.
+7. **Downstream application repositories** — create as specific applications emerge with distinct audiences, maintainers, or release schedules.
+
+## Repository boundary guidance
+
+When making a change, use this table to identify which repository it belongs in.
+
+| Change | Repository |
+|---|---|
+| Add a new field to the restoration project data model | `hrl-restoration-schema` |
+| Add a new controlled vocabulary value | `hrl-restoration-schema` |
+| Change how semicolon-delimited multi-select fields are parsed | `hrl-spatial-validation` |
+| Add a new geometry validation rule | `hrl-spatial-validation` and, if the rule is part of the formal data contract, `hrl-restoration-schema` |
+| Change the target PostGIS table structure | `hrl-spatial-database` |
+| Change the Azure Container Apps Job configuration | `hrl-spatial-pipeline` |
+| Change Azure Storage path conventions | `hrl-spatial-pipeline` |
+| Add a new API endpoint | `hrl-restoration-api` |
+| Change map popups or filters | `hrl-restoration-map` |
+| Add a new review or reporting application | a separate downstream application repository |
+| Update documentation explaining the overall architecture | `hrl-data-infrastructure` |

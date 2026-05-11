@@ -68,7 +68,7 @@ flowchart TD
 | Validation and transformation script | **Azure Container Apps Jobs**, **Azure Functions**, or **Azure Data Factory orchestration** | Azure Functions is event-driven and suited for lightweight, short-running scripts — for example, triggering validation when a file lands in storage. Container Apps Jobs run a full container, making them a better fit for pipelines that need geospatial dependencies like GDAL or Python/R packages, or that require longer runtimes. Data Factory can orchestrate either as part of a larger scheduled pipeline. |
 | Spatial database | **Azure Database for PostgreSQL Flexible Server + PostGIS** | This is the cleanest managed Postgres/PostGIS option. Azure's own architecture guidance identifies PostgreSQL/PostGIS as a fit for geospatial apps, and Azure Database for PostgreSQL is managed by Azure rather than by the team. |
 | Standardized public/download dataset | **PostGIS + GeoPackage/GeoJSON/Parquet outputs in Blob Storage** | PostGIS is the authoritative operational store; files are useful for external clients, archival, and reproducible snapshots. |
-| Metadata/catalog | **Microsoft Purview** if your organization uses it; otherwise static metadata files + landing page | Purview is Azure's governed data catalog/data estate tool and supports metadata, lineage, access policies, data quality concepts, and data discovery. |
+| Metadata/catalog | **Microsoft Purview** if DWR uses it; otherwise static metadata files + landing page | Purview is Azure's governed data catalog/data estate tool and supports metadata, lineage, access policies, data quality concepts, and data discovery. |
 | API access | **Azure App Service / Container Apps API + Azure API Management** | API Management is designed to publish and govern APIs for external, partner, and internal users. |
 | Interactive map app | **Azure App Service**, **Azure Static Web Apps**, or **Azure Container Apps** | App Service is managed PaaS web hosting; Container Apps is better for containerized apps; static hosting works if the app is a static front end consuming APIs. |
 | Map rendering | **Azure Maps Web SDK**, **kepler.gl**, **Shiny**, MapLibre, Leaflet, or OpenLayers | Azure Maps has a Web SDK for interactive maps and Azure-native geospatial services. kepler.gl is a React/WebGL visualization tool (built on deck.gl) well suited to large geospatial datasets; it can load GeoJSON, CSV, or Arrow/Parquet directly from Blob Storage or the API layer and deploys as a static web app. Shiny and Streamlit are also possible frameworks. |
@@ -86,6 +86,10 @@ The preferred architecture is **PaaS-first**: use Azure-managed services whereve
 **Export files.** Standardized GeoPackage, GeoJSON, CSV, and GeoParquet exports written to Blob Storage serve a different purpose than the database: they support external clients who cannot query an API, enable reproducible analytical snapshots, and provide archival copies that are independent of database availability.
 
 **API and application layers.** The API and map application should run on managed Azure hosting (App Service, Container Apps, or Static Web Apps) rather than a self-managed VM. This keeps operational overhead low for a small team.
+
+## Implementation repositories
+
+The spatial data pipeline is expected to be implemented across several repositories rather than as a single monorepo. This separation reflects the different responsibilities of the data model, validation code, Azure deployment configuration, database migrations, APIs, maps, and downstream applications. See [Repository structure and separation of concerns](repository_structure.qmd) for the recommended repository layout.
 
 ## Proposed storage structure
 

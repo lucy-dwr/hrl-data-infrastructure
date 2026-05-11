@@ -6,6 +6,7 @@ project:
     - pages/hrl_infrastructure_proposal.qmd
     - pages/map_memo.qmd
     - pages/data_pipeline_architecture.qmd
+    - pages/repository_structure.qmd
     - pages/posit_platform.qmd
 
 execute:
@@ -17,17 +18,34 @@ website:
   page-navigation: true
 
   navbar:
-    left:
-      - text: "Data Pipeline Architecture"
-        href: pages/data_pipeline_architecture.qmd
-      - text: "Posit Data Science Platform"
-        href: pages/posit_platform.qmd
-      - text: "Archive"
-        menu:
-          - text: "Infrastructure Proposal"
-            href: pages/hrl_infrastructure_proposal.qmd
-          - text: "Restoration Project Map"
-            href: pages/map_memo.qmd
+    right:
+      - icon: github
+        aria-label: "HRL Data Infrastructure on GitHub"
+        href: https://github.com/lucy-dwr/hrl-data-infrastructure
+
+  sidebar:
+    style: "docked"
+    search: true
+    collapse-level: 3
+    contents:
+      - href: index.qmd
+        text: "Home"
+      - section: "Architecture"
+        contents:
+          - href: pages/data_pipeline_architecture.qmd
+            text: "Data Pipeline Architecture"
+          - href: pages/posit_platform.qmd
+            text: "Posit Data Science Platform"
+      - section: "Repositories & code"
+        contents:
+          - href: pages/repository_structure.qmd
+            text: "Repository structure"
+      - section: "Archive"
+        contents:
+          - href: pages/hrl_infrastructure_proposal.qmd
+            text: "Infrastructure Proposal"
+          - href: pages/map_memo.qmd
+            text: "Restoration Project Map"
 
   page-footer:
     left:

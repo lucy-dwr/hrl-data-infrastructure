@@ -8,7 +8,7 @@
 
 <meta name="author" content="Lucy Andrews">
 
-<title>Data Pipeline Architecture – HRL Data Infrastructure</title>
+<title>Repository structure and separation of concerns – HRL Data Infrastructure</title>
 <style>
 /* Default styles provided by pandoc.
 ** See https://pandoc.org/MANUAL.html#variables-for-html for config info.
@@ -34,8 +34,8 @@ ul.task-list li input[type="checkbox"] {
 <script src="../site_libs/quarto-search/fuse.min.js"></script>
 <script src="../site_libs/quarto-search/quarto-search.js"></script>
 <meta name="quarto:offset" content="../">
-<link href="../pages/posit_platform.html" rel="next">
-<link href="../index.html" rel="prev">
+<link href="../pages/hrl_infrastructure_proposal.html" rel="next">
+<link href="../pages/posit_platform.html" rel="prev">
 <script src="../site_libs/quarto-html/quarto.js" type="module"></script>
 <script src="../site_libs/quarto-html/tabsets/tabsets.js" type="module"></script>
 <script src="../site_libs/quarto-html/popper.min.js"></script>
@@ -73,10 +73,6 @@ ul.task-list li input[type="checkbox"] {
     "search-label": "Search"
   }
 }</script>
-<meta name="mermaid-theme" content="neutral">
-<script src="../site_libs/quarto-diagram/mermaid.min.js"></script>
-<script src="../site_libs/quarto-diagram/mermaid-init.js"></script>
-<link href="../site_libs/quarto-diagram/mermaid.css" rel="stylesheet">
 
 
 <link rel="stylesheet" href="../styles.css">
@@ -116,7 +112,7 @@ ul.task-list li input[type="checkbox"] {
         <i class="bi bi-layout-text-sidebar-reverse"></i>
       </button>
         <a class="flex-grow-1 no-decor" role="navigation" data-bs-toggle="collapse" data-bs-target=".quarto-sidebar-collapse-item" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Toggle sidebar navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">      
-          <h1 class="quarto-secondary-nav-title">Data Pipeline Architecture</h1>
+          <h1 class="quarto-secondary-nav-title">Repository structure and separation of concerns</h1>
         </a>     
       <button type="button" class="btn quarto-search-button" aria-label="Search" onclick="window.quartoOpenSearch();">
         <i class="bi bi-search"></i>
@@ -152,7 +148,7 @@ ul.task-list li input[type="checkbox"] {
       <ul id="quarto-sidebar-section-1" class="collapse list-unstyled sidebar-section depth1 show">  
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="../pages/data_pipeline_architecture.html" class="sidebar-item-text sidebar-link active">
+  <a href="../pages/data_pipeline_architecture.html" class="sidebar-item-text sidebar-link">
  <span class="menu-text">Data Pipeline Architecture</span></a>
   </div>
 </li>
@@ -175,7 +171,7 @@ ul.task-list li input[type="checkbox"] {
       <ul id="quarto-sidebar-section-2" class="collapse list-unstyled sidebar-section depth1 show">  
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="../pages/repository_structure.html" class="sidebar-item-text sidebar-link">
+  <a href="../pages/repository_structure.html" class="sidebar-item-text sidebar-link active">
  <span class="menu-text">Repository structure</span></a>
   </div>
 </li>
@@ -214,10 +210,12 @@ ul.task-list li input[type="checkbox"] {
     <h2 id="toc-title">On this page</h2>
    
   <ul>
-  <li><a href="#component-reference" id="toc-component-reference" class="nav-link active" data-scroll-target="#component-reference">Component reference</a></li>
-  <li><a href="#recommended-implementation-pattern" id="toc-recommended-implementation-pattern" class="nav-link" data-scroll-target="#recommended-implementation-pattern">Recommended implementation pattern</a></li>
-  <li><a href="#implementation-repositories" id="toc-implementation-repositories" class="nav-link" data-scroll-target="#implementation-repositories">Implementation repositories</a></li>
-  <li><a href="#proposed-storage-structure" id="toc-proposed-storage-structure" class="nav-link" data-scroll-target="#proposed-storage-structure">Proposed storage structure</a></li>
+  <li><a href="#why-not-a-monorepo" id="toc-why-not-a-monorepo" class="nav-link active" data-scroll-target="#why-not-a-monorepo">Why not a monorepo?</a></li>
+  <li><a href="#core-pipeline-repositories" id="toc-core-pipeline-repositories" class="nav-link" data-scroll-target="#core-pipeline-repositories">Core pipeline repositories</a></li>
+  <li><a href="#optional-downstream-application-repositories" id="toc-optional-downstream-application-repositories" class="nav-link" data-scroll-target="#optional-downstream-application-repositories">Optional downstream application repositories</a></li>
+  <li><a href="#how-the-repositories-relate-to-the-pipeline" id="toc-how-the-repositories-relate-to-the-pipeline" class="nav-link" data-scroll-target="#how-the-repositories-relate-to-the-pipeline">How the repositories relate to the pipeline</a></li>
+  <li><a href="#practical-starting-point" id="toc-practical-starting-point" class="nav-link" data-scroll-target="#practical-starting-point">Practical starting point</a></li>
+  <li><a href="#repository-boundary-guidance" id="toc-repository-boundary-guidance" class="nav-link" data-scroll-target="#repository-boundary-guidance">Repository boundary guidance</a></li>
   </ul>
 </nav>
     </div>
@@ -226,7 +224,7 @@ ul.task-list li input[type="checkbox"] {
 
 <header id="title-block-header" class="quarto-title-block default">
 <div class="quarto-title">
-<h1 class="title d-none d-lg-block">Data Pipeline Architecture</h1>
+<h1 class="title d-none d-lg-block">Repository structure and separation of concerns</h1>
 </div>
 
 
@@ -268,10 +266,7 @@ ul.task-list li input[type="checkbox"] {
 <p>This is an internal planning document, not a policy or design specification.</p>
 </div>
 </div>
-<p>This document lays out a stack for the ingestion, validation, standardization, storage, and publication of HRL spatial data. It focuses on spatial data given immediate mapping needs but represents the first instance of a broader data infrastructure that will expand to serve other HRL data types as the program matures.</p>
-<p>Restoration spatial datasets (i.e., datasets describing where restoration is happening and some basic attributes describing the projects) will be emailed to Lucy for upload into this data system. These datasets are not suited for external repositories due to their content and update/versioning patterns. For other data types, HRL data producers publish datasets to external repositories such as the Environmental Data Initiative (EDI). EDI and analogous external repositories are the right place for static, citable archival data but are not a sufficient end state for a program that needs to integrate data across agencies, serve live applications, and present a coherent picture of restoration and environmental flow activity across the watershed. Data arriving from different producers will vary in structure, field names, field types, controlled vocabularies, coordinate reference systems, geometry types, and metadata completeness. Without a standardization layer, every downstream use — a map, a query, a join — would require repetitive, redundant manual reconciliation.</p>
-<p>The infrastructure described here fills that gap. It receives submitted spatial files (and eventually other data type files harvested from repositories such as EDI), validates them against a shared schema, transforms them to a common standard, loads them into a managed spatial database, and exposes them through an API and mapping application. It also provides the hosting environment that external repositories do not: a place to run the pipeline itself, serve an API, and deploy interactive applications for staff, partner agencies, and the public.</p>
-<p>The primary architectural decision running through this design is <strong>platform-as-a-service (PaaS) over infrastructure-as-a-service (IaaS)</strong>. With IaaS, the team would provision and manage virtual machines directly — handling OS updates, security patching, and uptime. PaaS offloads that to Azure, so the team is responsible only for the application and data layers. For a program of this scale and team size, PaaS is the right default: it substantially reduces operational overhead without meaningfully constraining what the infrastructure can do.</p>
+<p>The HRL spatial data pipeline is composed of multiple related but separable components: a machine-readable data model, validation and standardization code, Azure job orchestration and deployment configuration, a spatial database, an API layer, and one or more map or application interfaces. These components have different purposes, different owners, different release cycles, and different permission needs. The anticipated repository structure mirrors those boundaries so that each component can be developed, reviewed, deployed, and maintained independently.</p>
 <div class="callout callout-style-default callout-note callout-titled">
 <div class="callout-header d-flex align-content-center">
 <div class="callout-icon-container">
@@ -282,170 +277,183 @@ Note
 </div>
 </div>
 <div class="callout-body-container callout-body">
-<p>This page covers the data engineering and hosting layer: ingestion, validation, standardization, and storage. This page also covers infrastructure needed to host applications (e.g., maps) and APIs until Posit Connect is procured and configured. This page does not cover the tooling that supports data scientists in developing and publishing analytical content without needed to interact with Azure complexity described in this document. That is described separately on the <a href="../pages/posit_platform.html">Posit Data Science Platform</a> page.</p>
+<p>This page covers the expected repository layout for the spatial data pipeline and its supporting Azure stack. It does not describe all repositories that may eventually exist for the broader HRL program.</p>
 </div>
 </div>
-<div class="cell" data-layout-align="default">
-<div class="cell-output-display">
-<div>
-<p></p><figure class="figure"><p></p>
-<div>
-<pre class="mermaid mermaid-js">flowchart TD
-    A[Manual upload of spatial data files&lt;br/&gt;GeoPackage, zipped shapefile] --&gt; B[&lt;b&gt;Azure Storage / ADLS Gen2&lt;/b&gt;&lt;br/&gt;raw-submissions/]
-
-    C[Machine-readable schema&lt;br/&gt;&lt;b&gt;schemas/&lt;/b&gt;] --&gt; D[&lt;b&gt;Azure Container Apps Job&lt;/b&gt;&lt;br/&gt;Validation + transformation script]
-    B --&gt; D
-
-    D --&gt; E{Validation passes?}
-
-    E -- No --&gt; F[Write validation report&lt;br/&gt;&lt;b&gt;validation-reports/&lt;/b&gt;]
-    F --&gt; G[Return issues to data submitter&lt;br/&gt;Schema errors, geometry errors, CRS issues]
-
-    E -- Yes --&gt; H[Transform to common standard fields,&lt;br/&gt;CRS, geometry type, metadata]
-    H --&gt; I[&lt;b&gt;Azure Database for PostgreSQL&lt;/b&gt;&lt;br/&gt;Flexible Server + &lt;b&gt;PostGIS&lt;/b&gt;]
-
-    H --&gt; J[Standardized export files&lt;br/&gt;GeoPackage, GeoJSON, CSV, GeoParquet&lt;br/&gt;&lt;b&gt;standardized-exports/&lt;/b&gt;]
-
-    I --&gt; K[API layer&lt;br/&gt;&lt;b&gt;Azure App Service&lt;/b&gt; or &lt;b&gt;Azure Container Apps&lt;/b&gt;]
-    K --&gt; L[&lt;b&gt;Azure API Management&lt;/b&gt;&lt;br/&gt;External access, auth, throttling, versioning]
-
-    L --&gt; M[External clients&lt;br/&gt;GIS users, analysts, partner agencies, dashboards]
-
-    I --&gt; N[Interactive map application&lt;br/&gt;&lt;b&gt;Azure Static Web Apps&lt;/b&gt;, &lt;b&gt;App Service&lt;/b&gt;,&lt;br/&gt;or &lt;b&gt;Container Apps&lt;/b&gt;]
-    L --&gt; N
-
-    J --&gt; M
-
-    I --&gt; O[Metadata and catalog layer&lt;br/&gt;&lt;b&gt;Microsoft Purview&lt;/b&gt; and/or&lt;br/&gt;metadata landing page]
-    J --&gt; O
-    F --&gt; O
-
-    O --&gt; M
-
-    classDef azure fill:#D2EAF4,stroke:#2E7DA1,stroke-width:2px,color:#0C425C
-    class B,D,I,K,L,N,O azure
-</pre>
-</div>
-<p></p></figure><p></p>
-</div>
-</div>
-</div>
-<section id="component-reference" class="level2">
-<h2 class="anchored" data-anchor-id="component-reference">Component reference</h2>
+<section id="why-not-a-monorepo" class="level2">
+<h2 class="anchored" data-anchor-id="why-not-a-monorepo">Why not a monorepo?</h2>
+<p>Keeping every component in a single repository is tempting when a project is small, but it creates friction as the project matures. The spatial data pipeline is intentionally split across multiple repositories for the following reasons:</p>
+<ul>
+<li><p><strong>Different purposes.</strong> The data model, validation logic, database migrations, API code, map application, and Azure deployment configuration serve fundamentally different functions. Grouping them together obscures those distinctions and makes it harder to understand what any one repository is responsible for.</p></li>
+<li><p><strong>Different change rates.</strong> Schema changes do not happen at the same time as infrastructure configuration changes, and neither necessarily coincides with a map application release. Separate repositories allow each component to be versioned and released on its own schedule.</p></li>
+<li><p><strong>Different collaborators and permissions.</strong> Infrastructure configuration may be reviewed or managed by DWR IT staff. The data model may need sign-off from science program leads. Application code may be maintained by a developer who does not need write access to the database migration repository. Separate repositories make it practical to grant the right access to the right people.</p></li>
+<li><p><strong>Clearer code review.</strong> A pull request that touches only validation logic is easier to review than one that mixes validation changes with database migrations and deployment scripts. Keeping concerns separate keeps pull requests focused.</p></li>
+<li><p><strong>Avoiding accidental coupling.</strong> When data standards, deployment configuration, storage design, and downstream applications all live in the same repository, it is easy to write code that silently depends on details from another component. Separation makes those dependencies explicit and forces cleaner interfaces between components.</p></li>
+</ul>
+</section>
+<section id="core-pipeline-repositories" class="level2">
+<h2 class="anchored" data-anchor-id="core-pipeline-repositories">Core pipeline repositories</h2>
+<p>The table below describes the repositories anticipated for the spatial data pipeline and its immediate supporting infrastructure. These repositories do not all need to exist from day one; see <a href="#practical-starting-point">Practical starting point</a> below for sequencing guidance.</p>
 <table class="caption-top table">
 <colgroup>
-<col style="width: 33%">
-<col style="width: 33%">
-<col style="width: 33%">
+<col style="width: 25%">
+<col style="width: 25%">
+<col style="width: 25%">
+<col style="width: 25%">
 </colgroup>
 <thead>
 <tr class="header">
-<th>Need</th>
-<th>Azure component</th>
-<th>Why</th>
+<th>Repository</th>
+<th>Primary responsibility</th>
+<th>Typical contents</th>
+<th>Notes</th>
 </tr>
 </thead>
 <tbody>
 <tr class="odd">
-<td>Raw uploaded spatial files</td>
-<td><strong>Azure Blob Storage</strong> or <strong>Azure Data Lake Storage Gen2</strong></td>
-<td>Store submitted GeoPackages, zipped shapefiles, validation reports, transformed outputs, and archived versions. Azure Storage can also host static websites if needed.</td>
+<td><code>hrl-data-infrastructure</code></td>
+<td>Architecture and implementation documentation</td>
+<td>Quarto site, diagrams, design notes, decision records, user-facing documentation</td>
+<td>Human-readable documentation and planning source of truth. This repository already exists.</td>
 </tr>
 <tr class="even">
-<td>Schema / controlled vocabularies</td>
-<td><strong>GitHub/Azure DevOps repo + Blob Storage copy</strong></td>
-<td>Keep the machine-readable schema version-controlled; optionally publish a frozen copy with each pipeline run.</td>
+<td><code>hrl-restoration-schema</code></td>
+<td>Machine-readable restoration project data model and validation contract</td>
+<td>Field definitions, controlled vocabularies, geometry rules, business rules, generated data dictionary, example submissions</td>
+<td>Source of truth for what a valid spatial data submission looks like.</td>
 </tr>
 <tr class="odd">
-<td>Validation and transformation script</td>
-<td><strong>Azure Container Apps Jobs</strong>, <strong>Azure Functions</strong>, or <strong>Azure Data Factory orchestration</strong></td>
-<td>Azure Functions is event-driven and suited for lightweight, short-running scripts — for example, triggering validation when a file lands in storage. Container Apps Jobs run a full container, making them a better fit for pipelines that need geospatial dependencies like GDAL or Python/R packages, or that require longer runtimes. Data Factory can orchestrate either as part of a larger scheduled pipeline.</td>
+<td><code>hrl-spatial-validation</code></td>
+<td>Validation and standardization code</td>
+<td>Python or R package or CLI, functions to read GeoPackage and zipped shapefile submissions, attribute validation, geometry checks, CRS checks, validation reports, standardized outputs</td>
+<td>Enforces the schema contract and produces submitter-facing validation results.</td>
 </tr>
 <tr class="even">
-<td>Spatial database</td>
-<td><strong>Azure Database for PostgreSQL Flexible Server + PostGIS</strong></td>
-<td>This is the cleanest managed Postgres/PostGIS option. Azure’s own architecture guidance identifies PostgreSQL/PostGIS as a fit for geospatial apps, and Azure Database for PostgreSQL is managed by Azure rather than by the team.</td>
+<td><code>hrl-spatial-pipeline</code></td>
+<td>Azure job orchestration and deployment configuration</td>
+<td>Container build files, Azure Container Apps Job configuration, storage path conventions, environment configuration, deployment scripts, pipeline triggers</td>
+<td>May initially be combined with the validation repository, but should be separated if deployment concerns become more complex or IT-managed.</td>
 </tr>
 <tr class="odd">
-<td>Standardized public/download dataset</td>
-<td><strong>PostGIS + GeoPackage/GeoJSON/Parquet outputs in Blob Storage</strong></td>
-<td>PostGIS is the authoritative operational store; files are useful for external clients, archival, and reproducible snapshots.</td>
+<td><code>hrl-spatial-database</code></td>
+<td>PostgreSQL/PostGIS database structure</td>
+<td>SQL migrations, table definitions, indexes, lookup tables, views, database comments, seed data for controlled vocabularies</td>
+<td>Defines durable storage and query structures for validated and standardized data.</td>
 </tr>
 <tr class="even">
-<td>Metadata/catalog</td>
-<td><strong>Microsoft Purview</strong> if DWR uses it; otherwise static metadata files + landing page</td>
-<td>Purview is Azure’s governed data catalog/data estate tool and supports metadata, lineage, access policies, data quality concepts, and data discovery.</td>
+<td><code>hrl-restoration-api</code></td>
+<td>API or service layer over standardized restoration project data</td>
+<td>API routes, query logic, authentication and authorization configuration, API documentation, tests</td>
+<td>Provides stable access patterns for applications, maps, partner systems, and other approved data consumers.</td>
 </tr>
 <tr class="odd">
-<td>API access</td>
-<td><strong>Azure App Service / Container Apps API + Azure API Management</strong></td>
-<td>API Management is designed to publish and govern APIs for external, partner, and internal users.</td>
-</tr>
-<tr class="even">
-<td>Interactive map app</td>
-<td><strong>Azure App Service</strong>, <strong>Azure Static Web Apps</strong>, or <strong>Azure Container Apps</strong></td>
-<td>App Service is managed PaaS web hosting; Container Apps is better for containerized apps; static hosting works if the app is a static front end consuming APIs.</td>
-</tr>
-<tr class="odd">
-<td>Map rendering</td>
-<td><strong>Azure Maps Web SDK</strong>, <strong>kepler.gl</strong>, <strong>Shiny</strong>, MapLibre, Leaflet, or OpenLayers</td>
-<td>Azure Maps has a Web SDK for interactive maps and Azure-native geospatial services. kepler.gl is a React/WebGL visualization tool (built on deck.gl) well suited to large geospatial datasets; it can load GeoJSON, CSV, or Arrow/Parquet directly from Blob Storage or the API layer and deploys as a static web app. Shiny and Streamlit are also possible frameworks.</td>
+<td><code>hrl-restoration-map</code></td>
+<td>Interactive map application</td>
+<td>Web map application code, map styling, layer configuration, filters, popups, user interface documentation</td>
+<td>Uses the API or database views; should not contain ingestion or validation logic.</td>
 </tr>
 </tbody>
 </table>
 </section>
-<section id="recommended-implementation-pattern" class="level2">
-<h2 class="anchored" data-anchor-id="recommended-implementation-pattern">Recommended implementation pattern</h2>
-<p>The preferred architecture is <strong>PaaS-first</strong>: use Azure-managed services wherever possible and reserve containerized compute for steps that require custom geospatial dependencies. Avoid general-purpose VMs unless DWR IT policy requires them. “PaaS” stands for <a href="https://azure.microsoft.com/en-us/resources/cloud-computing-dictionary/what-is-paas">platform-as-a-service</a>. The other option is <a href="https://azure.microsoft.com/en-us/resources/cloud-computing-dictionary/what-is-iaas">infrastructure-as-a-service</a> (IaaS), but PaaS is better suited for our needs.</p>
-<p><strong>Storage.</strong> Azure Storage / ADLS Gen2 is the backbone of the pipeline. It holds raw submissions as received, the versioned schema and controlled vocabularies used for validation, validation reports (both passes and failures), standardized export files, and archived snapshots. Keeping all of these in a single storage account with a consistent folder hierarchy makes the pipeline auditable and reproducible.</p>
-<p><strong>Validation and transformation.</strong> Azure Container Apps Jobs are the preferred compute layer for this step. Geospatial validation and transformation workflows commonly require GDAL, Python geospatial packages (e.g., <code>geopandas</code>, <code>pyproj</code>, <code>shapely</code>), or R spatial packages, and often take longer than the execution limits of serverless functions. A containerized job can package the full dependency stack, run to completion, and exit — with no persistent infrastructure between runs.</p>
-<p><strong>Spatial database.</strong> Azure Database for PostgreSQL Flexible Server with the PostGIS extension is the authoritative store for standardized spatial data. All validated and transformed submissions are written here. Downstream services — the API layer, the map application, the metadata catalog — read from PostgreSQL/PostGIS as the primary source of truth.</p>
-<p><strong>Export files.</strong> Standardized GeoPackage, GeoJSON, CSV, and GeoParquet exports written to Blob Storage serve a different purpose than the database: they support external clients who cannot query an API, enable reproducible analytical snapshots, and provide archival copies that are independent of database availability.</p>
-<p><strong>API and application layers.</strong> The API and map application should run on managed Azure hosting (App Service, Container Apps, or Static Web Apps) rather than a self-managed VM. This keeps operational overhead low for a small team.</p>
+<section id="optional-downstream-application-repositories" class="level2">
+<h2 class="anchored" data-anchor-id="optional-downstream-application-repositories">Optional downstream application repositories</h2>
+<p>Additional applications and reporting products may eventually be created on top of the accepted, standardized data (which is only spatial data to start). These should generally live in separate repositories when they have distinct audiences, maintainers, release cycles, or dependencies. Examples include:</p>
+<ul>
+<li>ingestion, validation, storage, and serving of a different dataset</li>
+<li>an internal review application for science program staff to inspect incoming submissions before or after acceptance</li>
+<li>a public-facing project viewer for external audiences</li>
+<li>a reporting workflow that generates periodic summaries or exports</li>
+<li>a scenario analysis or spatial prioritization tool</li>
+<li>a scheduled export or data summary process that feeds partner systems</li>
+</ul>
 </section>
-<section id="implementation-repositories" class="level2">
-<h2 class="anchored" data-anchor-id="implementation-repositories">Implementation repositories</h2>
-<p>The spatial data pipeline is expected to be implemented across several repositories rather than as a single monorepo. This separation reflects the different responsibilities of the data model, validation code, Azure deployment configuration, database migrations, APIs, maps, and downstream applications. See <a href="../pages/repository_structure.html">Repository structure and separation of concerns</a> for the recommended repository layout.</p>
+<section id="how-the-repositories-relate-to-the-pipeline" class="level2">
+<h2 class="anchored" data-anchor-id="how-the-repositories-relate-to-the-pipeline">How the repositories relate to the pipeline</h2>
+<p>Each repository corresponds to a distinct stage or concern in the spatial data lifecycle:</p>
+<ul>
+<li><strong><code>hrl-restoration-schema</code></strong> defines what valid submitted data look like — the fields, types, controlled vocabularies, and geometry rules that submissions must satisfy.</li>
+<li><strong><code>hrl-spatial-validation</code></strong> contains the code that reads a submitted file and checks it against the schema, producing a validation report and, if the submission passes, a standardized output.</li>
+<li><strong><code>hrl-spatial-pipeline</code></strong> runs that validation and standardization code as an Azure Container Apps Job, managing the deployment configuration, storage paths, and triggers that connect the pieces.</li>
+<li><strong><code>hrl-spatial-database</code></strong> defines how accepted data are stored in PostgreSQL/PostGIS — the table structure, indexes, views, and lookup tables that make the data queryable.</li>
+<li><strong><code>hrl-restoration-api</code></strong> and <strong><code>hrl-restoration-map</code></strong> expose accepted data to users and partner systems through stable access patterns.</li>
+<li><strong>Optional downstream application repositories</strong> support review, reporting, analysis, and communication built on top of accepted, standardized data.</li>
+</ul>
+<p><strong><code>hrl-data-infrastructure</code></strong> (this site) documents all of the above. It does not contain production code.</p>
 </section>
-<section id="proposed-storage-structure" class="level2">
-<h2 class="anchored" data-anchor-id="proposed-storage-structure">Proposed storage structure</h2>
-<p>The following container layout organizes all pipeline inputs and outputs in a single Azure Storage account. The structure separates concerns by pipeline stage, makes automated writes and reads straightforward to script, and keeps a clear audit trail.</p>
-<pre class="text"><code>spatial-data-pipeline/
-  raw-submissions/
-    agency-name/
-      project-name/                  # this level may change depending on submission structure
-        submission_date/
-          submitted_file.gpkg
-          submission_metadata.json   # optional; spatial files expected to be self-documenting
-  schemas/
-    current/
-      spatial_submission_schema.json
-      controlled_vocabularies.json
-    archive/
-      v1.0.0/
-      v1.1.0/
-  validation-reports/
-    agency-name/
-      project-name/                  # this level may change depending on submission structure
-        submission-date/
-          validation_report.json
-          validation_report.html
-  standardized-exports/
-    current/
-      restoration_projects.gpkg
-      restoration_projects.geojson
-      restoration_projects.csv
-      restoration_projects.parquet
-    snapshots/
-      YYYY-MM-DD/
-  metadata/
-    data_dictionary.md               # file type tbd; this is a placeholder
-    field_definitions.csv            # file type tbd; this is a placeholder
-    change_log.md
-    lineage.json
-  archive/
-    raw-submissions/
-    standardized-exports/</code></pre>
+<section id="practical-starting-point" class="level2">
+<h2 class="anchored" data-anchor-id="practical-starting-point">Practical starting point</h2>
+<p>The initial implementation does not need to create every repository at once. A reasonable sequencing:</p>
+<ol type="1">
+<li><strong><code>hrl-data-infrastructure</code></strong> — already exists; continue using it as the architecture documentation home.</li>
+<li><strong><code>hrl-restoration-schema</code></strong> — create early; the schema is the contract that everything else depends on.</li>
+<li><strong><code>hrl-spatial-validation</code></strong> — create early alongside the schema; these two components are tightly coupled during initial development.</li>
+<li><strong><code>hrl-spatial-pipeline</code></strong> — Azure deployment configuration can live in the validation repository at first. Create a separate pipeline repository when deployment concerns become more complex, when DWR IT takes on a management role, or when the pipeline needs to be managed independently of the validation code.</li>
+<li><strong><code>hrl-spatial-database</code></strong> — create when PostGIS table structures and migrations are being formalized and need version control of their own.</li>
+<li><strong><code>hrl-restoration-api</code></strong> and <strong><code>hrl-restoration-map</code></strong> — create as those components become real products with their own development cycles.</li>
+<li><strong>Downstream application repositories</strong> — create as specific applications emerge with distinct audiences, maintainers, or release schedules.</li>
+</ol>
+</section>
+<section id="repository-boundary-guidance" class="level2">
+<h2 class="anchored" data-anchor-id="repository-boundary-guidance">Repository boundary guidance</h2>
+<p>When making a change, use this table to identify which repository it belongs in.</p>
+<table class="caption-top table">
+<colgroup>
+<col style="width: 50%">
+<col style="width: 50%">
+</colgroup>
+<thead>
+<tr class="header">
+<th>Change</th>
+<th>Repository</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td>Add a new field to the restoration project data model</td>
+<td><code>hrl-restoration-schema</code></td>
+</tr>
+<tr class="even">
+<td>Add a new controlled vocabulary value</td>
+<td><code>hrl-restoration-schema</code></td>
+</tr>
+<tr class="odd">
+<td>Change how semicolon-delimited multi-select fields are parsed</td>
+<td><code>hrl-spatial-validation</code></td>
+</tr>
+<tr class="even">
+<td>Add a new geometry validation rule</td>
+<td><code>hrl-spatial-validation</code> and, if the rule is part of the formal data contract, <code>hrl-restoration-schema</code></td>
+</tr>
+<tr class="odd">
+<td>Change the target PostGIS table structure</td>
+<td><code>hrl-spatial-database</code></td>
+</tr>
+<tr class="even">
+<td>Change the Azure Container Apps Job configuration</td>
+<td><code>hrl-spatial-pipeline</code></td>
+</tr>
+<tr class="odd">
+<td>Change Azure Storage path conventions</td>
+<td><code>hrl-spatial-pipeline</code></td>
+</tr>
+<tr class="even">
+<td>Add a new API endpoint</td>
+<td><code>hrl-restoration-api</code></td>
+</tr>
+<tr class="odd">
+<td>Change map popups or filters</td>
+<td><code>hrl-restoration-map</code></td>
+</tr>
+<tr class="even">
+<td>Add a new review or reporting application</td>
+<td>a separate downstream application repository</td>
+</tr>
+<tr class="odd">
+<td>Update documentation explaining the overall architecture</td>
+<td><code>hrl-data-infrastructure</code></td>
+</tr>
+</tbody>
+</table>
 
 
 </section>
@@ -853,13 +861,13 @@ Note
   </script>
 <nav class="page-navigation">
   <div class="nav-page nav-page-previous">
-      <a href="../index.html" class="pagination-link" aria-label="Home">
-        <i class="bi bi-arrow-left-short"></i> <span class="nav-page-text">Home</span>
+      <a href="../pages/posit_platform.html" class="pagination-link" aria-label="Posit Data Science Platform">
+        <i class="bi bi-arrow-left-short"></i> <span class="nav-page-text">Posit Data Science Platform</span>
       </a>          
   </div>
   <div class="nav-page nav-page-next">
-      <a href="../pages/posit_platform.html" class="pagination-link" aria-label="Posit Data Science Platform">
-        <span class="nav-page-text">Posit Data Science Platform</span> <i class="bi bi-arrow-right-short"></i>
+      <a href="../pages/hrl_infrastructure_proposal.html" class="pagination-link" aria-label="Infrastructure Proposal">
+        <span class="nav-page-text">Infrastructure Proposal</span> <i class="bi bi-arrow-right-short"></i>
       </a>
   </div>
 </nav>
