@@ -1,9 +1,9 @@
 ---
 status: accepted
-date:
-decision-makers:
+date: 2026-05-07
+decision-makers: Lucy Andrews
 consulted:
-informed:
+informed: Louise Conrad, Pascale Goertler, Erik Loboschefsky, Josh Martinez
 ---
 
 # Administer restoration project spatial data as a shared HRL program dataset with DWR as steward
