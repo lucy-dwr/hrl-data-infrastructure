@@ -2,8 +2,8 @@
 status: accepted
 date: 2026-05-08
 decision-makers: Lucy Andrews
-consulted: Louise Conrad, Ashley Vizek, John Spendlove
-informed:
+consulted: Ashley Vizek, John Spendlove
+informed: Louise Conrad
 ---
 
 # Use a DWR-hosted, PaaS-first Azure architecture for HRL data infrastructure
