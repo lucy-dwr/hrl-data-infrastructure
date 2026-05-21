@@ -35,3 +35,14 @@ to provide guidance on completing ADRs.
 | [015](adr/adr-015-spatial-data-pipeline-multiple-repositories.md) | Split the HRL spatial data pipeline across multiple repositories rather than a monorepo | 🟢&nbsp;Accepted |
 | [016](adr/adr-016-linkml-source-of-truth-schema.md) | Use LinkML as the source-of-truth schema language for restoration spatial data | 🟢&nbsp;Accepted |
 | [017](adr/adr-017-standardize-restoration-spatial-data-epsg-3310.md) | Standardize restoration spatial data to EPSG:3310 | 🟢&nbsp;Accepted |
+
+## Potential forthcoming ADRs
+
+| Candidate ADR | Title | Status |
+|---|---|---|
+| ADR-018 | Define the restoration project map architecture | ⚪&nbsp;Candidate |
+| ADR-019 | Define the update workflow for restoration project records | ⚪&nbsp;Candidate |
+| ADR-020 | Define the metadata and catalog strategy for HRL infrastructure datasets | ⚪&nbsp;Candidate |
+| ADR-021 | Define authentication, authorization, and secret-management patterns for HRL infrastructure | ⚪&nbsp;Candidate |
+| ADR-022 | Define database migration and schema-change management strategies | ⚪&nbsp;Candidate |
+| ADR-023 | Define backup, archival, logging, and operational retention strategy | ⚪&nbsp;Candidate |
