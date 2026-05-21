@@ -1,6 +1,6 @@
 ---
 status: proposed
-date:
+date: 2026-05-21
 decision-makers: Lucy Andrews
 consulted: Ashley Vizek, Jordan Hoang, Emanuel Rodriguez
 informed:
