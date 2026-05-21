@@ -1,12 +1,12 @@
 ---
-status:
+status: accepted
 date:
 decision-makers:
 consulted:
 informed:
 ---
 
-# <!-- short title, representative of solved problem and found solution -->
+# Administer restoration project spatial data as a shared HRL program dataset with DWR as steward
 
 ## Context and Problem Statement
 

@@ -1,12 +1,12 @@
 ---
-status:
+status: accepted
 date:
 decision-makers:
 consulted:
 informed:
 ---
 
-# <!-- short title, representative of solved problem and found solution -->
+# Procure and use Posit Workbench and Posit Connect for data science and application publishing
 
 ## Context and Problem Statement
 

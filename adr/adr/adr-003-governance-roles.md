@@ -1,12 +1,12 @@
 ---
-status:
+status: accepted
 date:
 decision-makers:
 consulted:
 informed:
 ---
 
-# <!-- short title, representative of solved problem and found solution -->
+# Define Data Producers, the Central Data Team, and Synthesis Teams as core governance roles
 
 ## Context and Problem Statement
 

@@ -1,12 +1,12 @@
 ---
-status:
+status: accepted
 date:
 decision-makers:
 consulted:
 informed:
 ---
 
-# <!-- short title, representative of solved problem and found solution -->
+# Require static publication of data before ingestion, with EDI as the default repository
 
 ## Context and Problem Statement
 

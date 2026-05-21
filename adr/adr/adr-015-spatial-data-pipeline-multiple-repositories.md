@@ -1,12 +1,12 @@
 ---
-status:
+status: accepted
 date:
 decision-makers:
 consulted:
 informed:
 ---
 
-# <!-- short title, representative of solved problem and found solution -->
+# Split the HRL spatial data pipeline across multiple repositories rather than a monorepo
 
 ## Context and Problem Statement
 

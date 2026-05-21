@@ -1,12 +1,12 @@
 ---
-status:
+status: accepted
 date:
 decision-makers:
 consulted:
 informed:
 ---
 
-# <!-- short title, representative of solved problem and found solution -->
+# Use PostgreSQL/PostGIS as the authoritative operational store for standardized spatial data
 
 ## Context and Problem Statement
 

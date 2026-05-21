@@ -1,12 +1,12 @@
 ---
-status:
+status: accepted
 date:
 decision-makers:
 consulted:
 informed:
 ---
 
-# <!-- short title, representative of solved problem and found solution -->
+# Separate the Azure data engineering stack from the Posit data science platform
 
 ## Context and Problem Statement
 

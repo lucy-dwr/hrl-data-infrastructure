@@ -1,12 +1,12 @@
 ---
-status:
+status: accepted
 date:
 decision-makers:
 consulted:
 informed:
 ---
 
-# <!-- short title, representative of solved problem and found solution -->
+# Use a PaaS-first Azure architecture for HRL data infrastructure, hosted by DWR
 
 ## Context and Problem Statement
 

@@ -1,12 +1,12 @@
 ---
-status:
+status: proposed
 date:
 decision-makers:
 consulted:
 informed:
 ---
 
-# <!-- short title, representative of solved problem and found solution -->
+# Use Azure Container Apps Jobs for validation and transformation workflows
 
 ## Context and Problem Statement
 

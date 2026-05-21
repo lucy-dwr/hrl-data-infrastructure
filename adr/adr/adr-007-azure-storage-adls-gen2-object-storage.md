@@ -1,12 +1,12 @@
 ---
-status:
+status: proposed
 date:
 decision-makers:
 consulted:
 informed:
 ---
 
-# <!-- short title, representative of solved problem and found solution -->
+# Use Azure Storage / ADLS Gen2 as the raw, intermediate, export, and archival object storage backbone
 
 ## Context and Problem Statement
 

@@ -1,12 +1,12 @@
 ---
-status:
+status: accepted
 date:
 decision-makers:
 consulted:
 informed:
 ---
 
-# <!-- short title, representative of solved problem and found solution -->
+# Use LinkML as the source-of-truth schema language for restoration spatial data
 
 ## Context and Problem Statement
 

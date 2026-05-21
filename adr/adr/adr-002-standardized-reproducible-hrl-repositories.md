@@ -1,12 +1,12 @@
 ---
-status:
+status: proposed
 date:
 decision-makers:
 consulted:
 informed:
 ---
 
-# <!-- short title, representative of solved problem and found solution -->
+# Require standardized, reproducible HRL repositories with GitHub, environment management, CI/CD, and governance files
 
 ## Context and Problem Statement
 

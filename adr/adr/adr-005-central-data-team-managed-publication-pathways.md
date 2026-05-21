@@ -1,12 +1,12 @@
 ---
-status:
+status: accepted
 date:
 decision-makers:
 consulted:
 informed:
 ---
 
-# <!-- short title, representative of solved problem and found solution -->
+# Allow Central Data Team-managed publication pathways for large or complex datasets
 
 ## Context and Problem Statement
 

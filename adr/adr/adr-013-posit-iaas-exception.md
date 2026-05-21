@@ -1,12 +1,12 @@
 ---
-status:
+status: accepted
 date:
 decision-makers:
 consulted:
 informed:
 ---
 
-# <!-- short title, representative of solved problem and found solution -->
+# Treat Posit as a deliberate IaaS exception to the PaaS-first principle
 
 ## Context and Problem Statement
 

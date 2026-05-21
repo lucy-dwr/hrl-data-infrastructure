@@ -1,12 +1,12 @@
 ---
-status:
+status: proposed
 date:
 decision-makers:
 consulted:
 informed:
 ---
 
-# <!-- short title, representative of solved problem and found solution -->
+# Publish standardized export files alongside the authoritative database
 
 ## Context and Problem Statement
 
