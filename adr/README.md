@@ -40,9 +40,9 @@ to provide guidance on completing ADRs.
 
 | Candidate ADR | Title | Status |
 |---|---|---|
-| ADR-018 | Define the restoration project map architecture | ⚪&nbsp;Candidate |
-| ADR-019 | Define the update workflow for restoration project records | ⚪&nbsp;Candidate |
-| ADR-020 | Define the metadata and catalog strategy for HRL infrastructure datasets | ⚪&nbsp;Candidate |
-| ADR-021 | Define authentication, authorization, and secret-management patterns for HRL infrastructure | ⚪&nbsp;Candidate |
-| ADR-022 | Define database migration and schema-change management strategies | ⚪&nbsp;Candidate |
-| ADR-023 | Define backup, archival, logging, and operational retention strategy | ⚪&nbsp;Candidate |
+| 018 | Define the restoration project map architecture | ⚪&nbsp;Candidate |
+| 019 | Define the update workflow for restoration project records | ⚪&nbsp;Candidate |
+| 020 | Define the metadata and catalog strategy for HRL infrastructure datasets | ⚪&nbsp;Candidate |
+| 021 | Define authentication, authorization, and secret-management patterns for HRL infrastructure | ⚪&nbsp;Candidate |
+| 022 | Define database migration and schema-change management strategies | ⚪&nbsp;Candidate |
+| 023 | Define backup, archival, logging, and operational retention strategy | ⚪&nbsp;Candidate |
