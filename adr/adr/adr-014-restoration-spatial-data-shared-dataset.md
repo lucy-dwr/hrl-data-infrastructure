@@ -3,7 +3,7 @@ status: accepted
 date: 2026-05-07
 decision-makers: Lucy Andrews
 consulted:
-informed: Louise Conrad, Pascale Goertler, Erik Loboschefsky, Josh Martinez
+informed: Louise Conrad, Pascale Goertler, Erik Loboschefsky, Josh Martinez, HRL Habitat Implementation Team
 ---
 
 # Administer restoration project spatial data as a shared HRL program dataset with DWR as steward
