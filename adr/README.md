@@ -23,7 +23,7 @@ to provide guidance on completing ADRs.
 | ADR | Title | Status |
 |---|---|---|
 | [001](adr/adr-001-hrl-data-lifecycle.md) | Adopt the HRL data lifecycle as the organizing framework | Accepted |
-| [002](adr/adr-002-standardized-reproducible-hrl-repositories.md) | Require standardized, reproducible HRL repositories with GitHub, environment management, CI/CD, and governance files | Proposed |
+| [002](adr/adr-002-standardized-reproducible-hrl-repositories.md) | Require semi-standardized, reproducible HRL repositories with GitHub, environment management, CI/CD, and governance files | Proposed |
 | [003](adr/adr-003-governance-roles.md) | Define Data Producers, the Central Data Team, and Synthesis Teams as core governance roles | Accepted |
 | [004](adr/adr-004-static-publication-before-ingestion.md) | Require static publication of data before ingestion, with EDI as the default repository | Accepted |
 | [005](adr/adr-005-central-data-team-managed-publication-pathways.md) | Allow Central Data Team-managed publication pathways for large or complex datasets | Accepted |
