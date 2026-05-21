@@ -2,7 +2,7 @@
 status: accepted
 date: 2026-01-01
 decision-makers: Lucy Andrews, Louise Conrad, Pascale Goertler
-consulted: HRL Science Committee
+consulted: HRL Science Committee, Ashley Vizek
 informed: HRL Science Committee
 ---
 
