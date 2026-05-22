@@ -8,8 +8,8 @@ format:
   html:
     theme:
       - sandstone
-      - ../theme/dwr-overrides.scss
-    css: ../styles.css
+      - ../theme/dwr.scss
+    css: ../theme/site.css
     toc: true
     toc-depth: 3
     toc-title: "On this page"
