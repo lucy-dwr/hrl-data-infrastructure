@@ -1,58 +1,100 @@
 project:
   type: website
-  output-dir: docs
   render:
     - index.qmd
     - pages/hrl_infrastructure_proposal.qmd
     - pages/map_memo.qmd
-    - pages/data_pipeline_architecture.qmd
-    - pages/repository_structure.qmd
+    - pages/spatial_data_pipeline_architecture.qmd
+    - pages/spatial_repository_structure.qmd
     - pages/posit_platform.qmd
-
-execute:
-  freeze: auto
+    - adr/index.qmd
+    - adr/adr/*.md
 
 website:
-  title: "HRL Data Infrastructure"
+  title: "HRL data infrastructure"
   bread-crumbs: false
   page-navigation: true
 
   navbar:
     right:
       - icon: github
-        aria-label: "HRL Data Infrastructure on GitHub"
+        aria-label: "HRL data infrastructure on GitHub"
         href: https://github.com/lucy-dwr/hrl-data-infrastructure
 
   sidebar:
     style: "docked"
     search: true
-    collapse-level: 3
+    collapse-level: 1
     contents:
       - href: index.qmd
         text: "Home"
       - section: "Architecture"
         contents:
-          - href: pages/data_pipeline_architecture.qmd
-            text: "Data Pipeline Architecture"
+          - href: pages/spatial_data_pipeline_architecture.qmd
+            text: "Spatial data pipeline architecture"
           - href: pages/posit_platform.qmd
-            text: "Posit Data Science Platform"
+            text: "Posit data science platform"
       - section: "Repositories & code"
         contents:
-          - href: pages/repository_structure.qmd
-            text: "Repository structure"
+          - href: pages/spatial_repository_structure.qmd
+            text: "Spatial pipeline repositories"
+      - section: "Decision log"
+        contents:
+          - href: adr/index.qmd
+            text: "ADR inventory"
+          - section: "Foundations & governance"
+            contents:
+              - href: adr/adr/adr-001-hrl-data-lifecycle.md
+                text: "ADR-001 data lifecycle"
+              - href: adr/adr/adr-002-standardized-reproducible-hrl-repositories.md
+                text: "ADR-002 reproducible repositories"
+              - href: adr/adr/adr-003-governance-roles.md
+                text: "ADR-003 governance roles"
+              - href: adr/adr/adr-004-static-publication-before-ingestion.md
+                text: "ADR-004 publication before ingestion"
+              - href: adr/adr/adr-005-central-data-team-managed-publication-pathways.md
+                text: "ADR-005 managed publication pathways"
+          - section: "Cloud & platform"
+            contents:
+              - href: adr/adr/adr-006-paas-first-azure-architecture.md
+                text: "ADR-006 PaaS-first Azure"
+              - href: adr/adr/adr-007-azure-storage-adls-gen2-object-storage.md
+                text: "ADR-007 ADLS Gen2 storage"
+              - href: adr/adr/adr-008-azure-container-apps-jobs.md
+                text: "ADR-008 Container Apps Jobs"
+              - href: adr/adr/adr-009-postgresql-postgis-operational-store.md
+                text: "ADR-009 PostgreSQL/PostGIS"
+              - href: adr/adr/adr-010-standardized-export-files.md
+                text: "ADR-010 standardized spatial exports"
+              - href: adr/adr/adr-011-posit-workbench-posit-connect.md
+                text: "ADR-011 Posit platform"
+              - href: adr/adr/adr-012-separate-azure-data-engineering-and-posit.md
+                text: "ADR-012 separate Azure and Posit"
+              - href: adr/adr/adr-013-posit-iaas-exception.md
+                text: "ADR-013 Posit IaaS exception"
+          - section: "Restoration spatial data"
+            contents:
+              - href: adr/adr/adr-014-restoration-spatial-data-shared-dataset.md
+                text: "ADR-014 shared spatial dataset"
+              - href: adr/adr/adr-015-spatial-data-pipeline-multiple-repositories.md
+                text: "ADR-015 multiple repositories"
+              - href: adr/adr/adr-016-linkml-source-of-truth-schema.md
+                text: "ADR-016 LinkML schema"
+              - href: adr/adr/adr-017-standardize-restoration-spatial-data-epsg-3310.md
+                text: "ADR-017 EPSG:3310"
       - section: "Archive"
         contents:
           - href: pages/hrl_infrastructure_proposal.qmd
-            text: "Infrastructure Proposal"
+            text: "Infrastructure proposal"
           - href: pages/map_memo.qmd
-            text: "Restoration Project Map"
+            text: "Restoration project map"
 
   page-footer:
     left:
       - text: '<span class="footer-draft-note">Disclaimer: this site is currently published in draft form, aligned with HRL''s commitment to open source work, and should not be cited as authoritative HRL policy.</span>'
     right:
       - icon: github
-        aria-label: "HRL Data Infrastructure on GitHub"
+        aria-label: "HRL data infrastructure on GitHub"
         href: https://github.com/lucy-dwr/hrl-data-infrastructure
 
 format:
