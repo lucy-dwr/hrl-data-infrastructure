@@ -1,0 +1,164 @@
+---
+title: "Architecture decision records"
+toc: false
+---
+
+Architecture decision records (ADRs) are the durable decision log for the HRL
+data infrastructure. Narrative architecture pages explain the current design;
+ADRs preserve the reason each significant decision was made, the options
+considered, and the consequences of the choice.
+
+::: {.callout-note}
+The ADR inventory includes both accepted and proposed decisions. Accepted ADRs
+represent current design direction. Proposed ADRs are still under review and
+should not be treated as final policy.
+:::
+
+## Current ADRs
+
+::: {.adr-inventory}
+
+| ADR | Title | Status | Date | Topic |
+|---|---|---|---|---|
+| [ADR-001](adr/adr-001-hrl-data-lifecycle.md) | Adopt the HRL data lifecycle as the organizing framework | Accepted | 2026-01-01 | Foundations & governance |
+| [ADR-002](adr/adr-002-standardized-reproducible-hrl-repositories.md) | Require semi-standardized, reproducible HRL repositories with GitHub, environment management, CI/CD, and governance files | Proposed | 2026-05-21 | Foundations & governance |
+| [ADR-003](adr/adr-003-governance-roles.md) | Define Data Producers, the Central Data Team, and Synthesis Teams as core governance roles | Accepted | 2026-01-01 | Foundations & governance |
+| [ADR-004](adr/adr-004-static-publication-before-ingestion.md) | Require static publication of data before ingestion, with EDI as the default repository | Accepted | 2026-01-01 | Foundations & governance |
+| [ADR-005](adr/adr-005-central-data-team-managed-publication-pathways.md) | Allow Central Data Team-managed publication pathways for large or complex datasets | Accepted | 2026-01-01 | Foundations & governance |
+| [ADR-006](adr/adr-006-paas-first-azure-architecture.md) | Use a DWR-hosted, PaaS-first Azure architecture for HRL data infrastructure | Accepted | 2026-05-08 | Cloud & platform |
+| [ADR-007](adr/adr-007-azure-storage-adls-gen2-object-storage.md) | Use Azure Storage / ADLS Gen2 as the raw, intermediate, export, and archival object storage backbone | Proposed | 2026-05-21 | Cloud & platform |
+| [ADR-008](adr/adr-008-azure-container-apps-jobs.md) | Use Azure Container Apps Jobs for validation and transformation workflows | Proposed | 2026-05-21 | Cloud & platform |
+| [ADR-009](adr/adr-009-postgresql-postgis-operational-store.md) | Use PostgreSQL/PostGIS as the authoritative operational store for standardized spatial data | Accepted | 2026-05-11 | Cloud & platform |
+| [ADR-010](adr/adr-010-standardized-export-files.md) | Publish standardized spatial export files alongside the authoritative database | Accepted | 2026-05-21 | Cloud & platform |
+| [ADR-011](adr/adr-011-posit-workbench-posit-connect.md) | Procure and use Posit Workbench and Posit Connect for data science and application publishing | Accepted | 2026-04-28 | Cloud & platform |
+| [ADR-012](adr/adr-012-separate-azure-data-engineering-and-posit.md) | Separate the Azure data engineering stack from the Posit data science platform | Accepted | 2026-05-07 | Cloud & platform |
+| [ADR-013](adr/adr-013-posit-iaas-exception.md) | Treat Posit as a deliberate IaaS exception to the PaaS-first principle | Accepted | 2026-05-07 | Cloud & platform |
+| [ADR-014](adr/adr-014-restoration-spatial-data-shared-dataset.md) | Administer restoration project spatial data as a shared HRL program dataset with DWR as steward | Accepted | 2026-05-07 | Restoration spatial data |
+| [ADR-015](adr/adr-015-spatial-data-pipeline-multiple-repositories.md) | Split the HRL spatial data pipeline across multiple repositories rather than a monorepo | Accepted | 2026-05-14 | Restoration spatial data |
+| [ADR-016](adr/adr-016-linkml-source-of-truth-schema.md) | Use LinkML as the source-of-truth schema language for restoration spatial data | Accepted | 2026-05-12 | Restoration spatial data |
+| [ADR-017](adr/adr-017-standardize-restoration-spatial-data-epsg-3310.md) | Standardize restoration spatial data to EPSG:3310 | Accepted | 2026-05-14 | Restoration spatial data |
+
+:::
+
+```{=html}
+<script>
+document.addEventListener("DOMContentLoaded", () => {
+  const adrNumber = (row) => {
+    const text = row.children[0].textContent.trim();
+    return Number.parseInt(text.replace(/\D/g, ""), 10);
+  };
+
+  const adrCompare = (a, b) => adrNumber(a) - adrNumber(b);
+  const topicCompare = (topicIndex) => (a, b) => {
+    const topicA = a.children[topicIndex].textContent.trim().toLowerCase();
+    const topicB = b.children[topicIndex].textContent.trim().toLowerCase();
+    return topicA.localeCompare(topicB) || adrCompare(a, b);
+  };
+
+  const textCompare = (columnIndex) => (a, b) => {
+    const valueA = a.children[columnIndex].textContent.trim().toLowerCase();
+    const valueB = b.children[columnIndex].textContent.trim().toLowerCase();
+    return valueA.localeCompare(valueB) || adrCompare(a, b);
+  };
+
+  const addSortControl = (header, label, compare, tbody, sortControls) => {
+    const originalLabel = header.textContent.trim();
+    header.textContent = "";
+
+    const button = document.createElement("button");
+    button.type = "button";
+    button.className = "table-sort-control";
+    button.setAttribute("aria-label", `Sort ADRs by ${label}`);
+    button.setAttribute("aria-sort", "none");
+
+    const labelSpan = document.createElement("span");
+    labelSpan.textContent = originalLabel;
+
+    const arrowSpan = document.createElement("span");
+    arrowSpan.className = "table-sort-arrow";
+    arrowSpan.setAttribute("aria-hidden", "true");
+    arrowSpan.textContent = "↕";
+
+    button.appendChild(labelSpan);
+    button.appendChild(arrowSpan);
+    header.appendChild(button);
+    sortControls.push({ button, arrowSpan });
+
+    let ascending = true;
+    button.addEventListener("click", () => {
+      const rows = Array.from(tbody.querySelectorAll("tr"));
+      rows.sort((a, b) => {
+        const result = compare(a, b);
+        return ascending ? result : result * -1;
+      });
+
+      rows.forEach((row) => tbody.appendChild(row));
+      sortControls.forEach((control) => {
+        if (control.button !== button) {
+          control.button.setAttribute("aria-sort", "none");
+          control.arrowSpan.textContent = "↕";
+        }
+      });
+      button.setAttribute("aria-sort", ascending ? "ascending" : "descending");
+      arrowSpan.textContent = ascending ? "↑" : "↓";
+      ascending = !ascending;
+    });
+  };
+
+  const addSortableHeaders = (table, columns) => {
+    if (!table) return;
+
+    const tbody = table.querySelector("tbody");
+    if (!tbody) return;
+
+    const sortControls = [];
+    columns.forEach(({ columnIndex, label, compare }) => {
+      const header = table.querySelector(`thead th:nth-child(${columnIndex + 1})`);
+      if (header) {
+        addSortControl(header, label, compare, tbody, sortControls);
+      }
+    });
+  };
+
+  const currentTable = document.querySelector(".adr-inventory table");
+  if (currentTable) {
+    const tbody = currentTable.querySelector("tbody");
+    Array.from(tbody.querySelectorAll("tr")).forEach((row) => {
+      const statusCell = row.children[2];
+      const status = statusCell.textContent.trim().toLowerCase();
+      if (status === "accepted" || status === "proposed") {
+        statusCell.innerHTML = `<span class="adr-status adr-status-${status}">${statusCell.textContent.trim()}</span>`;
+      }
+    });
+    addSortableHeaders(currentTable, [
+      { columnIndex: 0, label: "ADR number", compare: adrCompare },
+      { columnIndex: 2, label: "status", compare: textCompare(2) },
+      { columnIndex: 3, label: "date", compare: textCompare(3) },
+      { columnIndex: 4, label: "topic", compare: topicCompare(4) }
+    ]);
+  }
+
+  addSortableHeaders(document.querySelector(".forthcoming-decisions table"), [
+    { columnIndex: 0, label: "ADR number", compare: adrCompare },
+    { columnIndex: 3, label: "topic", compare: topicCompare(3) }
+  ]);
+});
+</script>
+```
+
+## Forthcoming decisions
+
+The following decisions have been identified but are not yet captured as ADRs:
+
+::: {.forthcoming-decisions}
+
+| Candidate ADR | Title | Status | Topic |
+|---|---|---|---|
+| ADR-018 | Define the restoration project map architecture | Candidate | Restoration spatial data |
+| ADR-019 | Define the update workflow for restoration project records | Candidate | Restoration spatial data |
+| ADR-020 | Define the metadata and catalog strategy for HRL infrastructure datasets | Candidate | Cloud & platform |
+| ADR-021 | Define authentication, authorization, and secret-management patterns for HRL infrastructure | Candidate | Cloud & platform |
+| ADR-022 | Define database migration and schema-change management strategies | Candidate | Cloud & platform |
+| ADR-023 | Define backup, archival, logging, and operational retention strategy | Candidate | Cloud & platform |
+
+:::

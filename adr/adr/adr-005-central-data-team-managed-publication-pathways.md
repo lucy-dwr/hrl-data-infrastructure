@@ -8,7 +8,15 @@ informed: HRL Science Committee
 
 # Allow Central Data Team-managed publication pathways for large or complex datasets
 
-## Context and Problem Statement
+::: {.adr-metadata}
+**Status:** Accepted  
+**Date:** 2026-01-01  
+**Decision makers:** Lucy Andrews, Louise Conrad, Pascale Goertler  
+**Consulted:** HRL Science Committee, Ashley Vizek  
+**Informed:** HRL Science Committee
+:::
+
+## Context and problem statement
 
 Healthy Rivers and Landscapes (HRL) data infrastructure uses static data publication as the default prerequisite for ingestion into shared program infrastructure. In most cases, datasets should be published as documented, versioned, citable releases before they are ingested, standardized, stored, served, or used in program-level synthesis.
 
@@ -18,7 +26,7 @@ If the EDI-first rule is applied too rigidly, important datasets may be delayed,
 
 HRL therefore needs a defined exception pathway for large or complex datasets that should be managed through the Central Data Team and published or served through an HRL program-supplied platform rather than through the default EDI-first pathway.
 
-## Decision Drivers
+## Decision drivers
 
 - Need to preserve the default expectation of static, citable, documented data publication
 - Need to support datasets that are too large, complex, specialized, or unique for the default EDI publication pathway
@@ -29,14 +37,14 @@ HRL therefore needs a defined exception pathway for large or complex datasets th
 - Need to support FAIR-aligned data access even when traditional repository publication is not the best fit
 - Need to ensure that exceptions are documented and reviewable
 
-## Considered Options
+## Considered options
 
 - Allow Central Data Team-managed publication pathways for large or complex datasets
 - Require all datasets to use the default EDI-first publication pathway without exception
 - Allow Data Producers to choose alternative publication pathways independently
 - Treat HRL infrastructure as the primary publication pathway for all datasets
 
-## Decision Outcome
+## Decision outcome
 
 Chosen option: **Allow Central Data Team-managed publication pathways for large or complex datasets** because HRL needs a practical and governed way to handle datasets that do not fit the default EDI-first publication model.
 
@@ -81,7 +89,7 @@ Examples of confirmation include:
 - Program-hosted datasets include landing pages, documentation, or catalog records sufficient for discovery and reuse
 - Exceptions are reviewed periodically to determine whether repository publication has become appropriate
 
-## Pros and Cons of the Options
+## Pros and cons of the options
 
 ### Allow Central Data Team-managed publication pathways for large or complex datasets
 
@@ -180,7 +188,7 @@ Undesirable:
 - Makes long-term preservation more dependent on HRL-specific systems
 - Blurs the distinction between static data publication and operational data services
 
-## More Information
+## More information
 
 This decision should be revisited if EDI or another repository becomes suitable for the large or complex datasets currently requiring exceptions, if DWR adopts an enterprise data publication platform that provides appropriate citation and preservation functions, or if Central Data Team capacity is insufficient to steward program-managed publication pathways.
 

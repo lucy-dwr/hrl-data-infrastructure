@@ -8,21 +8,21 @@ informed:
 
 # <!-- short title, representative of solved problem and found solution -->
 
-## Context and Problem Statement
+## Context and problem statement
 
 <!-- Describe the context, problem, and scope of the decision. -->
 
 
-## Decision Drivers
+## Decision drivers
 
 - <!-- decision driver -->
 
-## Considered Options
+## Considered options
 
 - <!-- chosen option -->
 - <!-- alternative option -->
 
-## Decision Outcome
+## Decision outcome
 
 Chosen option: **<!-- chosen option -->** because <!-- summarize why this option was selected. -->
 
@@ -44,7 +44,7 @@ Examples of confirmation include:
 
 - <!-- confirmation example -->
 
-## Pros and Cons of the Options
+## Pros and cons of the options
 
 ### <!-- title of option -->
 
@@ -78,7 +78,7 @@ Undesirable:
 
 - <!-- undesirable aspect of this option -->
 
-## More Information
+## More information
 
 <!-- Add follow-up notes, revisit criteria, or related ADRs. -->
 

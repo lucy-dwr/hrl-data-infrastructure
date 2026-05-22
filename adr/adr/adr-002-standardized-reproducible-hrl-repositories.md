@@ -1,14 +1,22 @@
 ---
 status: proposed
 date: 2026-05-21
-decision-makers: 
+decision-makers: unclear
 consulted: HRL Science Committee
 informed: HRL Science Committee
 ---
 
 # Require semi-standardized, reproducible HRL repositories with GitHub, environment management, CI/CD, and governance files
 
-## Context and Problem Statement
+::: {.adr-metadata}
+**Status:** Proposed  
+**Date:** 2026-05-21  
+**Decision makers:** unclear  
+**Consulted:** HRL Science Committee  
+**Informed:** HRL Science Committee
+:::
+
+## Context and problem statement
 
 Healthy Rivers and Landscapes (HRL) data infrastructure depends on many repositories for documentation, schemas, validation code, data product generation, data pipelines, databases, APIs, applications, and analysis workflows. These repositories are expected to support scientific reproducibility, long-term maintainability, collaboration across teams, and transparent stewardship of shared data products and program infrastructure.
 
@@ -16,7 +24,7 @@ Without shared repository expectations, HRL projects could develop inconsistent 
 
 HRL therefore needs a standard approach for repository organization and development practices. The standard should support reproducible computational work, clear governance, open-source readiness where appropriate, and consistent expectations for documentation, dependency management, review, and automation.
 
-## Decision Drivers
+## Decision drivers
 
 - Need to make HRL repositories understandable, maintainable, and reusable across teams
 - Need to support reproducible data publication, ingestion, analysis, and synthesis workflows
@@ -27,13 +35,13 @@ HRL therefore needs a standard approach for repository organization and developm
 - Need to support onboarding for contributors with varying levels of technical experience
 - Need to align repository practices with HRL data governance, FAIR and CARE principles, and long-term stewardship
 
-## Considered Options
+## Considered options
 
 - Require standardized, reproducible HRL repositories with GitHub, environment management, CI/CD, and governance files
 - Recommend shared repository practices but allow each repository to decide which practices to adopt
 - Allow each project or team to define its own repository structure and development practices
 
-## Decision Outcome
+## Decision outcome
 
 Chosen option: **Require standardized, reproducible HRL repositories with GitHub, environment management, CI/CD, and governance files** because HRL repositories are part of the program's data infrastructure, not only individual project workspaces. Standardized repository practices make HRL work easier to review, maintain, reuse, and transfer across staff, teams, and governance contexts.
 
@@ -76,7 +84,7 @@ Examples of confirmation include:
 - Repositories use consistent directory structures or templates appropriate to their repository type
 - Repositories distinguish exploratory work from production, publication, or infrastructure workflows
 
-## Pros and Cons of the Options
+## Pros and cons of the options
 
 ### Require standardized, reproducible HRL repositories with GitHub, environment management, CI/CD, and governance files
 
@@ -151,7 +159,7 @@ Undesirable:
 - Increases the risk of missing licenses, contribution guidance, dependency records, or automated checks
 - Makes it harder to build a coherent HRL technical ecosystem
 
-## More Information
+## More information
 
 This decision should be revisited if HRL repository standards become too burdensome for common workflows, if DWR adopts organization-wide repository standards that supersede HRL-specific practices, or if implementation shows that different repository classes need separate ADRs.
 
@@ -160,4 +168,4 @@ Related ADRs:
 - [ADR-001: Adopt the HRL data lifecycle as the organizing framework](adr-001-hrl-data-lifecycle.md)
 - [ADR-003: Define Data Producers, the Central Data Team, and Synthesis Teams as core governance roles](adr-003-governance-roles.md)
 - [ADR-004: Require static publication of data before ingestion, with EDI as the default repository](adr-004-static-publication-before-ingestion.md)
-- [ADR-015: Split the HRL spatial data pipeline across multiple repositories rather than a monorepo](adr-015-multiple-repositories.md)
+- [ADR-015: Split the HRL spatial data pipeline across multiple repositories rather than a monorepo](adr-015-spatial-data-pipeline-multiple-repositories.md)

@@ -8,7 +8,15 @@ informed:
 
 # Use Azure Container Apps Jobs for validation and transformation workflows
 
-## Context and Problem Statement
+::: {.adr-metadata}
+**Status:** Proposed  
+**Date:** 2026-05-21  
+**Decision makers:** Lucy Andrews  
+**Consulted:** Ashley Vizek, Jordan Hoang, Emanuel Rodriguez  
+**Informed:**
+:::
+
+## Context and problem statement
 
 Healthy Rivers and Landscapes (HRL) data infrastructure must support repeatable workflows for validating, transforming, and standardizing submitted data before those data are loaded into authoritative storage, published as exports, or used in downstream applications and analyses.
 
@@ -18,7 +26,7 @@ Many HRL validation and transformation workflows will require geospatial softwar
 
 HRL therefore needs a compute pattern for validation and transformation workflows that supports containerized, reproducible execution while minimizing server administration. Because HRL shared infrastructure is DWR-hosted in Azure and follows a PaaS-first architecture, Azure Container Apps Jobs are the preferred compute pattern for these workflows.
 
-## Decision Drivers
+## Decision drivers
 
 - Need to run repeatable validation and transformation workflows for HRL data infrastructure
 - Need to support geospatial dependencies such as GDAL, GEOS, PROJ, R geospatial packages, Python geospatial packages, or equivalent tooling
@@ -30,7 +38,7 @@ HRL therefore needs a compute pattern for validation and transformation workflow
 - Need to align with the DWR-hosted, PaaS-first Azure architecture
 - Need to keep the infrastructure understandable and maintainable for a small Central Data Team
 
-## Considered Options
+## Considered options
 
 - Use Azure Container Apps Jobs for validation and transformation workflows
 - Use Azure Functions for validation and transformation workflows
@@ -38,7 +46,7 @@ HRL therefore needs a compute pattern for validation and transformation workflow
 - Use self-managed virtual machines for validation and transformation workflows
 - Run validation and transformation workflows locally or manually
 
-## Decision Outcome
+## Decision outcome
 
 Chosen option: **Use Azure Container Apps Jobs for validation and transformation workflows** because container jobs provide a practical balance of reproducibility, dependency control, Azure integration, and reduced operational burden.
 
@@ -83,7 +91,7 @@ Examples of confirmation include:
 - Job failures are logged and can be reviewed by the Central Data Team
 - Local development instructions explain how to run the same validation or transformation code outside Azure for testing
 
-## Pros and Cons of the Options
+## Pros and cons of the options
 
 ### Use Azure Container Apps Jobs for validation and transformation workflows
 
@@ -202,7 +210,7 @@ Undesirable:
 - Makes it difficult to integrate validation workflows with Azure Storage, databases, APIs, and applications
 - Increases the risk that production data workflows depend on undocumented manual steps
 
-## More Information
+## More information
 
 This decision should be revisited if Azure Container Apps Jobs do not meet HRL requirements for performance, cost, orchestration, monitoring, security, or maintainability; if DWR adopts another standard managed job-execution platform; or if HRL workloads grow to require Azure Batch, Databricks, Kubernetes, or another specialized compute environment.
 
@@ -210,8 +218,8 @@ Related ADRs:
 
 - [ADR-001: Adopt the HRL data lifecycle as the organizing framework](adr-001-hrl-data-lifecycle.md)
 - [ADR-002: Require standardized, reproducible HRL repositories with GitHub, environment management, CI/CD, and governance files](adr-002-standardized-reproducible-hrl-repositories.md)
-- [ADR-006: Use a DWR-hosted, PaaS-first Azure architecture for HRL data infrastructure](adr-006-dwr-hosted-paas-first-azure-architecture.md)
-- [ADR-007: Use Azure Storage / ADLS Gen2 as the raw, intermediate, export, and archival object storage backbone](adr-007-azure-storage-adls-gen2-object-storage-backbone.md)
-- [ADR-009: Use PostgreSQL/PostGIS as the authoritative operational store for standardized spatial data](adr-009-postgresql-postgis-authoritative-operational-store.md)
+- [ADR-006: Use a DWR-hosted, PaaS-first Azure architecture for HRL data infrastructure](adr-006-paas-first-azure-architecture.md)
+- [ADR-007: Use Azure Storage / ADLS Gen2 as the raw, intermediate, export, and archival object storage backbone](adr-007-azure-storage-adls-gen2-object-storage.md)
+- [ADR-009: Use PostgreSQL/PostGIS as the authoritative operational store for standardized spatial data](adr-009-postgresql-postgis-operational-store.md)
 - [ADR-010: Publish standardized export files alongside the authoritative database](adr-010-standardized-export-files.md)
-- [ADR-017: Use LinkML as the source-of-truth schema language for restoration spatial data](adr-017-linkml-source-of-truth-schema.md)
+- [ADR-016: Use LinkML as the source-of-truth schema language for restoration spatial data](adr-016-linkml-source-of-truth-schema.md)

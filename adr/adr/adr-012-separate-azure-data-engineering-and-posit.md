@@ -1,6 +1,6 @@
 ---
 status: accepted
-date: 2026-05-7
+date: 2026-05-07
 decision-makers: Lucy Andrews
 consulted: John Spendlove
 informed: Louise Conrad
@@ -8,7 +8,15 @@ informed: Louise Conrad
 
 # Separate the Azure data engineering stack from the Posit data science platform
 
-## Context and Problem Statement
+::: {.adr-metadata}
+**Status:** Accepted  
+**Date:** 2026-05-07  
+**Decision makers:** Lucy Andrews  
+**Consulted:** John Spendlove  
+**Informed:** Louise Conrad
+:::
+
+## Context and problem statement
 
 Healthy Rivers and Landscapes (HRL) data infrastructure must support two related but distinct categories of work.
 
@@ -24,7 +32,7 @@ If the boundaries are unclear, Posit could be treated as a substitute for HRL da
 
 HRL therefore needs to explicitly separate the HRL Azure data engineering stack from the Posit data science platform while defining how the two interact.
 
-## Decision Drivers
+## Decision drivers
 
 - Need to distinguish infrastructure for HRL data ingestion, validation, storage, and serving from infrastructure for analysis and publishing
 - Need to recognize that Posit Workbench and Posit Connect will serve DWR programs beyond HRL
@@ -39,7 +47,7 @@ HRL therefore needs to explicitly separate the HRL Azure data engineering stack 
 - Need to support reproducible data science workflows while keeping shared HRL data infrastructure stable and maintainable
 - Need to align with the DWR-hosted, PaaS-first Azure architecture and the decision to procure Posit Workbench and Posit Connect
 
-## Considered Options
+## Considered options
 
 - Separate the HRL Azure data engineering stack from the DWR Posit data science platform
 - Host Posit as part of the HRL data engineering stack
@@ -47,7 +55,7 @@ HRL therefore needs to explicitly separate the HRL Azure data engineering stack 
 - Use Azure data engineering services directly as the primary analyst development and publishing environment
 - Build a single integrated platform that combines data engineering, analysis, and publishing responsibilities
 
-## Decision Outcome
+## Decision outcome
 
 Chosen option: **Separate the HRL Azure data engineering stack from the DWR Posit data science platform** because HRL needs a stable, governed data infrastructure layer, while DWR also needs a broader analyst-facing data science development and publishing platform that serves HRL and other programs.
 
@@ -105,7 +113,7 @@ Examples of confirmation include:
 - Secrets, credentials, and access controls for cross-platform access are documented and governed
 - System diagrams show HRL Azure data infrastructure and the DWR Posit data science/publishing platform as related but separate layers
 
-## Pros and Cons of the Options
+## Pros and cons of the options
 
 ### Separate the HRL Azure data engineering stack from the DWR Posit data science platform
 
@@ -231,16 +239,16 @@ Undesirable:
 - Makes it harder to replace or evolve individual components over time
 - Does not acknowledge that Posit is intended to serve broader DWR data science needs
 
-## More Information
+## More information
 
 This decision should be revisited if Posit becomes capable of directly providing required data engineering infrastructure functions, if Azure services become unsuitable for HRL data engineering needs, if DWR adopts an enterprise platform that unifies these layers without sacrificing governance and reproducibility, if Posit is no longer used beyond HRL, or if implementation shows that the separation creates excessive operational burden.
 
 Related ADRs:
 
 - [ADR-001: Adopt the HRL data lifecycle as the organizing framework](adr-001-hrl-data-lifecycle.md)
-- [ADR-006: Use a DWR-hosted, PaaS-first Azure architecture for HRL data infrastructure](adr-006-dwr-hosted-paas-first-azure-architecture.md)
-- [ADR-007: Use Azure Storage / ADLS Gen2 as the raw, intermediate, export, and archival object storage backbone](adr-007-azure-storage-adls-gen2-object-storage-backbone.md)
-- [ADR-009: Use PostgreSQL/PostGIS as the authoritative operational store for standardized spatial data](adr-009-postgresql-postgis-authoritative-operational-store.md)
+- [ADR-006: Use a DWR-hosted, PaaS-first Azure architecture for HRL data infrastructure](adr-006-paas-first-azure-architecture.md)
+- [ADR-007: Use Azure Storage / ADLS Gen2 as the raw, intermediate, export, and archival object storage backbone](adr-007-azure-storage-adls-gen2-object-storage.md)
+- [ADR-009: Use PostgreSQL/PostGIS as the authoritative operational store for standardized spatial data](adr-009-postgresql-postgis-operational-store.md)
 - [ADR-010: Publish standardized export files alongside the authoritative database](adr-010-standardized-export-files.md)
-- [ADR-011: Procure and use Posit Workbench and Posit Connect for data science and application publishing](adr-011-posit-workbench-connect.md)
+- [ADR-011: Procure and use Posit Workbench and Posit Connect for data science and application publishing](adr-011-posit-workbench-posit-connect.md)
 - [ADR-013: Treat Posit as a deliberate IaaS exception to the PaaS-first principle](adr-013-posit-iaas-exception.md)

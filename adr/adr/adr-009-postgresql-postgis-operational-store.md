@@ -8,7 +8,15 @@ informed:
 
 # Use PostgreSQL/PostGIS as the authoritative operational store for standardized spatial data
 
-## Context and Problem Statement
+::: {.adr-metadata}
+**Status:** Accepted  
+**Date:** 2026-05-11  
+**Decision makers:** Lucy Andrews  
+**Consulted:** Ashley Vizek  
+**Informed:**
+:::
+
+## Context and problem statement
 
 Healthy Rivers and Landscapes (HRL) data infrastructure must support standardized, queryable, and reusable spatial data for program-level analysis, synthesis, mapping, reporting, and application development. HRL workflows will include spatial datasets that begin as submitted files or external repository-hosted files, are validated and transformed through ingestion workflows, and then need to be stored in a form that supports reliable access by analysts, applications, APIs, and export processes.
 
@@ -18,7 +26,7 @@ PostgreSQL with the PostGIS extension is a widely used open-source spatial datab
 
 Because HRL shared infrastructure is DWR-hosted in Azure and follows a PaaS-first architecture, PostgreSQL/PostGIS should be implemented using a managed Azure database service where practical.
 
-## Decision Drivers
+## Decision drivers
 
 - Need for an authoritative operational store for standardized spatial data
 - Need to distinguish raw submitted files from curated, standardized, queryable program data
@@ -30,7 +38,7 @@ Because HRL shared infrastructure is DWR-hosted in Azure and follows a PaaS-firs
 - Need to use open-source, broadly supported geospatial database technology
 - Need to align with the DWR-hosted, PaaS-first Azure architecture
 
-## Considered Options
+## Considered options
 
 - Use PostgreSQL/PostGIS as the authoritative operational store for standardized spatial data
 - Use file-based spatial formats as the authoritative store
@@ -38,7 +46,7 @@ Because HRL shared infrastructure is DWR-hosted in Azure and follows a PaaS-firs
 - Store standardized spatial data only in Azure Storage / ADLS Gen2
 - Store standardized spatial data only in static publication repositories such as EDI
 
-## Decision Outcome
+## Decision outcome
 
 Chosen option: **Use PostgreSQL/PostGIS as the authoritative operational store for standardized spatial data** because HRL needs a durable, queryable, spatially enabled database for standardized program datasets after validation and transformation.
 
@@ -84,7 +92,7 @@ Examples of confirmation include:
 - Access controls distinguish read-only users, data stewards, pipeline service accounts, and administrators
 - Export files are generated from the authoritative database or from documented database views
 
-## Pros and Cons of the Options
+## Pros and cons of the options
 
 ### Use PostgreSQL/PostGIS as the authoritative operational store for standardized spatial data
 
@@ -205,7 +213,7 @@ Undesirable:
 - Does not replace the need for ingestion, standardization, storage, and serving infrastructure
 - May not support the access patterns needed for HRL program operations and interactive tools
 
-## More Information
+## More information
 
 This decision should be revisited if PostgreSQL/PostGIS does not meet HRL needs for performance, scale, administration, security, geospatial functionality, or integration; if DWR adopts another enterprise spatial database standard; or if a specific dataset type requires a specialized authoritative store outside PostGIS.
 
@@ -213,9 +221,9 @@ Related ADRs:
 
 - [ADR-001: Adopt the HRL data lifecycle as the organizing framework](adr-001-hrl-data-lifecycle.md)
 - [ADR-005: Allow Central Data Team-managed publication pathways for large or complex datasets](adr-005-central-data-team-managed-publication-pathways.md)
-- [ADR-006: Use a DWR-hosted, PaaS-first Azure architecture for HRL data infrastructure](adr-006-dwr-hosted-paas-first-azure-architecture.md)
-- [ADR-007: Use Azure Storage / ADLS Gen2 as the raw, intermediate, export, and archival object storage backbone](adr-007-azure-storage-adls-gen2-object-storage-backbone.md)
-- [ADR-008: Use Azure Container Apps Jobs for validation and transformation workflows](adr-008-container-apps-jobs-validation-transformation.md)
+- [ADR-006: Use a DWR-hosted, PaaS-first Azure architecture for HRL data infrastructure](adr-006-paas-first-azure-architecture.md)
+- [ADR-007: Use Azure Storage / ADLS Gen2 as the raw, intermediate, export, and archival object storage backbone](adr-007-azure-storage-adls-gen2-object-storage.md)
+- [ADR-008: Use Azure Container Apps Jobs for validation and transformation workflows](adr-008-azure-container-apps-jobs.md)
 - [ADR-010: Publish standardized export files alongside the authoritative database](adr-010-standardized-export-files.md)
-- [ADR-014: Administer restoration project spatial data as a shared HRL program dataset with DWR as steward](adr-014-shared-restoration-project-spatial-data.md)
+- [ADR-014: Administer restoration project spatial data as a shared HRL program dataset with DWR as steward](adr-014-restoration-spatial-data-shared-dataset.md)
 - [ADR-017: Standardize restoration spatial data to EPSG:3310](adr-017-standardize-restoration-spatial-data-epsg-3310.md)

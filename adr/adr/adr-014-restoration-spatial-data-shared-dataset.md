@@ -8,7 +8,15 @@ informed: Louise Conrad, Pascale Goertler, Erik Loboschefsky, Josh Martinez, HRL
 
 # Administer restoration project spatial data as a shared HRL program dataset with DWR as steward
 
-## Context and Problem Statement
+::: {.adr-metadata}
+**Status:** Accepted  
+**Date:** 2026-05-07  
+**Decision makers:** Lucy Andrews  
+**Consulted:**  
+**Informed:** Louise Conrad, Pascale Goertler, Erik Loboschefsky, Josh Martinez, HRL Habitat Implementation Team
+:::
+
+## Context and problem statement
 
 Healthy Rivers and Landscapes (HRL) needs a shared spatial dataset representing restoration projects across the program. This dataset is expected to support planning, coordination, reporting, mapping, synthesis, and communication across HRL systems and partner agencies.
 
@@ -18,7 +26,7 @@ If restoration project spatial data are treated as a collection of separate agen
 
 HRL therefore needs to administer restoration project spatial data as a shared HRL program dataset, with DWR serving as the technical steward responsible for hosting, maintaining, standardizing, and publishing the dataset through the HRL data infrastructure.
 
-## Decision Drivers
+## Decision drivers
 
 - Need for a shared spatial dataset representing restoration projects across HRL
 - Need to support program-level mapping, synthesis, reporting, coordination, and decision support
@@ -30,7 +38,7 @@ HRL therefore needs to administer restoration project spatial data as a shared H
 - Need to support public, partner, and internal access products where appropriate
 - Need to align restoration project data management with the HRL data lifecycle and DWR-hosted infrastructure architecture
 
-## Considered Options
+## Considered options
 
 - Administer restoration project spatial data as a shared HRL program dataset with DWR as steward
 - Treat restoration project spatial data as a DWR-owned dataset
@@ -38,7 +46,7 @@ HRL therefore needs to administer restoration project spatial data as a shared H
 - Treat the restoration project spatial dataset as a temporary map product rather than a maintained program dataset
 - Outsource stewardship of the restoration project spatial dataset to another agency or external organization
 
-## Decision Outcome
+## Decision outcome
 
 Chosen option: **Administer restoration project spatial data as a shared HRL program dataset with DWR as steward** because HRL needs a consistent, trusted, program-level view of restoration projects while also needing a specific entity to steward the technical implementation.
 
@@ -85,7 +93,7 @@ Examples of confirmation include:
 - Metadata distinguish stewardship, contribution, source, update date, and publication or access status
 - Public-facing products clearly indicate limitations, update frequency, and appropriate use
 
-## Pros and Cons of the Options
+## Pros and cons of the options
 
 ### Administer restoration project spatial data as a shared HRL program dataset with DWR as steward
 
@@ -204,7 +212,7 @@ Undesirable:
 - May reduce HRL's ability to align the dataset with its schema, infrastructure, and lifecycle decisions
 - Could make data stewardship dependent on contracts or temporary project arrangements
 
-## More Information
+## More information
 
 This decision should be revisited if HRL governance assigns technical stewardship to another entity, if DWR no longer has capacity to steward the dataset, if a partner agency develops a more appropriate shared stewardship platform, or if the restoration project spatial dataset no longer serves program-level HRL needs.
 
@@ -213,8 +221,8 @@ Related ADRs:
 - [ADR-001: Adopt the HRL data lifecycle as the organizing framework](adr-001-hrl-data-lifecycle.md)
 - [ADR-003: Define Data Producers, the Central Data Team, and Synthesis Teams as core governance roles](adr-003-governance-roles.md)
 - [ADR-005: Allow Central Data Team-managed publication pathways for large or complex datasets](adr-005-central-data-team-managed-publication-pathways.md)
-- [ADR-006: Use a DWR-hosted, PaaS-first Azure architecture for HRL data infrastructure](adr-006-dwr-hosted-paas-first-azure-architecture.md)
-- [ADR-009: Use PostgreSQL/PostGIS as the authoritative operational store for standardized spatial data](adr-009-postgresql-postgis-authoritative-operational-store.md)
+- [ADR-006: Use a DWR-hosted, PaaS-first Azure architecture for HRL data infrastructure](adr-006-paas-first-azure-architecture.md)
+- [ADR-009: Use PostgreSQL/PostGIS as the authoritative operational store for standardized spatial data](adr-009-postgresql-postgis-operational-store.md)
 - [ADR-010: Publish standardized export files alongside the authoritative database](adr-010-standardized-export-files.md)
 - [ADR-016: Use LinkML as the source-of-truth schema language for restoration spatial data](adr-016-linkml-source-of-truth-schema.md)
 - [ADR-017: Standardize restoration spatial data to EPSG:3310](adr-017-standardize-restoration-spatial-data-epsg-3310.md)

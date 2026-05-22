@@ -1,5 +1,5 @@
 ---
-title: "HRL Data Infrastructure Proposal"
+title: "HRL data infrastructure proposal"
 subtitle: "Healthy Rivers and Landscapes Science Program"
 author: "Lucy Andrews"
 date: "April 2026"
@@ -27,7 +27,16 @@ This document is currently published in draft form and should not be cited as
 authoritative HRL policy.
 :::
 
-## Executive Summary
+::: {.callout-note}
+## Archived planning context
+This proposal is preserved as an early planning artifact. For current
+architecture decisions, use the [Architecture decision records](../adr/index.qmd)
+and the newer architecture pages on this site. Where this proposal describes a
+choice as TBD but an ADR has since been accepted or proposed, the ADR is the more
+current source.
+:::
+
+## Executive summary
 
 The HRL Science Program is committed to open, reproducible science in an
 eight-year, multi-agency program that will generate hundreds of datasets,
@@ -103,7 +112,7 @@ technical choices---they are governance and resource decisions:
 
 ---
 
-## Program Context & Requirements
+## Program context & requirements
 
 ### The core challenge
 
@@ -167,7 +176,7 @@ those commitments produce four guiding principles:
 
 ---
 
-## Infrastructure Overview
+## Infrastructure overview
 
 The proposed infrastructure is organized into four layers, each corresponding to a
 stage in the HRL data lifecycle. Data flows from producers through each layer,
@@ -223,7 +232,7 @@ flowchart TB
     class E l4
 ```
 
-### Layer 1 — Source and Static Publication
+### Layer 1 — source and static publication
 
 Data enters the HRL system from a distributed network of producers. The program
 cannot and should not control what systems producers use internally. What it can
@@ -250,7 +259,7 @@ types and community context.
 :::
 
 ::: {.callout-important}
-## Decisions to Be Made — Layer 1
+## Decisions to be made — layer 1
 
 - **Where should large or complex data objects be archived?** EDI may not be
   appropriate for Earth observation products, LiDAR point clouds, or large model
@@ -270,7 +279,7 @@ types and community context.
   outputs.
 :::
 
-### Layer 2 — Ingestion and Standardization
+### Layer 2 — ingestion and standardization
 
 This is the most technically demanding layer to build and the Year 1 focus.
 Ingestion pipelines are responsible for:
@@ -301,7 +310,7 @@ tooling, and cloud compute platform have not yet been selected; leading
 candidates are described in the decisions section below.
 
 ::: {.callout-warning}
-## The hardest problem in Layer 2
+## The hardest problem in layer 2
 Schema design, i.e., defining the program-wide data model that ingestion pipelines
 conform data to, is the most intellectually demanding work in this layer. It
 requires deep domain knowledge, cross-agency buy-in or delegated strong
@@ -310,7 +319,7 @@ legitimate variability across HRL study designs.
 :::
 
 ::: {.callout-important}
-## Decisions to Be Made — Layer 2
+## Decisions to be made — layer 2
 
 - **What pipeline orchestration framework should be used?** This is a
   foundational decision that shapes the entire Layer 2 architecture. How likely
@@ -371,7 +380,7 @@ legitimate variability across HRL study designs.
   how do pipelines respond when incoming data does not meet it?
 :::
 
-### Layer 3 — Storage and Serving
+### Layer 3 — storage and serving
 
 The central data store holds standardized, analysis-ready products and makes
 them accessible through multiple interfaces. The proposed approach is a tiered
@@ -399,7 +408,7 @@ storage candidates; the specific mechanisms will follow from the storage platfor
 decision.
 
 ::: {.callout-important}
-## Decisions to Be Made — Layer 3
+## Decisions to be made — layer 3
 
 - **What cloud object storage platform should be used?** Azure Blob Storage is
   the leading candidate given DWR's existing enterprise agreement and the low
@@ -432,7 +441,7 @@ decision.
   consultation with Tribal partners before storage is provisioned.
 :::
 
-### Layer 4 — Access and Applications
+### Layer 4 — access and applications
 
 The access layer is how data reaches synthesis teams, partner agencies, and the
 public. Multiple access modes serve different users:
@@ -467,7 +476,7 @@ JupyterHub instance), that would be a separate platform decision beyond the
 scope of this proposal.
 
 ::: {.callout-important}
-## Decisions to Be Made — Layer 4
+## Decisions to be made — layer 4
 
 - **Will a Python SDK be developed alongside the R package?** The HRL science
   community is R-first, but some partners and the broader open data audience may
@@ -503,7 +512,7 @@ scope of this proposal.
 
 ---
 
-## Technology Stack
+## Technology stack
 
 | Layer | Tools and technologies |
 |---|---|
@@ -530,19 +539,19 @@ Storage would be a configuration change, not a re-architecture.
 
 ---
 
-## Phased Roadmap
+## Phased roadmap
 
 The architecture is designed to be implemented in phases, each of which is
 independently useful and maintainable. Phases are defined by what the team can
 realistically deliver given available staffing.
 
-### Phase 0 — Foundations (Now — Month 3)
+### Phase 0 — foundations (now — month 3)
 
 TBD.
 
 ---
 
-## Staffing & Resource Requirements
+## Staffing & resource requirements
 
 The architecture described here is realistic only if the program makes genuine
 investment in dedicated technical capacity. Scientific software and data
@@ -558,7 +567,7 @@ administration and who do not have specific training in these domains.
 | Program Data Lead | 1.0 | All phases | Architecture governance, external partnerships, publication contract, Science Committee liaison |
 
 ::: {.callout-note}
-## Note on Year 1 staffing
+## Note on year 1 staffing
 The recommended Year 1 team is **one data engineer, one data scientist, and one
 program data lead**. The data engineer is responsible for pipeline implementation,
 storage integration, automation, and catalog infrastructure. The data scientist
@@ -583,7 +592,7 @@ application hosting requirements are better characterized.
 
 ---
 
-## Risks & Open Questions
+## Risks & open questions
 
 | Risk | Severity | Likelihood | Mitigation |
 |---|---|---|---|
@@ -591,7 +600,7 @@ application hosting requirements are better characterized.
 
 ---
 
-## Decisions Required {#decisions-required}
+## Decisions required {#decisions-required}
 
 This proposal asks the Science Committee to make or endorse the following
 decisions to enable early work to proceed:

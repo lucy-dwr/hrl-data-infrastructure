@@ -8,7 +8,15 @@ informed: HRL Science Committee
 
 # Define Data Producers, the Central Data Team, and Synthesis Teams as core governance roles
 
-## Context and Problem Statement
+::: {.adr-metadata}
+**Status:** Accepted  
+**Date:** 2026-01-01  
+**Decision makers:** Lucy Andrews, Louise Conrad, Pascale Goertler  
+**Consulted:** HRL Science Committee, Ashley Vizek  
+**Informed:** HRL Science Committee
+:::
+
+## Context and problem statement
 
 Healthy Rivers and Landscapes (HRL) data infrastructure depends on coordinated work across data collection, data publication, ingestion and standardization, storage and serving, analysis and synthesis, and communication of results.
 
@@ -18,7 +26,7 @@ Without explicit governance roles, HRL data work could suffer from unclear owner
 
 HRL therefore needs a clear role model for assigning responsibility across the data lifecycle.
 
-## Decision Drivers
+## Decision drivers
 
 - Need to clarify who is responsible for different stages of the HRL data lifecycle
 - Need to distinguish data production responsibilities from infrastructure and synthesis responsibilities
@@ -28,14 +36,14 @@ HRL therefore needs a clear role model for assigning responsibility across the d
 - Need to make data workflows understandable to both technical and non-technical participants
 - Need to align HRL data governance with reproducibility, transparency, FAIR principles, and CARE principles
 
-## Considered Options
+## Considered options
 
 - Define Data Producers, the Central Data Team, and Synthesis Teams as core governance roles
 - Treat all HRL participants as shared data stewards without distinguishing roles
 - Organize responsibilities separately for each project or dataset
 - Assign most data lifecycle responsibilities to the Central Data Team
 
-## Decision Outcome
+## Decision outcome
 
 Chosen option: **Define Data Producers, the Central Data Team, and Synthesis Teams as core governance roles** because HRL data work requires differentiated responsibilities across the data lifecycle.
 
@@ -76,7 +84,7 @@ Examples of confirmation include:
 - Analysis and reporting workflows describe Synthesis Team responsibilities
 - Governance or escalation pathways identify when decisions should be elevated beyond the working role
 
-## Pros and Cons of the Options
+## Pros and cons of the options
 
 ### Define Data Producers, the Central Data Team, and Synthesis Teams as core governance roles
 
@@ -171,7 +179,7 @@ Undesirable:
 - Does not scale well across many datasets, projects, and analysis needs
 - Risks treating the Central Data Team as a service desk rather than a governance and infrastructure function
 
-## More Information
+## More information
 
 This decision should be revisited if HRL governance roles change substantially, if new standing teams are created, or if implementation shows that additional roles are needed to describe recurring responsibilities.
 

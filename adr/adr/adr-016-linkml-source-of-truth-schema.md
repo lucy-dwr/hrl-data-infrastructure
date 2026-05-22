@@ -8,7 +8,15 @@ informed: HRL Habitat Implementation Team
 
 # Use LinkML as the source-of-truth schema language for restoration spatial data
 
-## Context and Problem Statement
+::: {.adr-metadata}
+**Status:** Accepted  
+**Date:** 2026-05-12  
+**Decision makers:** Lucy Andrews  
+**Consulted:** Ashley Vizek  
+**Informed:** HRL Habitat Implementation Team
+:::
+
+## Context and problem statement
 
 Healthy Rivers and Landscapes (HRL) needs a machine-readable schema for restoration project spatial data. The schema must define the expected structure of submitted and standardized restoration project records, including fields, descriptions, data types, required fields, allowable values, multivalued fields, and relationships among schema components.
 
@@ -18,7 +26,7 @@ The restoration project data model initially existed in spreadsheet form. Spread
 
 LinkML provides a machine-readable schema language that can describe classes, slots, types, enumerations, required fields, multivalued fields, descriptions, and related metadata. It can also generate documentation and validation artifacts such as JSON Schema from a single schema source.
 
-## Decision Drivers
+## Decision drivers
 
 - Need for a machine-readable source of truth for the restoration project data model
 - Need to move beyond spreadsheet-based schema management
@@ -31,7 +39,7 @@ LinkML provides a machine-readable schema language that can describe classes, sl
 - Need to keep the schema understandable and maintainable for a small technical team
 - Need to support future interoperability with related data standards where practical
 
-## Considered Options
+## Considered options
 
 - Use LinkML as the source-of-truth schema language for restoration spatial data
 - Continue maintaining the schema primarily in spreadsheets
@@ -39,7 +47,7 @@ LinkML provides a machine-readable schema language that can describe classes, sl
 - Use a database schema or migration files as the source of truth
 - Use documentation pages as the source of truth
 
-## Decision Outcome
+## Decision outcome
 
 Chosen option: **Use LinkML as the source-of-truth schema language for restoration spatial data** because it provides a maintainable, machine-readable schema source that can generate documentation and downstream validation artifacts while remaining more expressive and human-editable than lower-level validation formats.
 
@@ -86,7 +94,7 @@ Examples of confirmation include:
 - Validation and ingestion code reference LinkML-derived artifacts rather than independently maintained field definitions
 - Spreadsheet representations, if used, are documented as review or communication artifacts rather than the authoritative schema
 
-## Pros and Cons of the Options
+## Pros and cons of the options
 
 ### Use LinkML as the source-of-truth schema language for restoration spatial data
 
@@ -207,15 +215,15 @@ Undesirable:
 - Does not provide a strong source for generating validation artifacts
 - Makes schema changes harder to review systematically
 
-## More Information
+## More information
 
 This decision should be revisited if LinkML becomes unsuitable for HRL needs, if the restoration project schema becomes too simple to justify LinkML tooling, if another schema language becomes a better fit for HRL validation and documentation workflows, or if implementation shows that LinkML-generated artifacts cannot support required validation and documentation workflows.
 
 Related ADRs:
 
 - [ADR-002: Require standardized, reproducible HRL repositories with GitHub, environment management, CI/CD, and governance files](adr-002-standardized-reproducible-hrl-repositories.md)
-- [ADR-008: Use Azure Container Apps Jobs for validation and transformation workflows](adr-008-container-apps-jobs-validation-transformation.md)
-- [ADR-009: Use PostgreSQL/PostGIS as the authoritative operational store for standardized spatial data](adr-009-postgresql-postgis-authoritative-operational-store.md)
-- [ADR-014: Administer restoration project spatial data as a shared HRL program dataset with DWR as steward](adr-014-shared-restoration-project-spatial-data.md)
-- [ADR-015: Split the HRL spatial data pipeline across multiple repositories rather than a monorepo](adr-015-multiple-repositories.md)
+- [ADR-008: Use Azure Container Apps Jobs for validation and transformation workflows](adr-008-azure-container-apps-jobs.md)
+- [ADR-009: Use PostgreSQL/PostGIS as the authoritative operational store for standardized spatial data](adr-009-postgresql-postgis-operational-store.md)
+- [ADR-014: Administer restoration project spatial data as a shared HRL program dataset with DWR as steward](adr-014-restoration-spatial-data-shared-dataset.md)
+- [ADR-015: Split the HRL spatial data pipeline across multiple repositories rather than a monorepo](adr-015-spatial-data-pipeline-multiple-repositories.md)
 - [ADR-017: Standardize restoration spatial data to EPSG:3310](adr-017-standardize-restoration-spatial-data-epsg-3310.md)

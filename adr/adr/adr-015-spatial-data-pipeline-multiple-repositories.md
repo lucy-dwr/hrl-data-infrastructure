@@ -8,7 +8,15 @@ informed:
 
 # Split the HRL spatial data pipeline across multiple repositories rather than a monorepo
 
-## Context and Problem Statement
+::: {.adr-metadata}
+**Status:** Accepted  
+**Date:** 2026-05-14  
+**Decision makers:** Lucy Andrews  
+**Consulted:** Ashley Vizek  
+**Informed:**
+:::
+
+## Context and problem statement
 
 Healthy Rivers and Landscapes (HRL) spatial data infrastructure includes several related but distinct components. These include architecture documentation, schema definitions, validation code, ingestion and transformation workflows, database migrations, API or data-serving code, export workflows, map applications, and user-facing documentation.
 
@@ -16,7 +24,7 @@ These components are connected, but they do not all have the same purpose, audie
 
 HRL therefore needs to decide whether to organize the spatial data pipeline in a single monorepo or across multiple repositories with clear boundaries.
 
-## Decision Drivers
+## Decision drivers
 
 - Need to maintain separation of concerns across schemas, validation code, infrastructure, databases, APIs, applications, and documentation
 - Need to support different release cycles for different components
@@ -28,14 +36,14 @@ HRL therefore needs to decide whether to organize the spatial data pipeline in a
 - Need to avoid a large, complex repository that becomes difficult to navigate or govern
 - Need to align repository structure with HRL reproducibility and governance standards
 
-## Considered Options
+## Considered options
 
 - Split the HRL spatial data pipeline across multiple repositories rather than a monorepo
 - Use a single monorepo for the entire HRL spatial data pipeline
 - Use one repository per dataset, project, or application without a coordinated repository architecture
 - Keep most spatial data pipeline code and documentation in local or informal working locations
 
-## Decision Outcome
+## Decision outcome
 
 Chosen option: **Split the HRL spatial data pipeline across multiple repositories rather than a monorepo** because the pipeline includes distinct components with different responsibilities, audiences, and deployment patterns.
 
@@ -80,7 +88,7 @@ Examples of confirmation include:
 - Cross-repository dependencies, such as schema versions used by validation code, are documented
 - Repository templates or scaffolding enforce shared HRL expectations without requiring a monorepo
 
-## Pros and Cons of the Options
+## Pros and cons of the options
 
 ### Split the HRL spatial data pipeline across multiple repositories rather than a monorepo
 
@@ -180,15 +188,15 @@ Undesirable:
 - Does not support CI/CD, release management, or open-source readiness
 - Is not appropriate for shared HRL program infrastructure
 
-## More Information
+## More information
 
 This decision should be revisited if the repository ecosystem becomes too fragmented, if cross-repository coordination becomes a major implementation burden, if HRL adopts a broader organizational repository strategy that supersedes this approach, or if some components become tightly coupled enough to justify consolidation.
 
 Related ADRs:
 
 - [ADR-002: Require standardized, reproducible HRL repositories with GitHub, environment management, CI/CD, and governance files](adr-002-standardized-reproducible-hrl-repositories.md)
-- [ADR-006: Use a DWR-hosted, PaaS-first Azure architecture for HRL data infrastructure](adr-006-dwr-hosted-paas-first-azure-architecture.md)
-- [ADR-007: Use Azure Storage / ADLS Gen2 as the raw, intermediate, export, and archival object storage backbone](adr-007-azure-storage-adls-gen2-object-storage-backbone.md)
-- [ADR-008: Use Azure Container Apps Jobs for validation and transformation workflows](adr-008-container-apps-jobs-validation-transformation.md)
-- [ADR-009: Use PostgreSQL/PostGIS as the authoritative operational store for standardized spatial data](adr-009-postgresql-postgis-authoritative-operational-store.md)
+- [ADR-006: Use a DWR-hosted, PaaS-first Azure architecture for HRL data infrastructure](adr-006-paas-first-azure-architecture.md)
+- [ADR-007: Use Azure Storage / ADLS Gen2 as the raw, intermediate, export, and archival object storage backbone](adr-007-azure-storage-adls-gen2-object-storage.md)
+- [ADR-008: Use Azure Container Apps Jobs for validation and transformation workflows](adr-008-azure-container-apps-jobs.md)
+- [ADR-009: Use PostgreSQL/PostGIS as the authoritative operational store for standardized spatial data](adr-009-postgresql-postgis-operational-store.md)
 - [ADR-016: Use LinkML as the source-of-truth schema language for restoration spatial data](adr-016-linkml-source-of-truth-schema.md)

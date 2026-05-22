@@ -8,7 +8,15 @@ informed:
 
 # Standardize restoration spatial data to EPSG:3310
 
-## Context and Problem Statement
+::: {.adr-metadata}
+**Status:** Accepted  
+**Date:** 2026-05-14  
+**Decision makers:** Lucy Andrews  
+**Consulted:**  
+**Informed:**
+:::
+
+## Context and problem statement
 
 Healthy Rivers and Landscapes (HRL) restoration project spatial data will be submitted by multiple agencies, programs, implementers, and partners. These data may arrive in different coordinate reference systems, file formats, and GIS workflows. To support validation, standardization, storage, analysis, mapping, and export, HRL needs a consistent coordinate reference system for the curated restoration project dataset.
 
@@ -18,7 +26,7 @@ If submitted datasets retain mixed coordinate reference systems in the authorita
 
 HRL therefore needs to standardize restoration spatial data to a single coordinate reference system for canonical storage and program-level use.
 
-## Decision Drivers
+## Decision drivers
 
 - Need for a consistent coordinate reference system for standardized restoration spatial data
 - Need to support spatial validation, transformation, storage, analysis, mapping, and export workflows
@@ -30,7 +38,7 @@ HRL therefore needs to standardize restoration spatial data to a single coordina
 - Need to make submission requirements and transformation behavior clear to data contributors
 - Need to avoid storing canonical records in arbitrary source-data coordinate systems
 
-## Considered Options
+## Considered options
 
 - Standardize restoration spatial data to EPSG:3310
 - Store restoration spatial data in the submitted coordinate reference system
@@ -38,7 +46,7 @@ HRL therefore needs to standardize restoration spatial data to a single coordina
 - Standardize restoration spatial data to a local projected coordinate system selected by each project or region
 - Require all submitters to provide data already projected to EPSG:3310
 
-## Decision Outcome
+## Decision outcome
 
 Chosen option: **Standardize restoration spatial data to EPSG:3310** because HRL restoration project data are California-focused and need a consistent projected coordinate reference system for canonical storage, validation, analysis, and export workflows.
 
@@ -85,7 +93,7 @@ Examples of confirmation include:
 - Export workflows document whether outputs are in EPSG:3310 or another requested CRS
 - User-facing documentation explains that EPSG:3310 is the canonical CRS for standardized HRL restoration spatial data
 
-## Pros and Cons of the Options
+## Pros and cons of the options
 
 ### Standardize restoration spatial data to EPSG:3310
 
@@ -202,15 +210,15 @@ Undesirable:
 - Reduces flexibility without eliminating the need to validate CRS metadata
 - May discourage contributions from less technical partners
 
-## More Information
+## More information
 
 This decision should be revisited if HRL expands substantially outside California, if EPSG:3310 becomes unsuitable for HRL restoration project spatial workflows, if DWR adopts a different enterprise CRS standard for California spatial data, or if specific data products require a different canonical CRS.
 
 Related ADRs:
 
-- [ADR-006: Use a DWR-hosted, PaaS-first Azure architecture for HRL data infrastructure](adr-006-dwr-hosted-paas-first-azure-architecture.md)
-- [ADR-008: Use Azure Container Apps Jobs for validation and transformation workflows](adr-008-container-apps-jobs-validation-transformation.md)
-- [ADR-009: Use PostgreSQL/PostGIS as the authoritative operational store for standardized spatial data](adr-009-postgresql-postgis-authoritative-operational-store.md)
+- [ADR-006: Use a DWR-hosted, PaaS-first Azure architecture for HRL data infrastructure](adr-006-paas-first-azure-architecture.md)
+- [ADR-008: Use Azure Container Apps Jobs for validation and transformation workflows](adr-008-azure-container-apps-jobs.md)
+- [ADR-009: Use PostgreSQL/PostGIS as the authoritative operational store for standardized spatial data](adr-009-postgresql-postgis-operational-store.md)
 - [ADR-010: Publish standardized export files alongside the authoritative database](adr-010-standardized-export-files.md)
-- [ADR-014: Administer restoration project spatial data as a shared HRL program dataset with DWR as steward](adr-014-shared-restoration-project-spatial-data.md)
+- [ADR-014: Administer restoration project spatial data as a shared HRL program dataset with DWR as steward](adr-014-restoration-spatial-data-shared-dataset.md)
 - [ADR-016: Use LinkML as the source-of-truth schema language for restoration spatial data](adr-016-linkml-source-of-truth-schema.md)

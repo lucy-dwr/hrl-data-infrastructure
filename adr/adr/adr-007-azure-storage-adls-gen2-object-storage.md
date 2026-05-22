@@ -3,12 +3,20 @@ status: proposed
 date: 2026-05-21
 decision-makers: Lucy Andrews
 consulted: Ashley Vizek, Jordan Hoang, Emanuel Rodriguez
-informed:
+informed: 
 ---
 
 # Use Azure Storage / ADLS Gen2 as the raw, intermediate, export, and archival object storage backbone
 
-## Context and Problem Statement
+::: {.adr-metadata}
+**Status:** Proposed  
+**Date:** 2026-05-21  
+**Decision makers:** Lucy Andrews  
+**Consulted:** Ashley Vizek, Jordan Hoang, Emanuel Rodriguez  
+**Informed:**
+:::
+
+## Context and problem statement
 
 Healthy Rivers and Landscapes (HRL) data infrastructure must support the movement of data through multiple lifecycle stages, including submission, validation, standardization, storage, serving, export, and archiving. Many HRL workflows will involve files that need to be preserved outside of databases, including submitted source files, validation reports, intermediate outputs, standardized exports, metadata records, and archival snapshots.
 
@@ -16,7 +24,7 @@ The infrastructure therefore needs a durable object storage backbone that can su
 
 Because HRL shared infrastructure will be hosted by DWR in Azure, Azure Storage / Azure Data Lake Storage (ADLS) Gen2 is the appropriate default object storage service for this role.
 
-## Decision Drivers
+## Decision drivers
 
 - Need for durable storage of raw submissions, validation reports, intermediate files, standardized exports, and archival snapshots
 - Need to preserve submitted source files separately from standardized, transformed, or derived products
@@ -28,7 +36,7 @@ Because HRL shared infrastructure will be hosted by DWR in Azure, Azure Storage 
 - Need to manage access controls, retention, backup, and lifecycle policies within the DWR Azure environment
 - Need to avoid relying on local machines, network drives, or ad hoc file-sharing systems as infrastructure components
 
-## Considered Options
+## Considered options
 
 - Use Azure Storage / ADLS Gen2 as the raw, intermediate, export, and archival object storage backbone
 - Store files primarily in PostgreSQL/PostGIS
@@ -36,7 +44,7 @@ Because HRL shared infrastructure will be hosted by DWR in Azure, Azure Storage 
 - Store files primarily in EDI or other external repositories
 - Store files on local machines, network drives, or ad hoc shared folders
 
-## Decision Outcome
+## Decision outcome
 
 Chosen option: **Use Azure Storage / ADLS Gen2 as the raw, intermediate, export, and archival object storage backbone** because HRL needs a durable, Azure-native object storage layer that supports file-based data movement across the infrastructure while keeping raw submissions, intermediate products, exports, reports, and archives organized and separable.
 
@@ -82,7 +90,7 @@ Examples of confirmation include:
 - Access to raw, intermediate, curated, export, and archive areas is governed according to sensitivity and role
 - Database records, metadata, or catalog entries preserve links to relevant stored files where appropriate
 
-## Pros and Cons of the Options
+## Pros and cons of the options
 
 ### Use Azure Storage / ADLS Gen2 as the raw, intermediate, export, and archival object storage backbone
 
@@ -204,7 +212,7 @@ Undesirable:
 - Makes program-level management, backup, retention, and auditing more difficult
 - Does not scale well across HRL teams, agencies, and workflows
 
-## More Information
+## More information
 
 This decision should be revisited if DWR changes its enterprise cloud storage platform, if HRL adopts another approved object storage backbone, or if implementation shows that Azure Storage / ADLS Gen2 does not meet HRL needs for scale, access control, integration, cost, or data stewardship.
 
@@ -213,7 +221,7 @@ Related ADRs:
 - [ADR-001: Adopt the HRL data lifecycle as the organizing framework](adr-001-hrl-data-lifecycle.md)
 - [ADR-004: Require static publication of data before ingestion, with EDI as the default repository](adr-004-static-publication-before-ingestion.md)
 - [ADR-005: Allow Central Data Team-managed publication pathways for large or complex datasets](adr-005-central-data-team-managed-publication-pathways.md)
-- [ADR-006: Use a DWR-hosted, PaaS-first Azure architecture for HRL data infrastructure](adr-006-dwr-hosted-paas-first-azure-architecture.md)
-- [ADR-008: Use Azure Container Apps Jobs for validation and transformation workflows](adr-008-container-apps-jobs-validation-transformation.md)
-- [ADR-009: Use PostgreSQL/PostGIS as the authoritative operational store for standardized spatial data](adr-009-postgresql-postgis-authoritative-operational-store.md)
+- [ADR-006: Use a DWR-hosted, PaaS-first Azure architecture for HRL data infrastructure](adr-006-paas-first-azure-architecture.md)
+- [ADR-008: Use Azure Container Apps Jobs for validation and transformation workflows](adr-008-azure-container-apps-jobs.md)
+- [ADR-009: Use PostgreSQL/PostGIS as the authoritative operational store for standardized spatial data](adr-009-postgresql-postgis-operational-store.md)
 - [ADR-010: Publish standardized export files alongside the authoritative database](adr-010-standardized-export-files.md)

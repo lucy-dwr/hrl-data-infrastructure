@@ -116,6 +116,125 @@ main .table tbody tr:hover > * {
   background-color: #f7f7f7 !important;
 }
 
+/* ADR metadata blocks */
+.adr-metadata {
+  border-left: 4px solid #2E7DA1;
+  background-color: #F7F7F7;
+  padding: 0.8rem 1rem;
+  margin: 1rem 0 2rem 0;
+}
+
+.adr-metadata p {
+  margin-bottom: 0.3rem;
+}
+
+.adr-inventory table th:first-child,
+.adr-inventory table td:first-child {
+  min-width: 5.6rem;
+  white-space: nowrap;
+}
+
+.adr-inventory table th:nth-child(4),
+.adr-inventory table td:nth-child(4) {
+  min-width: 6.8rem;
+  white-space: nowrap;
+}
+
+.adr-inventory table th:nth-child(5),
+.adr-inventory table td:nth-child(5) {
+  min-width: 11.5rem;
+}
+
+.adr-status {
+  display: inline-block;
+  padding: 0.1rem 0.45rem;
+  border-radius: 4px;
+  font-size: 0.82rem;
+  font-weight: 700;
+  line-height: 1.35;
+}
+
+.adr-status-accepted {
+  background-color: #DDECDC;
+  color: #2E6E3D;
+}
+
+.adr-status-proposed {
+  background-color: #F6E5BC;
+  color: #7A4F00;
+}
+
+.table-sort-control {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.35rem;
+  padding: 0;
+  border: 0;
+  background: transparent;
+  color: #0C425C;
+  font: inherit;
+  font-weight: 700;
+  line-height: inherit;
+  cursor: pointer;
+}
+
+.table-sort-control:hover,
+.table-sort-control:focus {
+  color: #2E7DA1;
+}
+
+.table-sort-control:focus-visible {
+  outline: 2px solid #2E7DA1;
+  outline-offset: 2px;
+}
+
+.table-sort-arrow {
+  color: #2E7DA1;
+  font-size: 0.8em;
+}
+
+.forthcoming-decisions table {
+  width: 100%;
+}
+
+.forthcoming-decisions table colgroup col:first-child {
+  width: 8rem !important;
+}
+
+.forthcoming-decisions table colgroup col:nth-child(2) {
+  width: auto !important;
+}
+
+.forthcoming-decisions table colgroup col:nth-child(3) {
+  width: 8rem !important;
+}
+
+.forthcoming-decisions table colgroup col:nth-child(4) {
+  width: 11.5rem !important;
+}
+
+.forthcoming-decisions table th:first-child,
+.forthcoming-decisions table td:first-child {
+  width: 8rem;
+  white-space: nowrap;
+}
+
+.forthcoming-decisions table th:nth-child(2),
+.forthcoming-decisions table td:nth-child(2) {
+  width: auto;
+}
+
+.forthcoming-decisions table th:nth-child(3),
+.forthcoming-decisions table td:nth-child(3) {
+  width: 8rem;
+  white-space: nowrap;
+}
+
+.forthcoming-decisions table th:nth-child(4),
+.forthcoming-decisions table td:nth-child(4) {
+  width: 11.5rem;
+}
+
 /* Increase vertical spacing between bullets (works even with Bootstrap/Quarto overrides) */
 main ul li,
 main ol li {
@@ -207,21 +326,69 @@ svg defs marker path {
   border-right: 1px solid #DADADA;
 }
 
+/* Keep sidebar labels and disclosure controls on the same visual line. */
+.sidebar .sidebar-item .sidebar-item-container {
+  display: flex;
+  align-items: center;
+}
+
+.sidebar .sidebar-item.sidebar-item-section {
+  margin-top: 0.85rem;
+}
+
+.sidebar .sidebar-section .sidebar-item.sidebar-item-section {
+  margin-top: 0.5rem;
+}
+
 /* Section header labels */
 .sidebar .sidebar-item.sidebar-item-section > .sidebar-item-container .sidebar-item-text,
 .sidebar .sidebar-section-item {
-  font-size: 0.7rem;
   font-weight: 700;
-  letter-spacing: 0.07em;
+  line-height: 1.25;
   text-transform: uppercase;
   color: #0C425C !important;
-  padding-top: 0.9rem;
+}
+
+/* Top-level section headers */
+.sidebar > .sidebar-menu-container .sidebar-menu > .sidebar-item.sidebar-item-section
+  > .sidebar-item-container .sidebar-item-text {
+  font-size: 0.82rem;
+  letter-spacing: 0.055em;
+}
+
+/* Nested section headers */
+.sidebar .sidebar-section .sidebar-item.sidebar-item-section
+  > .sidebar-item-container .sidebar-item-text {
+  font-size: 0.76rem;
+  letter-spacing: 0.055em;
 }
 
 /* Regular sidebar links */
 .sidebar .sidebar-item .sidebar-item-text {
+  display: flex;
+  align-items: center;
   font-size: 0.875rem;
+  line-height: 1.25;
   color: #333333;
+  min-height: 1.75rem;
+  padding-top: 0.2rem;
+  padding-bottom: 0.2rem;
+}
+
+/* Nested page links should not visually overpower their section headers. */
+.sidebar .sidebar-section .sidebar-item:not(.sidebar-item-section) .sidebar-item-text {
+  font-size: 0.84rem;
+}
+
+.sidebar .sidebar-item .sidebar-item-toggle {
+  display: flex;
+  align-items: center;
+  align-self: center;
+  justify-content: center;
+  line-height: 1;
+  min-height: 1.75rem;
+  padding-top: 0.2rem;
+  padding-bottom: 0.2rem;
 }
 
 /* Sidebar link hover */

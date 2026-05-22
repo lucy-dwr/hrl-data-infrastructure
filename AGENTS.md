@@ -1,4 +1,4 @@
-# Agent Context — hrl-data-infrastructure
+# Agent context — hrl-data-infrastructure
 
 ## What this repo is
 

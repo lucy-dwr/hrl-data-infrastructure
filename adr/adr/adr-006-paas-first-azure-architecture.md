@@ -8,7 +8,15 @@ informed: Louise Conrad
 
 # Use a DWR-hosted, PaaS-first Azure architecture for HRL data infrastructure
 
-## Context and Problem Statement
+::: {.adr-metadata}
+**Status:** Accepted  
+**Date:** 2026-05-08  
+**Decision makers:** Lucy Andrews  
+**Consulted:** Ashley Vizek, John Spendlove  
+**Informed:** Louise Conrad
+:::
+
+## Context and problem statement
 
 Healthy Rivers and Landscapes (HRL) data infrastructure must support data ingestion, validation, standardization, storage, serving, access, and analysis across multiple datasets and workflows. The infrastructure needs to support reproducible and maintainable data workflows while remaining manageable for the technical staff responsible for operating the system.
 
@@ -20,7 +28,7 @@ HRL could implement this infrastructure using self-managed virtual machines, man
 
 HRL therefore needs a default infrastructure architecture that clearly identifies DWR as the hosting agency and uses DWR's Azure environment in a way that supports reliability, scalability, security, and maintainability while minimizing unnecessary server administration.
 
-## Decision Drivers
+## Decision drivers
 
 - Need to identify a responsible hosting agency for shared HRL data infrastructure
 - Need to host HRL data infrastructure within an agency environment that has sufficient technical, administrative, procurement, and enterprise cloud capacity
@@ -34,7 +42,7 @@ HRL therefore needs a default infrastructure architecture that clearly identifie
 - Need to avoid unnecessary maintenance of operating systems, patching, and manually administered servers
 - Need to allow infrastructure components to scale as HRL data volume, access needs, and user communities grow
 
-## Considered Options
+## Considered options
 
 - Use a DWR-hosted, PaaS-first Azure architecture for HRL data infrastructure
 - Host HRL data infrastructure through another HRL partner agency
@@ -42,7 +50,7 @@ HRL therefore needs a default infrastructure architecture that clearly identifie
 - Use externally hosted third-party data platforms outside DWR-managed Azure infrastructure
 - Use local, desktop, or network-drive-based infrastructure for early implementation
 
-## Decision Outcome
+## Decision outcome
 
 Chosen option: **Use a DWR-hosted, PaaS-first Azure architecture for HRL data infrastructure** because DWR is currently the HRL partner agency with the capacity to host and operate shared cloud-based data infrastructure, and DWR's enterprise cloud environment is Microsoft Azure.
 
@@ -94,7 +102,7 @@ Examples of confirmation include:
 - IaaS components are documented as deliberate exceptions rather than default infrastructure
 - Infrastructure documentation distinguishes Azure data engineering services from analyst-facing platforms such as Posit Workbench and Posit Connect
 
-## Pros and Cons of the Options
+## Pros and cons of the options
 
 ### Use a DWR-hosted, PaaS-first Azure architecture for HRL data infrastructure
 
@@ -220,7 +228,7 @@ Undesirable:
 - Makes program-level synthesis and application publishing harder
 - Does not provide a durable foundation for HRL data infrastructure
 
-## More Information
+## More information
 
 This decision should be revisited if DWR changes its enterprise cloud hosting environment, if another HRL partner agency develops sufficient capacity to host shared infrastructure, if Azure managed services become unsuitable for HRL needs, if HRL infrastructure requirements exceed what DWR and the Central Data Team can manage under a PaaS-first approach, or if another approved enterprise platform provides a better fit.
 
@@ -228,8 +236,8 @@ Related ADRs:
 
 - [ADR-001: Adopt the HRL data lifecycle as the organizing framework](adr-001-hrl-data-lifecycle.md)
 - [ADR-005: Allow Central Data Team-managed publication pathways for large or complex datasets](adr-005-central-data-team-managed-publication-pathways.md)
-- [ADR-007: Use Azure Storage / ADLS Gen2 as the raw, intermediate, export, and archival object storage backbone](adr-007-azure-storage-adls-gen2-object-storage-backbone.md)
-- [ADR-008: Use Azure Container Apps Jobs for validation and transformation workflows](adr-008-container-apps-jobs-validation-transformation.md)
-- [ADR-009: Use PostgreSQL/PostGIS as the authoritative operational store for standardized spatial data](adr-009-postgresql-postgis-authoritative-operational-store.md)
-- [ADR-011: Procure and use Posit Workbench and Posit Connect for data science and application publishing](adr-011-posit-workbench-connect.md)
+- [ADR-007: Use Azure Storage / ADLS Gen2 as the raw, intermediate, export, and archival object storage backbone](adr-007-azure-storage-adls-gen2-object-storage.md)
+- [ADR-008: Use Azure Container Apps Jobs for validation and transformation workflows](adr-008-azure-container-apps-jobs.md)
+- [ADR-009: Use PostgreSQL/PostGIS as the authoritative operational store for standardized spatial data](adr-009-postgresql-postgis-operational-store.md)
+- [ADR-011: Procure and use Posit Workbench and Posit Connect for data science and application publishing](adr-011-posit-workbench-posit-connect.md)
 - [ADR-013: Treat Posit as a deliberate IaaS exception to the PaaS-first principle](adr-013-posit-iaas-exception.md)

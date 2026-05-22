@@ -8,7 +8,15 @@ informed: HRL Science Committee
 
 # Require static publication of data before ingestion, with EDI as the default repository
 
-## Context and Problem Statement
+::: {.adr-metadata}
+**Status:** Accepted  
+**Date:** 2026-01-01  
+**Decision makers:** Lucy Andrews, Louise Conrad, Pascale Goertler  
+**Consulted:** HRL Science Committee, Ashley Vizek  
+**Informed:** HRL Science Committee
+:::
+
+## Context and problem statement
 
 Healthy Rivers and Landscapes (HRL) data infrastructure is intended to support program-level data reuse, synthesis, analysis, reporting, and decision support. To make this possible, data entering shared infrastructure must be well documented, quality-controlled, versioned, citable, and reproducible.
 
@@ -16,7 +24,7 @@ If datasets are ingested directly from informal working files, undocumented spre
 
 HRL therefore needs a default expectation that datasets are first published as static, citable data releases before they are ingested into shared program infrastructure. The [Environmental Data Initiative (EDI)](https://edirepository.org) is the default repository for HRL static data publication when it is appropriate for the data type and publication context.
 
-## Decision Drivers
+## Decision drivers
 
 - Need to ensure that data entering shared HRL infrastructure are documented, quality-controlled, versioned, and citable
 - Need to support reproducibility and long-term reuse of HRL data products
@@ -27,14 +35,14 @@ HRL therefore needs a default expectation that datasets are first published as s
 - Need to provide Data Producers with a clear publication target and review standard
 - Need to avoid treating shared infrastructure as a substitute for proper data publication
 
-## Considered Options
+## Considered options
 
 - Require static publication of data before ingestion, with EDI as the default repository
 - Ingest data directly from project working files and publish later
 - Allow each project or Data Producer to choose whether publication is required before ingestion
 - Use HRL shared infrastructure as the primary publication location for all datasets
 
-## Decision Outcome
+## Decision outcome
 
 Chosen option: **Require static publication of data before ingestion, with EDI as the default repository** because HRL needs stable, documented, versioned, and citable source data products before those data are transformed into shared program infrastructure.
 
@@ -77,7 +85,7 @@ Examples of confirmation include:
 - Data Producers are provided with guidance for preparing EDI-ready data packages
 - Exceptions to EDI-first publication are documented and routed through an approved alternative pathway
 
-## Pros and Cons of the Options
+## Pros and cons of the options
 
 ### Require static publication of data before ingestion, with EDI as the default repository
 
@@ -176,7 +184,7 @@ Undesirable:
 - Makes long-term preservation more dependent on HRL-specific systems
 - Could reduce interoperability with broader scientific data publication practices
 
-## More Information
+## More information
 
 This decision should be revisited if EDI becomes unsuitable for HRL publication needs; if DWR or HRL adopts an official repository platform that provides equivalent or better support for citation, metadata, versioning, preservation, and discovery; or if implementation shows that the default publication-before-ingestion rule creates unacceptable delays or barriers.
 

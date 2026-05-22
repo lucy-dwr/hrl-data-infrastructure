@@ -1,6 +1,6 @@
 ---
 status: accepted
-date: 2026-05-7
+date: 2026-05-07
 decision-makers: Lucy Andrews
 consulted: John Spendlove
 informed: Louise Conrad
@@ -8,7 +8,15 @@ informed: Louise Conrad
 
 # Treat Posit as a deliberate IaaS exception to the PaaS-first principle
 
-## Context and Problem Statement
+::: {.adr-metadata}
+**Status:** Accepted  
+**Date:** 2026-05-07  
+**Decision makers:** Lucy Andrews  
+**Consulted:** John Spendlove  
+**Informed:** Louise Conrad
+:::
+
+## Context and problem statement
 
 Healthy Rivers and Landscapes (HRL) data infrastructure follows a DWR-hosted, PaaS-first Azure architecture. This means that HRL should prefer managed Azure services for shared data infrastructure wherever practical, including managed object storage, managed databases, managed container execution, managed application hosting, managed secrets, and managed monitoring.
 
@@ -18,7 +26,7 @@ HRL and DWR nevertheless need Posit Workbench and Posit Connect because they pro
 
 Without an explicit architectural decision, the use of Azure Virtual Machines for Posit could appear to contradict the PaaS-first principle. HRL therefore needs to document Posit as a deliberate, justified IaaS exception to the PaaS-first Azure architecture.
 
-## Decision Drivers
+## Decision drivers
 
 - Need to preserve the PaaS-first principle for HRL data engineering infrastructure
 - Need to acknowledge that Posit Workbench and Posit Connect require server-based deployment and administration
@@ -31,7 +39,7 @@ Without an explicit architectural decision, the use of Azure Virtual Machines fo
 - Need to document why this exception is justified and bounded
 - Need to allow other IaaS exceptions only when similarly justified
 
-## Considered Options
+## Considered options
 
 - Treat Posit as a deliberate IaaS exception to the PaaS-first principle
 - Avoid Posit because it requires IaaS deployment
@@ -39,7 +47,7 @@ Without an explicit architectural decision, the use of Azure Virtual Machines fo
 - Attempt to replace Posit with custom PaaS-based Azure services
 - Use only local development environments and ad hoc publishing workflows
 
-## Decision Outcome
+## Decision outcome
 
 Chosen option: **Treat Posit as a deliberate IaaS exception to the PaaS-first principle** because Posit Workbench and Posit Connect provide necessary data science development and publishing capabilities that are not available through a directly equivalent PaaS service, while their deployment model requires server-based infrastructure.
 
@@ -87,7 +95,7 @@ Examples of confirmation include:
 - Posit platform costs, administration, and user management are tracked separately from HRL-specific data engineering resources
 - Any additional IaaS exceptions are documented in separate ADRs with their own rationale
 
-## Pros and Cons of the Options
+## Pros and cons of the options
 
 ### Treat Posit as a deliberate IaaS exception to the PaaS-first principle
 
@@ -209,12 +217,12 @@ Undesirable:
 - Makes HRL and DWR analytical products harder to maintain over time
 - Does not meet the need for a durable platform for Shiny apps, Quarto reports, APIs, notebooks, and scheduled products
 
-## More Information
+## More information
 
 This decision should be revisited if Posit provides a fully managed PaaS deployment model acceptable to DWR, if DWR adopts a different enterprise data science platform that meets the same functional needs without IaaS deployment, if Posit is no longer used beyond HRL, or if the operational burden of Posit's IaaS deployment becomes unsustainable.
 
 Related ADRs:
 
-- [ADR-006: Use a DWR-hosted, PaaS-first Azure architecture for HRL data infrastructure](adr-006-dwr-hosted-paas-first-azure-architecture.md)
-- [ADR-011: Procure and use Posit Workbench and Posit Connect for data science and application publishing](adr-011-posit-workbench-connect.md)
-- [ADR-012: Separate the Azure data engineering stack from the Posit data science platform](adr-012-separate-azure-data-engineering-stack-from-posit.md)
+- [ADR-006: Use a DWR-hosted, PaaS-first Azure architecture for HRL data infrastructure](adr-006-paas-first-azure-architecture.md)
+- [ADR-011: Procure and use Posit Workbench and Posit Connect for data science and application publishing](adr-011-posit-workbench-posit-connect.md)
+- [ADR-012: Separate the Azure data engineering stack from the Posit data science platform](adr-012-separate-azure-data-engineering-and-posit.md)

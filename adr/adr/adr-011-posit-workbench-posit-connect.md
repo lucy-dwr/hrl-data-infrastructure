@@ -8,7 +8,15 @@ informed:
 
 # Procure and use Posit Workbench and Posit Connect for data science and application publishing
 
-## Context and Problem Statement
+::: {.adr-metadata}
+**Status:** Accepted  
+**Date:** 2026-04-28  
+**Decision makers:** Lucy Andrews, Louise Conrad  
+**Consulted:** DISE divisional leadership  
+**Informed:**
+:::
+
+## Context and problem statement
 
 Healthy Rivers and Landscapes (HRL) data infrastructure must support not only data storage and serving, but also the practical work of scientific computing, data analysis, reproducible reporting, and application publishing. HRL scientists, analysts, and data engineers need an environment where they can develop code, access shared data resources, collaborate on analytical workflows, and publish products such as Shiny applications, Quarto reports, dashboards, APIs, and scheduled analytical outputs.
 
@@ -18,7 +26,7 @@ Local desktop environments alone are not sufficient for shared HRL data science 
 
 HRL therefore needs a shared data science development and publishing platform that supports common open-source analytical workflows while integrating with DWR-hosted infrastructure.
 
-## Decision Drivers
+## Decision drivers
 
 - Need to support R, Shiny, Quarto, Streamlit, Python, FastAPI, Plumber, and common open-source scientific libraries
 - Need to provide hosted development environments for HRL data scientists, analysts, and developers
@@ -31,7 +39,7 @@ HRL therefore needs a shared data science development and publishing platform th
 - Need to support internal and potentially public-facing communication of data products and decision-support tools
 - Need to select a platform that is well aligned with HRL's existing R-centered scientific computing practices
 
-## Considered Options
+## Considered options
 
 - Procure and use Posit Workbench and Posit Connect for data science and application publishing
 - Use local desktop development environments and manual publication workflows
@@ -39,7 +47,7 @@ HRL therefore needs a shared data science development and publishing platform th
 - Use general-purpose notebook or machine learning platforms
 - Use proprietary business intelligence or GIS application platforms as the primary publishing environment
 
-## Decision Outcome
+## Decision outcome
 
 Chosen option: **Procure and use Posit Workbench and Posit Connect for data science and application publishing** because these products provide an integrated platform for open-source data science development and publishing that aligns with HRL's analytical workflows, existing R/Shiny/Quarto practices, and need for maintainable deployment paths.
 
@@ -88,7 +96,7 @@ Examples of confirmation include:
 - Platform administration, user access, authentication, backups, and support responsibilities are documented
 - The relationship between Posit and the Azure data engineering stack is documented clearly
 
-## Pros and Cons of the Options
+## Pros and cons of the options
 
 ### Procure and use Posit Workbench and Posit Connect for data science and application publishing
 
@@ -214,7 +222,7 @@ Undesirable:
 - May be less suitable for methods transparency, scientific reproducibility, and code-based review
 - Does not replace the need for a data science development environment
 
-## More Information
+## More information
 
 This decision should be revisited if Posit Workbench or Posit Connect no longer meet HRL needs, if procurement or licensing becomes infeasible, if DWR adopts another enterprise-standard data science platform that supports HRL's open-source scientific computing and publishing requirements, or if HRL's analytical workflows shift away from R, Shiny, Quarto, and related open-source tools.
 
@@ -222,6 +230,6 @@ Related ADRs:
 
 - [ADR-001: Adopt the HRL data lifecycle as the organizing framework](adr-001-hrl-data-lifecycle.md)
 - [ADR-002: Require standardized, reproducible HRL repositories with GitHub, environment management, CI/CD, and governance files](adr-002-standardized-reproducible-hrl-repositories.md)
-- [ADR-006: Use a DWR-hosted, PaaS-first Azure architecture for HRL data infrastructure](adr-006-dwr-hosted-paas-first-azure-architecture.md)
-- [ADR-012: Separate the Azure data engineering stack from the Posit data science platform](adr-012-separate-azure-data-engineering-stack-from-posit.md)
+- [ADR-006: Use a DWR-hosted, PaaS-first Azure architecture for HRL data infrastructure](adr-006-paas-first-azure-architecture.md)
+- [ADR-012: Separate the Azure data engineering stack from the Posit data science platform](adr-012-separate-azure-data-engineering-and-posit.md)
 - [ADR-013: Treat Posit as a deliberate IaaS exception to the PaaS-first principle](adr-013-posit-iaas-exception.md)

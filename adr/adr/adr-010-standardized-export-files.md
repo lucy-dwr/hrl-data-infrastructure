@@ -6,9 +6,17 @@ consulted: Ashley Vizek
 informed:
 ---
 
-# Publish standardized export files alongside the authoritative database
+# Publish standardized spatial export files alongside the authoritative database
 
-## Context and Problem Statement
+::: {.adr-metadata}
+**Status:** Accepted  
+**Date:** 2026-05-21  
+**Decision makers:** Lucy Andrews  
+**Consulted:** Ashley Vizek  
+**Informed:**
+:::
+
+## Context and problem statement
 
 Healthy Rivers and Landscapes (HRL) data infrastructure uses PostgreSQL/PostGIS as the authoritative operational store for standardized spatial data. This database-centered approach supports controlled updates, spatial queries, relational structure, APIs, applications, maps, dashboards, and reproducible downstream workflows.
 
@@ -18,7 +26,7 @@ If standardized data are available only through the operational database, HRL ri
 
 HRL therefore needs a standard approach for publishing file-based exports generated from the authoritative database or documented database views.
 
-## Decision Drivers
+## Decision drivers
 
 - Need to make standardized HRL data accessible to users who do not connect directly to databases
 - Need to support desktop GIS, analytical workflows, reproducible research, and partner agency use
@@ -30,7 +38,7 @@ HRL therefore needs a standard approach for publishing file-based exports genera
 - Need to align exports with the DWR-hosted Azure architecture and object storage backbone
 - Need to preserve a clear relationship between database records, export files, and static publication records
 
-## Considered Options
+## Considered options
 
 - Publish standardized export files alongside the authoritative database
 - Require users to access standardized data only through PostgreSQL/PostGIS
@@ -38,7 +46,7 @@ HRL therefore needs a standard approach for publishing file-based exports genera
 - Maintain manual or ad hoc export workflows
 - Treat static publication repositories as the only source for downloadable files
 
-## Decision Outcome
+## Decision outcome
 
 Chosen option: **Publish standardized export files alongside the authoritative database** because HRL needs both an authoritative operational database and accessible, portable, documented file-based data products.
 
@@ -85,7 +93,7 @@ Examples of confirmation include:
 - Export workflows include checks to reduce schema drift or incomplete exports
 - User-facing documentation explains that exports are derived access products, not the operational source of truth
 
-## Pros and Cons of the Options
+## Pros and cons of the options
 
 ### Publish standardized export files alongside the authoritative database
 
@@ -209,15 +217,15 @@ Undesirable:
 - Does not replace the need for exports generated from the current operational database
 - May blur the distinction between source publication, operational storage, and derived access products
 
-## More Information
+## More information
 
 This decision should be revisited if HRL users primarily access standardized data through APIs or applications and no longer need file exports, if export maintenance becomes unsustainable, if a catalog or data portal supersedes the proposed export mechanism, or if specific datasets require a different access model.
 
 Related ADRs:
 
 - [ADR-001: Adopt the HRL data lifecycle as the organizing framework](adr-001-hrl-data-lifecycle.md)
-- [ADR-006: Use a DWR-hosted, PaaS-first Azure architecture for HRL data infrastructure](adr-006-dwr-hosted-paas-first-azure-architecture.md)
-- [ADR-007: Use Azure Storage / ADLS Gen2 as the raw, intermediate, export, and archival object storage backbone](adr-007-azure-storage-adls-gen2-object-storage-backbone.md)
-- [ADR-009: Use PostgreSQL/PostGIS as the authoritative operational store for standardized spatial data](adr-009-postgresql-postgis-authoritative-operational-store.md)
-- [ADR-014: Administer restoration project spatial data as a shared HRL program dataset with DWR as steward](adr-014-shared-restoration-project-spatial-data.md)
+- [ADR-006: Use a DWR-hosted, PaaS-first Azure architecture for HRL data infrastructure](adr-006-paas-first-azure-architecture.md)
+- [ADR-007: Use Azure Storage / ADLS Gen2 as the raw, intermediate, export, and archival object storage backbone](adr-007-azure-storage-adls-gen2-object-storage.md)
+- [ADR-009: Use PostgreSQL/PostGIS as the authoritative operational store for standardized spatial data](adr-009-postgresql-postgis-operational-store.md)
+- [ADR-014: Administer restoration project spatial data as a shared HRL program dataset with DWR as steward](adr-014-restoration-spatial-data-shared-dataset.md)
 - [ADR-017: Standardize restoration spatial data to EPSG:3310](adr-017-standardize-restoration-spatial-data-epsg-3310.md)

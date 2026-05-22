@@ -1,15 +1,18 @@
 ---
-title: "HRL Data Infrastructure"
+title: "HRL data infrastructure"
 subtitle: "Healthy Rivers and Landscapes Science Program and DWR Science"
 toc: false
 ---
 
 Technical planning and design documentation for the HRL Science Program data infrastructure — the systems that collect, standardize, store, and serve data across an eight-year, multi-agency ecological restoration and monitoring program — and broader DWR ecological data science.
 
-## Planning Documents
+## Planning documents
 
-[**Data Pipeline Architecture**](pages/data_pipeline_architecture.qmd)
-: Design for the ingestion, validation, standardization, storage, and serving layers of the HRL data infrastructure.
+[**Spatial data pipeline architecture**](pages/spatial_data_pipeline_architecture.qmd)
+: Design for the ingestion, validation, standardization, storage, and serving layers of the HRL data infrastructure specifically for spatial data. Concepts presented here will apply to other data types as well but have not yet been built out beyond spatial data.
 
-[**Posit Data Science Platform**](pages/posit_platform.qmd)
+[**Posit data science platform**](pages/posit_platform.qmd)
 : Design for the data science tooling layer — Posit Workbench and Connect — that supports analysts working with HRL data products and performing broader DWR science activities.
+
+[**Architecture decision records**](adr/index.qmd)
+: Decision log documenting the architectural choices, options considered, and consequences for the HRL data infrastructure.

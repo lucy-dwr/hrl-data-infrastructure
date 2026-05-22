@@ -8,7 +8,15 @@ informed: HRL Science Committee
 
 # Adopt the HRL data lifecycle as the organizing framework
 
-## Context and Problem Statement
+::: {.adr-metadata}
+**Status:** Accepted  
+**Date:** 2026-01-01  
+**Decision makers:** Lucy Andrews, Louise Conrad, Pascale Goertler  
+**Consulted:** HRL Science Committee, Ashley Vizek  
+**Informed:** HRL Science Committee
+:::
+
+## Context and problem statement
 
 Healthy Rivers and Landscapes (HRL) data infrastructure must support many different types of data work, including data collection, quality assurance, static publication, ingestion and standardization, storage and serving, analysis and synthesis, and communication of results.
 
@@ -16,7 +24,7 @@ Without a shared organizing framework, responsibilities across these activities 
 
 The decision scope includes HRL program documentation, data governance, repository organization, infrastructure planning, data publication workflows, ingestion workflows, storage and serving patterns, and synthesis workflows.
 
-## Decision Drivers
+## Decision drivers
 
 - Need for a shared program-wide framework for data governance, data management, and infrastructure planning
 - Need to support reproducible, citable, and reusable data products
@@ -25,14 +33,14 @@ The decision scope includes HRL program documentation, data governance, reposito
 - Need to make HRL data workflows understandable to both technical and non-technical participants
 - Need to align infrastructure design and data governance with FAIR and CARE principles
 
-## Considered Options
+## Considered options
 
 - Adopt the HRL data lifecycle as the organizing framework
 - Organize HRL data work primarily by team or governance role
 - Organize HRL data work primarily by technology platform or system
 - Organize HRL data work separately for each project or dataset
 
-## Decision Outcome
+## Decision outcome
 
 Chosen option: **Adopt the HRL data lifecycle as the organizing framework** because it provides a shared model for describing how data move from collection through publication, ingestion, storage, synthesis, and use. This framework clarifies responsibilities, supports consistent governance, and allows infrastructure and documentation to be organized around durable stages of data work rather than around specific tools, teams, or individual projects.
 
@@ -65,7 +73,7 @@ Examples of confirmation include:
 - Infrastructure plans identify which components support which lifecycle stages
 - Repository templates and workflow documentation refer to the relevant lifecycle stage or stages
 
-## Pros and Cons of the Options
+## Pros and cons of the options
 
 ### Adopt the HRL data lifecycle as the organizing framework
 
@@ -147,7 +155,7 @@ Undesirable:
 - It makes data products less interoperable and harder to discover, reuse, and preserve
 - It increases the risk of redundant or conflicting work and practices
 
-## More Information
+## More information
 
 This decision should be revisited if HRL data governance changes substantially, if the program adopts a different operating model, or if implementation shows that the lifecycle stages do not adequately describe HRL data workflows.
 

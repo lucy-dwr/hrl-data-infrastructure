@@ -1,5 +1,5 @@
 ---
-title: "Repository structure and separation of concerns"
+title: "Spatial pipeline repository structure and separation of concerns"
 author: "Lucy Andrews"
 date: "May 2026"
 date-format: "MMMM YYYY"
@@ -10,7 +10,7 @@ date-format: "MMMM YYYY"
 This is an internal planning document, not a policy or design specification.
 :::
 
-The HRL spatial data pipeline is composed of multiple related but separable components: a machine-readable data model, validation and standardization code, Azure job orchestration and deployment configuration, a spatial database, an API layer, and one or more map or application interfaces. These components have different purposes, different owners, different release cycles, and different permission needs. The anticipated repository structure mirrors those boundaries so that each component can be developed, reviewed, deployed, and maintained independently.
+The HRL spatial data pipeline is composed of multiple related but separable components: a LinkML data model, validation and standardization code, Azure job orchestration and deployment configuration, a spatial database, an API layer, and one or more map or application interfaces. These components have different purposes, different owners, different release cycles, and different permission needs. The accepted repository structure mirrors those boundaries so that each component can be developed, reviewed, deployed, and maintained independently.
 
 ::: {.callout-note}
 This page covers the expected repository layout for the spatial data pipeline and its supporting Azure stack. It does not describe all repositories that may eventually exist for the broader HRL program.
@@ -37,7 +37,7 @@ The table below describes the repositories anticipated for the spatial data pipe
 | Repository | Primary responsibility | Typical contents | Notes |
 |---|---|---|---|
 | `hrl-data-infrastructure` | Architecture and implementation documentation | Quarto site, diagrams, design notes, decision records, user-facing documentation | Human-readable documentation and planning source of truth. This repository already exists. |
-| `hrl-restoration-schema` | Machine-readable restoration project data model and validation contract | Field definitions, controlled vocabularies, geometry rules, business rules, generated data dictionary, example submissions | Source of truth for what a valid spatial data submission looks like. |
+| `hrl-restoration-schema` | LinkML restoration project data model and validation contract | LinkML schema, field definitions, controlled vocabularies, geometry rules, business rules, generated data dictionary, generated JSON Schema, example submissions | Source of truth for what a valid spatial data submission looks like. |
 | `hrl-spatial-validation` | Validation and standardization code | Python or R package or CLI, functions to read GeoPackage and zipped shapefile submissions, attribute validation, geometry checks, CRS checks, validation reports, standardized outputs | Enforces the schema contract and produces submitter-facing validation results. |
 | `hrl-spatial-pipeline` | Azure job orchestration and deployment configuration | Container build files, Azure Container Apps Job configuration, storage path conventions, environment configuration, deployment scripts, pipeline triggers | May initially be combined with the validation repository, but should be separated if deployment concerns become more complex or IT-managed. |
 | `hrl-spatial-database` | PostgreSQL/PostGIS database structure | SQL migrations, table definitions, indexes, lookup tables, views, database comments, seed data for controlled vocabularies | Defines durable storage and query structures for validated and standardized data. |
@@ -97,3 +97,9 @@ When making a change, use this table to identify which repository it belongs in.
 | Change map popups or filters | `hrl-restoration-map` |
 | Add a new review or reporting application | a separate downstream application repository |
 | Update documentation explaining the overall architecture | `hrl-data-infrastructure` |
+
+## Related decisions
+
+- [ADR-002: Require semi-standardized, reproducible HRL repositories with GitHub, environment management, CI/CD, and governance files](../adr/adr/adr-002-standardized-reproducible-hrl-repositories.md)
+- [ADR-015: Split the HRL spatial data pipeline across multiple repositories rather than a monorepo](../adr/adr/adr-015-spatial-data-pipeline-multiple-repositories.md)
+- [ADR-016: Use LinkML as the source-of-truth schema language for restoration spatial data](../adr/adr/adr-016-linkml-source-of-truth-schema.md)

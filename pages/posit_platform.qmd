@@ -1,5 +1,5 @@
 ---
-title: "Posit Data Science Platform"
+title: "Posit data science platform"
 author: "Lucy Andrews"
 date: "May 2026"
 date-format: "MMMM YYYY"
@@ -10,12 +10,12 @@ date-format: "MMMM YYYY"
 This is an internal planning document, not a policy or design specification.
 :::
 
-HRL data scientists work primarily in R and Python and are familiar with RStudio, Positron, JupyterLab, and Visual Studio Code. The Azure stack and pipelines described on the [Data Pipeline Architecture](data_pipeline_architecture.qmd) page handles data ingestion, validation, standardization, storage, and public-facing APIs — but its services (Container Apps, API Management, App Service, etc.) are designed for infrastructure engineers, not ecologists running analyses and building Shiny applications. A data scientist should not need to understand Azure DevOps to share a dashboard with a colleague.
+HRL data scientists work primarily in R and Python and are familiar with RStudio, Positron, JupyterLab, and Visual Studio Code. The Azure stack and pipelines described on the [Data Pipeline Architecture](spatial_data_pipeline_architecture.qmd) page handle data ingestion, validation, standardization, storage, and public-facing APIs — but those services (Container Apps, API Management, App Service, etc.) are designed for infrastructure engineers, not ecologists running analyses and building Shiny applications. A data scientist should not need to understand Azure deployment mechanics to share a dashboard with a colleague.
 
 **Posit Workbench** and **Posit Connect** fill that gap. Together they give HRL data scientists a familiar, cloud-hosted development environment and a publishing platform for analytical content — for example, Shiny applications, Quarto reports, scheduled scripts, and APIs — without requiring them to learn the underpinning cloud infrastructure. These are distinct products that serve different purposes; both are made by [Posit, PBC](https://posit.co/) (formerly RStudio).
 
 ::: {.callout-note}
-This page describes the data science tooling layer. It complements the data engineering layer described on the [Data Pipeline Architecture](data_pipeline_architecture.qmd) page; it does not replace it. Both are needed.
+This page describes the data science tooling layer. It complements the data engineering layer described on the [Data Pipeline Architecture](spatial_data_pipeline_architecture.qmd) page; it does not replace it. Both are needed.
 :::
 
 ## How the two stacks relate
@@ -91,7 +91,7 @@ From a data scientist's perspective, Connect makes deployment invisible. They do
 
 The Azure pipeline page on this site describes hosting data engineering functions, applications, and public APIs on Azure App Service or Azure Container Apps, backed by a full Azure stack. Those services are appropriate for applications that have complex compute and deployment needs, are written primarily in languages other than R or Python or frameworks other than Shiny and Streamlit, need to be produced prior to Posit Connect's procurement and configuration, or are built by developers who prefer containerized deployment workflows. Posit Connect is appropriate for applications built by data scientists in R or Python who want to share work with internal colleagues or controlled external audiences without an infrastructure intermediary.
 
-In practice, the two may coexist: some applications run on Azure, others on Posit Connect, depending on deployment and developer needs.
+In practice, the two may coexist: infrastructure-managed applications and public APIs can run on Azure, while R/Python analytical applications, reports, and controlled internal tools can run on Posit Connect, depending on audience, deployment needs, and developer workflow.
 
 ## Hosting on Azure
 
@@ -102,3 +102,9 @@ DWR IT will need to be involved in provisioning. Key decisions to make:
 - VM size (RAM and CPU requirements depend on the number of concurrent users and the scale of datasets being processed)
 - Authentication integration (both products support Microsoft Entra ID, which is how DWR does identity management)
 - Network configuration
+
+## Related decisions
+
+- [ADR-011: Procure and use Posit Workbench and Posit Connect for data science and application publishing](../adr/adr/adr-011-posit-workbench-posit-connect.md)
+- [ADR-012: Separate the Azure data engineering stack from the Posit data science platform](../adr/adr/adr-012-separate-azure-data-engineering-and-posit.md)
+- [ADR-013: Treat Posit as a deliberate IaaS exception to the PaaS-first principle](../adr/adr/adr-013-posit-iaas-exception.md)

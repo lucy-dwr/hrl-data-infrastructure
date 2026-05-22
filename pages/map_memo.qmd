@@ -1,5 +1,5 @@
 ---
-title: "HRL Restoration Project Map: Implicated Infrastructure Decisions"
+title: "HRL restoration project map: implicated infrastructure decisions"
 author: "Lucy Andrews"
 date: "April 2026"
 date-format: "MMMM YYYY"
@@ -20,13 +20,14 @@ the State Water Resources Control Board, and the public can use.
 This is a well-scoped, achievable task and a good one to tackle early because it
 is relatively narrow, has a specific end-product, and will prompt engagement
 with technical questions that the HRL program needs to start addressing in
-preparation for implementation. But completing this task requires resolving
-several infrastructure decisions that are currently open. This memo walks through
-what those decisions are and why they matter.
+preparation for implementation. Several of the infrastructure decisions this
+memo originally identified have now been captured as Architecture Decision
+Records (ADRs). This memo therefore distinguishes decisions that have been made
+from decisions that remain open.
 
 For a thorough discussion of HRL data infrastructure, including decisions that 
 need to be made in order for work to progress, please see the
-[HRL Data Infrastructure Proposal](hrl_infrastructure_proposal.qmd) page.
+[HRL data infrastructure proposal](hrl_infrastructure_proposal.qmd) page.
 
 ---
 
@@ -48,73 +49,74 @@ depending on those choices.
 
 ---
 
-## Layer by layer: what needs to happen and what decisions are open
+## Layer by layer: current decision status
 
-### Layer 1 — Creating and publishing the dataset
+### Layer 1 — creating and publishing the dataset
 
 **What this means here:** The restoration project spatial dataset does not exist
 yet as a program-administered dataset. It needs to be created from existing GIS
 layers, partner data, and/or first-principles digitizing; assigned a stable home;
 and given an explicit process for review, update, and versioning.
 
-**Open decision: Does this dataset go through EDI?**
+**Current decision: This dataset is managed through HRL program infrastructure,
+not the default EDI-first publication path.**
 
 Our standard process requires that all HRL data be published to EDI before it
 enters the infrastructure. EDI is designed for ecological field data with rich,
 standardized metadata.
 
-A spatial reference layer such as restoration project boundaries is likely to be
-an exception, especially because this particular dataset may need to evolve in
-ways that don't lend themselves to rigid versioning. It could instead live
-directly in HRL program infrastructure as a program reference layer. We need to
-decide which path to take, and document it, because this decision could set a
-precedent for other spatial datasets.
+A spatial reference layer such as restoration project boundaries is an accepted
+exception to the default path because it needs to function as an evolving shared
+program dataset rather than a static ecological archive package. This does not
+weaken the EDI-first publication contract for ordinary HRL datasets; it defines
+one managed pathway for data products whose update pattern or technical form
+does not fit EDI well.
 
-**Open decision: How are shared program datasets administered and updated?**
+**Current decision: The restoration project spatial dataset is a shared HRL
+program dataset with DWR as steward.**
 
-We should not assume DWR owns this dataset simply because DWR staff may help
-compile it. The restoration project map should be treated as a shared HRL program
-dataset, which means we need to decide how program datasets are administered:
-who is the steward, who can propose edits, who approves changes, how often the
-dataset is reviewed, how partner updates flow in, and how revisions are
-versioned and documented. This affects both the data model and the governance.
+The dataset should be treated as an HRL program asset, not simply as a DWR-owned
+GIS layer. DWR stewardship means DWR is responsible for maintaining the technical
+system and coordinating the data-management process. It does not mean DWR has
+exclusive authority over the scientific or programmatic content. The detailed
+update workflow, review cadence, and approval path still need to be defined.
 
 ---
 
-### Layer 2 — Ingesting and standardizing the data
+### Layer 2 — ingesting and standardizing the data
 
 **What this means here:** Once the data are archived, an automated pipeline needs
 to pull them in, validate them (do all features have the required attributes? are
 coordinates in the expected projection? etc.), and convert it to the standard
 format for storage.
 
-**Open decision: Which spatial file format do we use?**
+**Current decision: Use standardized export files alongside the database.**
 
-The infrastructure proposal identifies two candidates for storing spatial (vector)
-data in a nonproprietary structure:
+PostgreSQL/PostGIS is the authoritative operational store for standardized
+restoration project spatial data. Standardized export files should also be
+published for users and systems that need file-based access. Expected export
+formats include GeoPackage, GeoJSON, CSV, and GeoParquet, with the exact public
+access pattern refined as the map and API architecture are defined.
 
-- **GeoPackage** — a single-file format, widely used in GIS software like QGIS,
-  should be familiar to many geospatial analysts.
-- **GeoParquet** — a newer format designed for cloud storage, faster for
-  large-scale queries, but likely less familiar.
+**Current decision: Use LinkML as the schema source of truth.**
 
-This decision needs to be made before we build the first spatial pipeline. Both
-options are open standards, so we are not locked in either way, but once we
-pick one, spatial pipelines should follow that standard unless there is a 
-compelling reason to deviate. The restoration project map is a natural place to
-make this call and see if any challenges arise during implementation that would
-suggest a different approach.
+Before the pipeline can validate the data, HRL needs a schema: what fields each
+record has, which fields are required, which controlled vocabularies are valid,
+and how geometry and coordinate reference system requirements are represented.
+That schema should be maintained in LinkML, with downstream validation artifacts,
+data dictionaries, and templates generated from or synchronized with the LinkML
+source where practical.
 
-**Open decision: What attributes does each restoration project record need?**
+**Current decision: Standardize restoration spatial data to EPSG:3310.**
 
-Before the pipeline can validate the data, we need a schema: what fields does
-each record have? (name, location, watershed, project phase, restoration action,
-implementation status, lead entity, science considerations, etc.). We will also 
-need to determine how the schema is built (e.g., JSON).
+Submitted data may arrive in different coordinate reference systems, but the
+standardized restoration project dataset should use EPSG:3310. This gives the
+pipeline a clear CRS target for validation, transformation, and downstream
+serving.
 
 ---
 
-### Layer 3 — Storing and serving the data
+### Layer 3 — storing and serving the data
 
 **What this means here:** The processed spatial dataset needs to live somewhere
 permanent that other tools---mapping clients, a data access R package or Python
@@ -122,17 +124,26 @@ library, and future analyses---can reliably read from. Storage alone is not
 enough; we also need to decide how clients discover, query, and retrieve the
 data.
 
-**Open decision: How will we provision and manage cloud storage?**
+**Current proposal: Use Azure Storage / ADLS Gen2 as the object storage
+backbone.**
 
-The infrastructure proposal calls for cloud object storage (Azure Blob Storage
-is the leading candidate, given DWR's existing enterprise agreement, though
-other options may be compelling). That storage has not been set up yet. The
-restoration project spatial dataset could be the first dataset we store there,
-which means we need to provision the storage, configure access permissions, and
-establish naming conventions for this work to proceed.
+The ADR inventory now proposes Azure Storage / ADLS Gen2 as the raw,
+intermediate, export, and archival object storage backbone. The restoration
+project spatial dataset could be the first dataset stored there, which means the
+team still needs provisioning, permissions, and naming conventions before the
+pipeline can operate.
 
-This is a dependency, not a blocker we can work around: there is no place to
-put the processed data until storage exists.
+This is a dependency, not a blocker we can work around: there is no durable
+infrastructure location for raw submissions, validation reports, standardized
+exports, or archived snapshots until storage exists.
+
+**Current decision: Use PostgreSQL/PostGIS as the authoritative operational
+store.**
+
+PostgreSQL/PostGIS is the accepted operational store for standardized spatial
+data. The database should hold the current authoritative version used by APIs,
+applications, and query workflows. Export files remain important, but they do
+not replace the database as the operational source of truth.
 
 **Open decision: What data-serving interface do clients (tools or applications) use, and how is that interface made public?**
 
@@ -159,7 +170,7 @@ be handled explicitly as an exception rather than as the default design.
 
 ---
 
-### Layer 4 — The interactive map
+### Layer 4 — the interactive map
 
 **What this means here:** The map is the deliverable the stakeholder can see,
 but "interactive map" can mean several very different things, with different
@@ -191,18 +202,31 @@ we maximize accessibility?
 
 ---
 
-## Summary of decisions required
+## Summary of decision status
 
-The following decisions need to be made for this work to proceed. Some can be
-made by staff; others may need leadership input or cross-agency coordination.
+The following table summarizes the current state of decisions needed for the
+restoration project map and supporting pipeline.
 
-| Decision | Who needs to decide | Blocking? |
+| Decision | Status | Blocking? |
 |---|---|---|
-| Does this dataset go through EDI or is it hosted on program infrastructure? | ? | Yes — affects data creation workflow |
-| How are shared program datasets administered and updated? | ? | Yes — affects ownership, stewardship, and update workflow |
-| Which spatial file format: GeoPackage or GeoParquet? | Technical expert(s) (Lucy?) | Yes — needed before pipeline build |
-| What attributes does each restoration project record need? | Spatial restoration data working group | Yes — needed before schema design |
-| How do we provision cloud storage? | ? | Yes — data has nowhere to live |
-| What data-serving interface do clients use? | ? | Yes — determines how maps, apps, packages, and other end users access the data |
-| What does "interactive map" mean? | ? | Yes — scope determines build plan |
-| Map audience? | ? | Yes — determines hosting path |
+| Does this dataset go through EDI or program infrastructure? | Accepted: managed through HRL program infrastructure as a shared program dataset | No |
+| How are shared program datasets administered? | Partly accepted: DWR steward for restoration spatial data; detailed update workflow still needed | Partly |
+| What schema language is authoritative? | Accepted: LinkML | No |
+| What CRS is used for standardized restoration spatial data? | Accepted: EPSG:3310 | No |
+| What is the operational spatial store? | Accepted: PostgreSQL/PostGIS | No |
+| Are standardized export files published? | Accepted: yes, alongside the database | No |
+| How do we provision cloud object storage? | Proposed: Azure Storage / ADLS Gen2 | Yes |
+| What compute layer runs validation and transformation? | Proposed: Azure Container Apps Jobs | Yes |
+| What data-serving interface do clients use? | Candidate ADR needed | Yes |
+| What does "interactive map" mean? | Candidate ADR needed | Yes |
+| Who are the map audiences and what are their UX needs? | Candidate ADR or product brief needed | Yes |
+
+## Related decisions
+
+- [ADR-004: Require static publication of data before ingestion, with EDI as the default repository](../adr/adr/adr-004-static-publication-before-ingestion.md)
+- [ADR-005: Allow Central Data Team-managed publication pathways for large or complex datasets](../adr/adr/adr-005-central-data-team-managed-publication-pathways.md)
+- [ADR-009: Use PostgreSQL/PostGIS as the authoritative operational store for standardized spatial data](../adr/adr/adr-009-postgresql-postgis-operational-store.md)
+- [ADR-010: Publish standardized export files alongside the authoritative database](../adr/adr/adr-010-standardized-export-files.md)
+- [ADR-014: Administer restoration project spatial data as a shared HRL program dataset with DWR as steward](../adr/adr/adr-014-restoration-spatial-data-shared-dataset.md)
+- [ADR-016: Use LinkML as the source-of-truth schema language for restoration spatial data](../adr/adr/adr-016-linkml-source-of-truth-schema.md)
+- [ADR-017: Standardize restoration spatial data to EPSG:3310](../adr/adr/adr-017-standardize-restoration-spatial-data-epsg-3310.md)
