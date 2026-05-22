@@ -616,10 +616,3 @@ program learns. Suggestions and revisions are welcome via GitHub issues on the
 :::
 
 ---
-
-```{r}
-#| label: session-info
-#| echo: false
-#| output: false
-# sessioninfo::session_info()
-```
