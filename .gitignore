@@ -8,6 +8,7 @@
 
 # User-specific files
 .Ruserdata
+.DS_Store
 
 # Example code in package build process
 *-Ex.R
@@ -46,7 +47,13 @@ po/*~
 rsconnect/
 
 /.quarto/
+/_freeze/
+/_site/
+/docs/
+/index.html
+/index_files/
 **/*.quarto_ipynb
 
-# Stale root-level Quarto render artifacts (output goes to docs/)
+# Stale root-level Quarto render artifacts
 /site_libs/
+*_files/figure-docx/
