@@ -1,20 +1,10 @@
----
-status: accepted
-date: 2026-05-14
-decision-makers: Lucy Andrews
-consulted:
-informed:
----
-
 # Standardize restoration spatial data to EPSG:3310
 
-::: {.adr-metadata}
-**Status:** Accepted  
-**Date:** 2026-05-14  
-**Decision makers:** Lucy Andrews  
-**Consulted:**  
-**Informed:**
-:::
+> **Status:** Accepted  
+> **Date:** 2026-05-14  
+> **Decision makers:** Lucy Andrews  
+> **Consulted:**  
+> **Informed:**
 
 ## Context and problem statement
 

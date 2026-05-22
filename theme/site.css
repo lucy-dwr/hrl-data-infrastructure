@@ -116,18 +116,6 @@ main .table tbody tr:hover > * {
   background-color: #f7f7f7 !important;
 }
 
-/* ADR metadata blocks */
-.adr-metadata {
-  border-left: 4px solid #2E7DA1;
-  background-color: #F7F7F7;
-  padding: 0.8rem 1rem;
-  margin: 1rem 0 2rem 0;
-}
-
-.adr-metadata p {
-  margin-bottom: 0.3rem;
-}
-
 .adr-inventory table th:first-child,
 .adr-inventory table td:first-child {
   min-width: 5.6rem;

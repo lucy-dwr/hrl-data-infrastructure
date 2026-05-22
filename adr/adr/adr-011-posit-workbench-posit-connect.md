@@ -1,20 +1,10 @@
----
-status: accepted
-date: 2026-04-28
-decision-makers: Lucy Andrews, Louise Conrad
-consulted: DISE divisional leadership
-informed:
----
-
 # Procure and use Posit Workbench and Posit Connect for data science and application publishing
 
-::: {.adr-metadata}
-**Status:** Accepted  
-**Date:** 2026-04-28  
-**Decision makers:** Lucy Andrews, Louise Conrad  
-**Consulted:** DISE divisional leadership  
-**Informed:**
-:::
+> **Status:** Accepted  
+> **Date:** 2026-04-28  
+> **Decision makers:** Lucy Andrews, Louise Conrad  
+> **Consulted:** DISE divisional leadership  
+> **Informed:**
 
 ## Context and problem statement
 

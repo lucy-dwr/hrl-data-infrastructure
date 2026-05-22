@@ -1,20 +1,10 @@
----
-status: accepted
-date: 2026-05-11
-decision-makers: Lucy Andrews
-consulted: Ashley Vizek
-informed:
----
-
 # Use PostgreSQL/PostGIS as the authoritative operational store for standardized spatial data
 
-::: {.adr-metadata}
-**Status:** Accepted  
-**Date:** 2026-05-11  
-**Decision makers:** Lucy Andrews  
-**Consulted:** Ashley Vizek  
-**Informed:**
-:::
+> **Status:** Accepted  
+> **Date:** 2026-05-11  
+> **Decision makers:** Lucy Andrews  
+> **Consulted:** Ashley Vizek  
+> **Informed:**
 
 ## Context and problem statement
 

@@ -1,20 +1,10 @@
----
-status: accepted
-date: 2026-05-21
-decision-makers: Lucy Andrews
-consulted: Ashley Vizek
-informed:
----
-
 # Publish standardized spatial export files alongside the authoritative database
 
-::: {.adr-metadata}
-**Status:** Accepted  
-**Date:** 2026-05-21  
-**Decision makers:** Lucy Andrews  
-**Consulted:** Ashley Vizek  
-**Informed:**
-:::
+> **Status:** Accepted  
+> **Date:** 2026-05-21  
+> **Decision makers:** Lucy Andrews  
+> **Consulted:** Ashley Vizek  
+> **Informed:**
 
 ## Context and problem statement
 

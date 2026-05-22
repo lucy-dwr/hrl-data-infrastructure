@@ -1,20 +1,10 @@
----
-status: accepted
-date: 2026-05-12
-decision-makers: Lucy Andrews
-consulted: Ashley Vizek
-informed: HRL Habitat Implementation Team
----
-
 # Use LinkML as the source-of-truth schema language for restoration spatial data
 
-::: {.adr-metadata}
-**Status:** Accepted  
-**Date:** 2026-05-12  
-**Decision makers:** Lucy Andrews  
-**Consulted:** Ashley Vizek  
-**Informed:** HRL Habitat Implementation Team
-:::
+> **Status:** Accepted  
+> **Date:** 2026-05-12  
+> **Decision makers:** Lucy Andrews  
+> **Consulted:** Ashley Vizek  
+> **Informed:** HRL Habitat Implementation Team
 
 ## Context and problem statement
 

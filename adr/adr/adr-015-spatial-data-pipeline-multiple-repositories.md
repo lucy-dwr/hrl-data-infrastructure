@@ -1,20 +1,10 @@
----
-status: accepted
-date: 2026-05-14
-decision-makers: Lucy Andrews
-consulted: Ashley Vizek
-informed:
----
-
 # Split the HRL spatial data pipeline across multiple repositories rather than a monorepo
 
-::: {.adr-metadata}
-**Status:** Accepted  
-**Date:** 2026-05-14  
-**Decision makers:** Lucy Andrews  
-**Consulted:** Ashley Vizek  
-**Informed:**
-:::
+> **Status:** Accepted  
+> **Date:** 2026-05-14  
+> **Decision makers:** Lucy Andrews  
+> **Consulted:** Ashley Vizek  
+> **Informed:**
 
 ## Context and problem statement
 

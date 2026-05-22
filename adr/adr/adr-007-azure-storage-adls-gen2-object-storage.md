@@ -1,20 +1,10 @@
----
-status: proposed
-date: 2026-05-21
-decision-makers: Lucy Andrews
-consulted: Ashley Vizek, Jordan Hoang, Emanuel Rodriguez
-informed: 
----
-
 # Use Azure Storage / ADLS Gen2 as the raw, intermediate, export, and archival object storage backbone
 
-::: {.adr-metadata}
-**Status:** Proposed  
-**Date:** 2026-05-21  
-**Decision makers:** Lucy Andrews  
-**Consulted:** Ashley Vizek, Jordan Hoang, Emanuel Rodriguez  
-**Informed:**
-:::
+> **Status:** Proposed  
+> **Date:** 2026-05-21  
+> **Decision makers:** Lucy Andrews  
+> **Consulted:** Ashley Vizek, Jordan Hoang, Emanuel Rodriguez  
+> **Informed:**
 
 ## Context and problem statement
 

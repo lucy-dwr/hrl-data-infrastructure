@@ -1,20 +1,10 @@
----
-status: accepted
-date: 2026-05-07
-decision-makers: Lucy Andrews
-consulted: John Spendlove
-informed: Louise Conrad
----
-
 # Treat Posit as a deliberate IaaS exception to the PaaS-first principle
 
-::: {.adr-metadata}
-**Status:** Accepted  
-**Date:** 2026-05-07  
-**Decision makers:** Lucy Andrews  
-**Consulted:** John Spendlove  
-**Informed:** Louise Conrad
-:::
+> **Status:** Accepted  
+> **Date:** 2026-05-07  
+> **Decision makers:** Lucy Andrews  
+> **Consulted:** John Spendlove  
+> **Informed:** Louise Conrad
 
 ## Context and problem statement
 

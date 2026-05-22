@@ -1,20 +1,10 @@
----
-status: accepted
-date: 2026-01-01
-decision-makers: Lucy Andrews, Louise Conrad, Pascale Goertler
-consulted: HRL Science Committee, Ashley Vizek
-informed: HRL Science Committee
----
-
 # Require static publication of data before ingestion, with EDI as the default repository
 
-::: {.adr-metadata}
-**Status:** Accepted  
-**Date:** 2026-01-01  
-**Decision makers:** Lucy Andrews, Louise Conrad, Pascale Goertler  
-**Consulted:** HRL Science Committee, Ashley Vizek  
-**Informed:** HRL Science Committee
-:::
+> **Status:** Accepted  
+> **Date:** 2026-01-01  
+> **Decision makers:** Lucy Andrews, Louise Conrad, Pascale Goertler  
+> **Consulted:** HRL Science Committee, Ashley Vizek  
+> **Informed:** HRL Science Committee
 
 ## Context and problem statement
 

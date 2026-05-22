@@ -1,20 +1,10 @@
----
-status: accepted
-date: 2026-05-08
-decision-makers: Lucy Andrews
-consulted: Ashley Vizek, John Spendlove
-informed: Louise Conrad
----
-
 # Use a DWR-hosted, PaaS-first Azure architecture for HRL data infrastructure
 
-::: {.adr-metadata}
-**Status:** Accepted  
-**Date:** 2026-05-08  
-**Decision makers:** Lucy Andrews  
-**Consulted:** Ashley Vizek, John Spendlove  
-**Informed:** Louise Conrad
-:::
+> **Status:** Accepted  
+> **Date:** 2026-05-08  
+> **Decision makers:** Lucy Andrews  
+> **Consulted:** Ashley Vizek, John Spendlove  
+> **Informed:** Louise Conrad
 
 ## Context and problem statement
 

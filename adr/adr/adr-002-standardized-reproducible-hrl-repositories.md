@@ -1,20 +1,10 @@
----
-status: proposed
-date: 2026-05-21
-decision-makers: unclear
-consulted: HRL Science Committee
-informed: HRL Science Committee
----
-
 # Require semi-standardized, reproducible HRL repositories with GitHub, environment management, CI/CD, and governance files
 
-::: {.adr-metadata}
-**Status:** Proposed  
-**Date:** 2026-05-21  
-**Decision makers:** unclear  
-**Consulted:** HRL Science Committee  
-**Informed:** HRL Science Committee
-:::
+> **Status:** Proposed  
+> **Date:** 2026-05-21  
+> **Decision makers:** unclear  
+> **Consulted:** HRL Science Committee  
+> **Informed:** HRL Science Committee
 
 ## Context and problem statement
 
