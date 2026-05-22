@@ -1,17 +1,14 @@
----
-status:
-date:
-decision-makers:
-consulted:
-informed:
----
-
 # <!-- short title, representative of solved problem and found solution -->
+
+> **Status:** <!-- accepted/proposed/superseded -->  
+> **Date:** <!-- YYYY-MM-DD -->  
+> **Decision makers:** <!-- person or group -->  
+> **Consulted:** <!-- person or group -->  
+> **Informed:** <!-- person or group -->
 
 ## Context and problem statement
 
 <!-- Describe the context, problem, and scope of the decision. -->
-
 
 ## Decision drivers
 
