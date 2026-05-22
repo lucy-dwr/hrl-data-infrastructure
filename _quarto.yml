@@ -45,15 +45,15 @@ website:
           - section: "Foundations & governance"
             contents:
               - href: adr/adr/adr-001-hrl-data-lifecycle.md
-                text: "ADR-001 data lifecycle"
+                text: "ADR-001 Data lifecycle"
               - href: adr/adr/adr-002-standardized-reproducible-hrl-repositories.md
-                text: "ADR-002 reproducible repositories"
+                text: "ADR-002 Reproducible repositories"
               - href: adr/adr/adr-003-governance-roles.md
-                text: "ADR-003 governance roles"
+                text: "ADR-003 Governance roles"
               - href: adr/adr/adr-004-static-publication-before-ingestion.md
-                text: "ADR-004 publication before ingestion"
+                text: "ADR-004 Publication before ingestion"
               - href: adr/adr/adr-005-central-data-team-managed-publication-pathways.md
-                text: "ADR-005 managed publication pathways"
+                text: "ADR-005 Managed publication pathways"
           - section: "Cloud & platform"
             contents:
               - href: adr/adr/adr-006-paas-first-azure-architecture.md
@@ -65,19 +65,19 @@ website:
               - href: adr/adr/adr-009-postgresql-postgis-operational-store.md
                 text: "ADR-009 PostgreSQL/PostGIS"
               - href: adr/adr/adr-010-standardized-export-files.md
-                text: "ADR-010 standardized spatial exports"
+                text: "ADR-010 Standardized spatial exports"
               - href: adr/adr/adr-011-posit-workbench-posit-connect.md
                 text: "ADR-011 Posit platform"
               - href: adr/adr/adr-012-separate-azure-data-engineering-and-posit.md
-                text: "ADR-012 separate Azure and Posit"
+                text: "ADR-012 Separate Azure and Posit"
               - href: adr/adr/adr-013-posit-iaas-exception.md
                 text: "ADR-013 Posit IaaS exception"
           - section: "Restoration spatial data"
             contents:
               - href: adr/adr/adr-014-restoration-spatial-data-shared-dataset.md
-                text: "ADR-014 shared spatial dataset"
+                text: "ADR-014 Shared spatial dataset"
               - href: adr/adr/adr-015-spatial-data-pipeline-multiple-repositories.md
-                text: "ADR-015 multiple repositories"
+                text: "ADR-015 Multiple repositories"
               - href: adr/adr/adr-016-linkml-source-of-truth-schema.md
                 text: "ADR-016 LinkML schema"
               - href: adr/adr/adr-017-standardize-restoration-spatial-data-epsg-3310.md
